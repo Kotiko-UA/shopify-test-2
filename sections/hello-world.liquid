@@ -3,53 +3,71 @@
 {% endcomment %}
 
 <div class="welcome full-width">
-  <div class="welcome-content">
+  <div class="welcome-content welcome-content--image-{{ section.settings.image_position }}">
     <div>
-      <h1>Hello, World!</h1>
-
-      <p class="welcome-description">
-        The Skeleton theme is a minimal, carefully structured Shopify theme designed to help you quickly get started.
-        Designed with modularity, maintainability, and Shopify's best practices in mind.
-      </p>
-
-      <p class="welcome-description">
-        Themes shape the online store experience for merchants and their customers. Build fast, flexible themes at scale
-        using Liquid, Shopify's theme templating language, along with HTML, CSS, JavaScript, and JSON.
-      </p>
+      <h1>{{ section.settings.heading }}</h1>
+      {%- if section.settings.description != blank -%}
+        <p class="welcome-description">
+          {{ section.settings.description }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.secondary_description != blank -%}
+        <p class="welcome-description">
+          {{ section.settings.secondary_description }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a href="{{ section.settings.button_link }}" class="welcome-button">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
     </div>
-    <div class="icon">
-      <img src="{{ 'shoppy-x-ray.svg' | asset_url }}" width="300" height="300">
-    </div>
+    {%- if section.settings.image != blank -%}
+      <div class="icon">
+        {{ section.settings.image | image_url: width: 600 | image_tag }}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
 <div class="highlights">
-  <div class="highlight">
-    <h3>Key Concepts</h3>
-    <p class="highlight-description">
-      Shopify themes are a package of template files, building blocks, and supporting assets. Use these building blocks
-      to create modular, customizable themes.
-    </p>
-    <p>{{ 'Learn more about key concepts' | link_to: 'https://shopify.dev/docs/storefronts/themes/architecture' }}</p>
-  </div>
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'highlight' -%}
+        <div class="highlight" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3>{{ block.settings.title }}</h3>
+          {%- endif -%}
 
-  <div class="highlight">
-    <h3>Liquid</h3>
-    <p class="highlight-description">
-      The Liquid templating language is the backbone of Shopify themes, and is used to load dynamic content on
-      storefronts. Extend Liquid objects to store and present custom data using metafields.
-    </p>
-    <p>{{ 'View the Liquid reference' | link_to: 'https://shopify.dev/docs/api/liquid' }}</p>
-  </div>
+          {%- if block.settings.description != blank -%}
+            <p class="highlight-description">
+              {{ block.settings.description }}
+            </p>
+          {%- endif -%}
 
-  <div class="highlight">
-    <h3>Best Practices</h3>
-    <p class="highlight-description">
-      To optimize your theme development experience, Shopify has established a set of best practices that you can refer
-      to when developing your theme and setting up your toolchains and processes.
-    </p>
-    <p>{{ 'Follow best practices' | link_to: 'https://shopify.dev/docs/storefronts/themes/best-practices' }}</p>
-  </div>
+          {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+            <p>
+              {{ block.settings.link_label | link_to: block.settings.link_url }}
+            </p>
+          {%- endif -%}
+        </div>
+
+      {%- when 'quote' -%}
+        <blockquote class="highlight highlight-quote" {{ block.shopify_attributes }}>
+          {%- if block.settings.text != blank -%}
+            <p class="highlight-quote-text">
+              {{ block.settings.text }}
+            </p>
+          {%- endif -%}
+
+          {%- if block.settings.author != blank -%}
+            <cite class="highlight-quote-author">
+              {{ block.settings.author }}
+            </cite>
+          {%- endif -%}
+        </blockquote>
+    {%- endcase -%}
+  {%- endfor -%}
 </div>
 
 {% stylesheet %}
@@ -70,12 +88,26 @@
     padding: 0 24px;
   }
 
+  .welcome-content--image-left {
+    flex-direction: row-reverse;
+  }
+
   .welcome-description {
     max-width: 80ch;
     line-height: 1.4;
     margin-top: 1.5rem;
   }
-
+  .welcome-button {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 1.5rem;
+    padding: 10px 16px;
+    border-radius: 4px;
+    background-color: rgb(32, 34, 35);
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    line-height: 1.2;
+  }
   .icon {
     width: 300px;
   }
@@ -104,7 +136,7 @@
     line-height: 1.4;
   }
 
-  .highlight > * + *{
+  .highlight > * + * {
     margin-top: 1rem;
   }
 
@@ -128,16 +160,146 @@
     padding: 3px 10px 5px;
     text-decoration: none;
   }
+  .highlight-quote {
+    border-left: 4px solid rgb(32, 34, 35);
+  }
+
+  .highlight-quote-text {
+    flex: 1 1;
+    font-style: italic;
+  }
+
+  .highlight-quote-author {
+    color: rgb(32, 34, 35);
+    font-style: normal;
+    font-weight: 700;
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Hello World",
-  "settings": [],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "My first Shopify section"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "This is cool text of description"
+    },
+    {
+      "type": "textarea",
+      "id": "secondary_description",
+      "label": "Second Description",
+      "default": "Themes shape the online store experience for merchants and their customers. Build fast, flexible themes at scale using Liquid, Shopify's theme templating language, along with HTML, CSS, JavaScript, and JSON."
+    },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "highlight",
+      "name": "Highlight card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Key Concepts"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Describe this highlight card."
+        },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Learn More" },
+        { "type": "url", "id": "link_url", "label": "Link URL" }
+      ]
+    },
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "This is a quote from a happy customer."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Customer name"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "Hello World Template",
-      "category": "Demo"
+      "category": "Demo",
+      "blocks": [
+        {
+          "type": "highlight",
+          "settings": {
+            "title": "Key Concepts",
+            "description": "Shopify themes are made from templates, sections, blocks, and assets.",
+            "link_label": "Learn more"
+          }
+        },
+        {
+          "type": "highlight",
+          "settings": {
+            "title": "Liquid",
+            "description": "Liquid is Shopify's templating language for rendering dynamic storefront content.",
+            "link_label": "View reference"
+          }
+        },
+        {
+          "type": "quote",
+          "settings": {
+            "text": "This section is now powered by reusable blocks.",
+            "author": "Theme developer"
+          }
+        }
+      ]
     }
   ]
 }
