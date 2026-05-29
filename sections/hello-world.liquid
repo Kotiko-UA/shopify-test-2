@@ -2,90 +2,147 @@
   Welcome to Shopify theme development!
 {% endcomment %}
 
-<div class="welcome full-width">
-  <div class="welcome-content welcome-content--image-{{ section.settings.image_position }}">
-    <div>
-      <h1>{{ section.settings.heading }}</h1>
-      {%- if section.settings.description != blank -%}
-        <p class="welcome-description">
-          {{ section.settings.description }}
-        </p>
-      {%- endif -%}
-      {%- if section.settings.secondary_description != blank -%}
-        <p class="welcome-description">
-          {{ section.settings.secondary_description }}
-        </p>
-      {%- endif -%}
-      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-        <a href="{{ section.settings.button_link }}" class="welcome-button">
-          {{ section.settings.button_label }}
-        </a>
+<div
+  class="section full-width"
+  style="--section-spacing: {{ section.settings.section_spacing }}px; --background-color: {{ section.settings.background_color }};"
+>
+  <div class="container">
+    <div class="welcome-content welcome-content--image-{{ section.settings.image_position }}">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="welcome-eyebrow">
+            {{ section.settings.eyebrow }}
+          </div>
+        {%- endif -%}
+        <h1>{{ section.settings.heading }}</h1>
+        {%- if section.settings.description != blank -%}
+          <p class="welcome-description">
+            {{ section.settings.description }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.secondary_description != blank -%}
+          <p class="welcome-description">
+            {{ section.settings.secondary_description }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.rich_description != blank -%}
+          <div class="welcome-rich-description">
+            {{ section.settings.rich_description }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          {%- render 'main-button', label: section.settings.button_label, url: section.settings.button_link -%}
+        {%- endif -%}
+      </div>
+      {%- if section.settings.image != blank -%}
+        <div class="icon">
+          {{ section.settings.image | image_url: width: 600 | image_tag }}
+        </div>
       {%- endif -%}
     </div>
-    {%- if section.settings.image != blank -%}
-      <div class="icon">
-        {{ section.settings.image | image_url: width: 600 | image_tag }}
+    {%- if section.settings.show_highlights -%}
+      <div class="highlights">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'highlight' -%}
+              <div class="highlight" {{ block.shopify_attributes }}>
+                {%- if block.settings.title != blank -%}
+                  <h3>{{ block.settings.title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.description != blank -%}
+                  <p class="highlight-description">
+                    {{ block.settings.description }}
+                  </p>
+                {%- endif -%}
+
+                {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                  <p>
+                    {{ block.settings.link_label | link_to: block.settings.link_url }}
+                  </p>
+                {%- endif -%}
+              </div>
+
+            {%- when 'quote' -%}
+              <blockquote class="highlight highlight-quote" {{ block.shopify_attributes }}>
+                {%- if block.settings.text != blank -%}
+                  <p class="highlight-quote-text">
+                    {{ block.settings.text }}
+                  </p>
+                {%- endif -%}
+
+                {%- if block.settings.author != blank -%}
+                  <cite class="highlight-quote-author">
+                    {{ block.settings.author }}
+                  </cite>
+                {%- endif -%}
+              </blockquote>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if section.settings.featured_collection != blank -%}
+      <div class="welcome-collection">
+        <span>Featured collection:</span>
+        <a href="{{ section.settings.featured_collection.url }}">
+          {{ section.settings.featured_collection.title }}
+        </a>
+        <ul class="welcome-collection-products">
+          {%- for product in section.settings.featured_collection.products limit: 3 -%}
+            <li>
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.featured_product != blank -%}
+      <div class="welcome-product">
+        <span>Featured product:</span>
+        <a href="{{ section.settings.featured_product.url }}">
+          {{ section.settings.featured_product.title }}
+        </a>
+        <span>{{ section.settings.featured_product.price | money }}</span>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.featured_page != blank -%}
+      <div class="welcome-page">
+        <span>Featured page:</span>
+        <a href="{{ section.settings.featured_page.url }}">
+          {{ section.settings.featured_page.title }}
+        </a>
       </div>
     {%- endif -%}
   </div>
 </div>
 
-<div class="highlights">
-  {%- for block in section.blocks -%}
-    {%- case block.type -%}
-      {%- when 'highlight' -%}
-        <div class="highlight" {{ block.shopify_attributes }}>
-          {%- if block.settings.title != blank -%}
-            <h3>{{ block.settings.title }}</h3>
-          {%- endif -%}
-
-          {%- if block.settings.description != blank -%}
-            <p class="highlight-description">
-              {{ block.settings.description }}
-            </p>
-          {%- endif -%}
-
-          {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
-            <p>
-              {{ block.settings.link_label | link_to: block.settings.link_url }}
-            </p>
-          {%- endif -%}
-        </div>
-
-      {%- when 'quote' -%}
-        <blockquote class="highlight highlight-quote" {{ block.shopify_attributes }}>
-          {%- if block.settings.text != blank -%}
-            <p class="highlight-quote-text">
-              {{ block.settings.text }}
-            </p>
-          {%- endif -%}
-
-          {%- if block.settings.author != blank -%}
-            <cite class="highlight-quote-author">
-              {{ block.settings.author }}
-            </cite>
-          {%- endif -%}
-        </blockquote>
-    {%- endcase -%}
-  {%- endfor -%}
-</div>
-
 {% stylesheet %}
-  .welcome {
-    display: grid;
-    grid-template-columns: var(--content-grid);
-    background-color: #f6f6f7;
-    padding: 72px 0;
+  .section {
+    display: block;
+    background-color: var(--background-color);
+    padding: var(--section-spacing) 0;
+  }
+  .container {
+    width: 100%;
+    padding: 0 16px;
+    max-width: 1280px;
+    margin: 0 auto;
   }
 
   .welcome-content {
-    grid-column: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
     width: 100%;
     padding: 0 24px;
+  }
+  .welcome-eyebrow {
+    margin-bottom: 0.75rem;
+    color: rgb(92, 95, 98);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
   .welcome-content--image-left {
@@ -97,17 +154,13 @@
     line-height: 1.4;
     margin-top: 1.5rem;
   }
-  .welcome-button {
-    display: inline-flex;
-    width: fit-content;
+
+  .welcome-rich-description {
+    max-width: 80ch;
+    line-height: 1.4;
     margin-top: 1.5rem;
-    padding: 10px 16px;
-    border-radius: 4px;
-    background-color: rgb(32, 34, 35);
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    line-height: 1.2;
   }
+
   .icon {
     width: 300px;
   }
@@ -174,6 +227,42 @@
     font-style: normal;
     font-weight: 700;
   }
+  .welcome-collection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    line-height: 1.4;
+  }
+  .welcome-collection span {
+    color: rgb(92, 95, 98);
+  }
+
+  .welcome-collection-products {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+  }
+
+  .welcome-product {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .welcome-product span {
+    color: rgb(92, 95, 98);
+  }
+  .welcome-page {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .welcome-page span {
+    color: rgb(92, 95, 98);
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -183,6 +272,12 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Built with Shopify"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -218,6 +313,29 @@
       ],
       "default": "right"
     },
+    { "type": "checkbox", "id": "show_highlights", "label": "Show highlight blocks", "default": true },
+    {
+      "type": "range",
+      "id": "section_spacing",
+      "label": "Section vertical spacing",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f6f6f7"
+    },
+    {
+      "type": "richtext",
+      "id": "rich_description",
+      "label": "Rich description",
+      "default": "<p>Add formatted text for this section.</p>"
+    },
     {
       "type": "text",
       "id": "button_label",
@@ -228,6 +346,21 @@
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured collection"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "page",
+      "id": "featured_page",
+      "label": "Featured page"
     }
   ],
   "max_blocks": 4,

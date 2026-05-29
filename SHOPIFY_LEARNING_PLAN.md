@@ -1,5 +1,27 @@
 # Shopify Theme Learning Plan
 
+## Latest Session Summary - 2026-05-29
+
+Completed today:
+
+- Finished additional section settings practice: `checkbox`, `range`, `color`, `richtext`, `inline_richtext`.
+- Practiced resource picker settings: `collection`, `product`, `page`.
+- Rendered selected collection title, collection URL, and first products from `collection.products`.
+- Rendered selected product title, product URL, and price with the `money` filter.
+- Rendered selected page title and URL.
+- Reviewed theme blocks in `blocks/text.liquid` and `blocks/group.liquid`.
+- Learned the difference between snippets, section blocks, and theme blocks.
+- Created `snippets/main-button.liquid`.
+- Removed invalid snippet schema and converted the snippet to accept render parameters: `label` and `url`.
+- Rendered the snippet from `sections/hello-world.liquid` using `{% render 'main-button', label: ..., url: ... %}`.
+
+Current progress update:
+
+- Point 12 is completed for the practical basics. `blog` and `article` will be handled later in the dedicated articles/blog section.
+- Point 13 is partially completed: theme blocks were inspected and explained, but we have not created our own theme block yet.
+- Point 15 is partially completed: first snippet was created and used.
+- Next recommended topic: continue snippets with `variant`/extra props, then return to creating a custom theme block.
+
 Цей файл - наша карта навчання Shopify theme development. Ми будемо оновлювати його по мірі проходження тем.
 
 ## Принцип навчання

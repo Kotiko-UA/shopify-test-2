@@ -45,13 +45,21 @@
       ],
       "name": "Hello World Template",
       "settings": {
+        "eyebrow": "Built with Shopify",
         "heading": "My first Shopify section",
         "description": "This is cool text of description",
         "secondary_description": "Themes shape the online store experience for merchants and their customers. Build fast, flexible themes at scale using Liquid, Shopify's theme templating language, along with HTML, CSS, JavaScript, and JSON.",
         "image": "shopify://shop_images/cat.jpg",
         "image_position": "right",
+        "show_highlights": true,
+        "section_spacing": 72,
+        "background_color": "#f6f6f7",
+        "rich_description": "<p>Add formatted text for <strong>this section</strong>.</p><ul><li><em>123</em></li><li><strong>321</strong></li></ul>",
         "button_label": "Learn More",
-        "button_link": ""
+        "button_link": "shopify://products/selling-plans-ski-wax",
+        "featured_collection": "hydrogen",
+        "featured_product": "gift-card",
+        "featured_page": "contact"
       }
     }
   },
