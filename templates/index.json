@@ -9,12 +9,53 @@
  */
 {
   "sections": {
-    "main": {
+    "hello_world_wqDDib": {
       "type": "hello-world",
-      "settings": {}
+      "blocks": {
+        "highlight_UjHFF4": {
+          "type": "highlight",
+          "settings": {
+            "title": "Key Concepts 3",
+            "description": "Shopify themes are made from templates, sections, blocks, and assets.",
+            "link_label": "Learn more 1",
+            "link_url": ""
+          }
+        },
+        "highlight_iJpngV": {
+          "type": "highlight",
+          "settings": {
+            "title": "Liquid 2",
+            "description": "Liquid is Shopify's templating language for rendering dynamic storefront content.",
+            "link_label": "View reference 2",
+            "link_url": ""
+          }
+        },
+        "quote_Vbqr9e": {
+          "type": "quote",
+          "settings": {
+            "text": "This section is now powered by reusable blocks.",
+            "author": "Theme developer 3"
+          }
+        }
+      },
+      "block_order": [
+        "highlight_UjHFF4",
+        "highlight_iJpngV",
+        "quote_Vbqr9e"
+      ],
+      "name": "Hello World Template",
+      "settings": {
+        "heading": "My first Shopify section",
+        "description": "This is cool text of description",
+        "secondary_description": "Themes shape the online store experience for merchants and their customers. Build fast, flexible themes at scale using Liquid, Shopify's theme templating language, along with HTML, CSS, JavaScript, and JSON.",
+        "image": "shopify://shop_images/cat.jpg",
+        "image_position": "right",
+        "button_label": "Learn More",
+        "button_link": ""
+      }
     }
   },
   "order": [
-    "main"
+    "hello_world_wqDDib"
   ]
 }
