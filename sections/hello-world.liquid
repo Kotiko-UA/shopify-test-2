@@ -31,7 +31,11 @@
           </div>
         {%- endif -%}
         {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-          {%- render 'main-button', label: section.settings.button_label, url: section.settings.button_link -%}
+          {%- render 'main-button',
+            label: section.settings.button_label,
+            url: section.settings.button_link,
+            variant: section.settings.button_variant
+          -%}
         {%- endif -%}
       </div>
       {%- if section.settings.image != blank -%}
@@ -346,6 +350,22 @@
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_variant",
+      "label": "Button style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ],
+      "default": "primary"
     },
     {
       "type": "collection",

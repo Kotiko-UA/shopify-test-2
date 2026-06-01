@@ -57,13 +57,59 @@
         "rich_description": "<p>Add formatted text for <strong>this section</strong>.</p><ul><li><em>123</em></li><li><strong>321</strong></li></ul>",
         "button_label": "Learn More",
         "button_link": "shopify://products/selling-plans-ski-wax",
+        "button_variant": "secondary",
         "featured_collection": "hydrogen",
         "featured_product": "gift-card",
         "featured_page": "contact"
       }
+    },
+    "custom_stack_qphzBX": {
+      "type": "custom-stack",
+      "blocks": {
+        "badge_q9TziJ": {
+          "type": "badge",
+          "name": "Badge",
+          "settings": {
+            "text": "Badge 1",
+            "variant": "dark"
+          },
+          "blocks": {}
+        },
+        "badge_HwXBW6": {
+          "type": "badge",
+          "name": "Badge",
+          "settings": {
+            "text": "Badge 2",
+            "variant": "default"
+          },
+          "blocks": {}
+        },
+        "text_nrJV6G": {
+          "type": "text",
+          "name": "t:general.text",
+          "settings": {
+            "text": "Text 3",
+            "text_style": "text--title",
+            "alignment": "left"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "badge_q9TziJ",
+        "badge_HwXBW6",
+        "text_nrJV6G"
+      ],
+      "name": "Custom stack",
+      "settings": {
+        "gap": 36,
+        "padding": 120,
+        "alignment": "center"
+      }
     }
   },
   "order": [
-    "hello_world_wqDDib"
+    "hello_world_wqDDib",
+    "custom_stack_qphzBX"
   ]
 }

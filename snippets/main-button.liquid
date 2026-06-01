@@ -1,4 +1,8 @@
-<a class="main-button" href="{{url}}">{{ label }}</a>
+{%- assign button_variant = variant | default: 'primary' -%}
+
+<a class="main-button main-button--{{ button_variant }}" href="{{ url }}">
+  {{ label }}
+</a>
 
 {%- stylesheet -%}
   .main-button {
@@ -7,9 +11,18 @@
     margin-top: 1.5rem;
     padding: 10px 16px;
     border-radius: 4px;
-    background-color: rgb(32, 34, 35);
-    color: rgb(255, 255, 255);
     text-decoration: none;
     line-height: 1.2;
+  }
+
+  .main-button--primary {
+    background-color: rgb(32, 34, 35);
+    color: rgb(255, 255, 255);
+  }
+
+  .main-button--secondary {
+    background-color: rgb(250, 251, 251);
+    color: rgb(32, 34, 35);
+    border: 1px solid rgb(140, 145, 150);
   }
 {%- endstylesheet -%}
