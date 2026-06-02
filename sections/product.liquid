@@ -5,15 +5,24 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+
 <div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
+  {% if featured_image %}
+    {% render 'image', class: 'product-image product-image--featured', image: featured_image, width: 900 %}
+  {% endif %}
+  {% if product.images.size > 1 %}
+    <div class="product-thumbnails">
+      {% for image in product.images %}
+        {% render 'image', class: 'product-thumbnail', image: image, width: 120 %}
+      {% endfor %}
+    </div>
+  {% endif %}
 </div>
 
-{% assign current_variant = product.selected_or_first_available_variant %}
 <div class="product-info">
-  {% if product.vendor != blank %}
+  {% if section.settings.show_vendor and product.vendor != blank %}
     <p class="product-vendor">{{ product.vendor }}</p>
   {% endif %}
   <h1>{{ product.title }}</h1>
@@ -33,6 +42,11 @@
 
 <div class="product-form">
   {% form 'product', product %}
+    {% if form.errors %}
+      <div class="product-form__errors">
+        {{ form.errors | default_errors }}
+      </div>
+    {% endif %}
     <select name="id">
       {% for variant in product.variants %}
         <option
@@ -89,12 +103,34 @@
   .product-form__quantity {
     width: 80px;
   }
+  .product-form__errors {
+    margin-bottom: 1rem;
+    color: rgb(190, 30, 30);
+  }
+  .product-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .product-thumbnail img {
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.product",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:labels.show_vendor",
+      "default": true
+    }
+  ],
   "disabled_on": {
     "groups": ["header", "footer"]
   }

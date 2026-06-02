@@ -6,9 +6,14 @@
 {% endcomment %}
 
 <h1>{{ collection.title }}</h1>
+{% if collection.description != blank %}
+  <div class="collection-description">
+    {{ collection.description }}
+  </div>
+{% endif %}
 
 <div class="collection-products">
-  {% paginate collection.products by 20 %}
+  {% paginate collection.products by section.settings.products_per_page %}
     {% for product in collection.products %}
       <div class="collection-product">
         {% if product.featured_image %}
@@ -23,7 +28,13 @@
         {% endif %}
         <div class="collection-product__content">
           <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
+          <div class="collection-product__price">
+            <span>{{ product.price | money }}</span>
+
+            {% if product.compare_at_price > product.price %}
+              <s>{{ product.compare_at_price | money }}</s>
+            {% endif %}
+          </div>
         </div>
       </div>
     {% endfor %}
@@ -37,11 +48,34 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   }
+  .collection-description {
+    margin-bottom: 1.5rem;
+    max-width: 720px;
+  }
+  .collection-product__price {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .collection-product__price s {
+    opacity: 0.6;
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.collection",
-  "settings": []
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "t:labels.products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    }
+  ]
 }
 {% endschema %}

@@ -50,7 +50,9 @@
 		"text_style": "Text style",
 		"text": "Text",
 		"featured_collection": "Featured collection",
-		"menu_position": "Menu position"
+		"menu_position": "Menu position",
+		"show_vendor": "Show vendor",
+		"products_per_page": "Products per page"
 	},
 	"options": {
 		"alignment": {
