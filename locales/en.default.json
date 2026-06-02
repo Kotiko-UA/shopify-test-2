@@ -53,5 +53,8 @@
 		"featured_collection": "Featured collection:",
 		"featured_product": "Featured product:",
 		"featured_page": "Featured page:"
+	},
+	"navigation": {
+		"menu": "Menu"
 	}
 }

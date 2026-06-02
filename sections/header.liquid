@@ -1,13 +1,72 @@
-<header>
+<header class="header--menu-{{ section.settings.menu_position }}">
   <h2 class="header__title">
     {{ shop.name | link_to: routes.root_url }}
   </h2>
 
   <div class="header__menu">
     {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
+      <div class="header__menu-item">
+        <a
+          class="header__menu-link{% if link.active or link.child_active %} header__menu-link--active{% endif %}"
+          href="{{ link.url }}"
+        >
+          {{ link.title }}
+        </a>
+
+        {% if link.links != blank %}
+          <div class="header__submenu">
+            {% for child_link in link.links %}
+              <a
+                class="header__submenu-link{% if child_link.active %} header__submenu-link--active{% endif %}"
+                href="{{ child_link.url }}"
+              >
+                {{ child_link.title }}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
     {% endfor %}
   </div>
+  <details class="header__mobile-menu">
+    <summary class="header__mobile-trigger" aria-label="{{ 'navigation.menu' | t }}">
+      {{ 'navigation.menu' | t }}
+    </summary>
+
+    <div class="header__mobile-panel">
+      {% for link in section.settings.menu.links %}
+        <div class="header__mobile-item">
+          {% if link.links != blank %}
+            <details class="header__mobile-subdetails">
+              <summary
+                class="header__mobile-link{% if link.active or link.child_active %} header__mobile-link--active{% endif %}"
+              >
+                {{ link.title }}
+              </summary>
+
+              <div class="header__mobile-submenu">
+                {% for child_link in link.links %}
+                  <a
+                    class="header__mobile-sublink{% if child_link.active %} header__mobile-sublink--active{% endif %}"
+                    href="{{ child_link.url }}"
+                  >
+                    {{ child_link.title }}
+                  </a>
+                {% endfor %}
+              </div>
+            </details>
+          {% else %}
+            <a
+              class="header__mobile-link{% if link.active %} header__mobile-link--active{% endif %}"
+              href="{{ link.url }}"
+            >
+              {{ link.title }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </details>
 
   <div class="header__icons">
     {% if shop.customer_accounts_enabled %}
@@ -33,6 +92,31 @@
     align-items: center;
     justify-content: space-between;
   }
+  header .header__menu-item {
+    position: relative;
+  }
+
+  header .header__submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 160px;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid rgb(220, 220, 220);
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 2;
+  }
+
+  header .header__menu-item:hover .header__submenu {
+    display: flex;
+  }
+
+  header .header__submenu-link--active {
+    font-weight: 700;
+  }
   header a {
     position: relative;
     text-decoration: none;
@@ -40,6 +124,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  header .header__menu-link--active {
+    text-decoration: underline;
   }
   header a sup {
     position: absolute;
@@ -54,6 +141,74 @@
   header .header__icons {
     display: flex;
     gap: 1rem;
+  }
+
+  header .header__mobile-menu {
+    display: none;
+    position: relative;
+  }
+
+  header .header__mobile-trigger {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  header .header__mobile-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 2;
+    min-width: 220px;
+    padding: 16px;
+    background-color: white;
+    border: 1px solid rgb(220, 220, 220);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  header .header__mobile-panel a {
+    justify-content: flex-start;
+  }
+
+  header .header__mobile-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 16px;
+    margin-top: 8px;
+  }
+
+  header .header__mobile-link--active,
+  header .header__mobile-sublink--active {
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 749px) {
+    header .header__menu {
+      display: none;
+    }
+
+    header .header__mobile-menu {
+      display: block;
+    }
+  }
+  header .header__mobile-subdetails summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  header.header--menu-left {
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+
+  header.header--menu-center {
+    justify-content: space-between;
+  }
+
+  header.header--menu-right {
+    justify-content: flex-end;
+    gap: 2rem;
   }
 {% endstylesheet %}
 
@@ -71,6 +226,26 @@
       "id": "customer_account_menu",
       "label": "t:labels.customer_account_menu",
       "default": "customer-account-main-menu"
+    },
+    {
+      "type": "select",
+      "id": "menu_position",
+      "label": "t:labels.menu_position",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
+      ]
     }
   ]
 }

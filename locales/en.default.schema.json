@@ -49,7 +49,8 @@
 		"show_payment_icons": "Show payment icons",
 		"text_style": "Text style",
 		"text": "Text",
-		"featured_collection": "Featured collection"
+		"featured_collection": "Featured collection",
+		"menu_position": "Menu position"
 	},
 	"options": {
 		"alignment": {
