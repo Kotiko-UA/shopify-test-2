@@ -36,7 +36,13 @@
   "name": "Custom stack",
   "blocks": [
     {
-      "type": "@theme"
+      "type": "badge"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "@app"
     }
   ],
   "settings": [
@@ -83,7 +89,24 @@
   ],
   "presets": [
     {
-      "name": "Custom stack"
+      "name": "Custom stack",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "text": "New",
+            "variant": "dark"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "Build flexible content with theme blocks",
+            "text_style": "text--title",
+            "alignment": "center"
+          }
+        }
+      ]
     }
   ]
 }

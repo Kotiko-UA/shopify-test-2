@@ -63,53 +63,41 @@
         "featured_page": "contact"
       }
     },
-    "custom_stack_qphzBX": {
+    "custom_stack_MDbtcH": {
       "type": "custom-stack",
       "blocks": {
-        "badge_q9TziJ": {
+        "badge_tMhhhc": {
           "type": "badge",
-          "name": "Badge",
           "settings": {
-            "text": "Badge 1",
+            "text": "New",
             "variant": "dark"
           },
           "blocks": {}
         },
-        "badge_HwXBW6": {
-          "type": "badge",
-          "name": "Badge",
-          "settings": {
-            "text": "Badge 2",
-            "variant": "default"
-          },
-          "blocks": {}
-        },
-        "text_nrJV6G": {
+        "text_y3YWbE": {
           "type": "text",
-          "name": "t:general.text",
           "settings": {
-            "text": "Text 3",
+            "text": "Build flexible content with theme blocks",
             "text_style": "text--title",
-            "alignment": "left"
+            "alignment": "center"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "badge_q9TziJ",
-        "badge_HwXBW6",
-        "text_nrJV6G"
+        "badge_tMhhhc",
+        "text_y3YWbE"
       ],
       "name": "Custom stack",
       "settings": {
-        "gap": 36,
-        "padding": 120,
-        "alignment": "center"
+        "gap": 16,
+        "padding": 48,
+        "alignment": "flex-start"
       }
     }
   },
   "order": [
     "hello_world_wqDDib",
-    "custom_stack_qphzBX"
+    "custom_stack_MDbtcH"
   ]
 }

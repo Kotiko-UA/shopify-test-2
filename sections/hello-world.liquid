@@ -40,7 +40,15 @@
       </div>
       {%- if section.settings.image != blank -%}
         <div class="icon">
-          {{ section.settings.image | image_url: width: 600 | image_tag }}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              widths: '300,600,900,1200',
+              sizes: '(min-width: 990px) 300px, 80vw',
+              loading: 'lazy',
+              alt: section.settings.heading
+          }}
         </div>
       {%- endif -%}
     </div>
@@ -87,7 +95,7 @@
     {%- endif -%}
     {%- if section.settings.featured_collection != blank -%}
       <div class="welcome-collection">
-        <span>Featured collection:</span>
+        <span>{{ 'hello_world.featured_collection' | t }}</span>
         <a href="{{ section.settings.featured_collection.url }}">
           {{ section.settings.featured_collection.title }}
         </a>
@@ -102,7 +110,7 @@
     {%- endif -%}
     {%- if section.settings.featured_product != blank -%}
       <div class="welcome-product">
-        <span>Featured product:</span>
+        <span>{{ 'hello_world.featured_product' | t }}</span>
         <a href="{{ section.settings.featured_product.url }}">
           {{ section.settings.featured_product.title }}
         </a>
@@ -111,7 +119,7 @@
     {%- endif -%}
     {%- if section.settings.featured_page != blank -%}
       <div class="welcome-page">
-        <span>Featured page:</span>
+        <span>{{ 'hello_world.featured_page' | t }}</span>
         <a href="{{ section.settings.featured_page.url }}">
           {{ section.settings.featured_page.title }}
         </a>
@@ -370,7 +378,7 @@
     {
       "type": "collection",
       "id": "featured_collection",
-      "label": "Featured collection"
+      "label": "t:labels.featured_collection"
     },
     {
       "type": "product",
