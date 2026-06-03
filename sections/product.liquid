@@ -41,7 +41,7 @@
 </div>
 
 <div class="product-form">
-  {% form 'product', product %}
+  {% form 'product', product, class: 'js-product-form' %}
     {% if form.errors %}
       <div class="product-form__errors">
         {{ form.errors | default_errors }}
@@ -67,7 +67,20 @@
     </select>
 
     <input class="product-form__quantity" type="number" name="quantity" min="1" value="1">
+    <div class="product-form__property">
+      <label for="gift-message">Gift message</label>
 
+      <input
+        id="gift-message"
+        type="text"
+        name="properties[Gift message]"
+      >
+    </div>
+    <input
+      type="hidden"
+      name="properties[_source]"
+      value="product-page"
+    >
     <input
       type="submit"
       value="{% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}"

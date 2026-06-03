@@ -17,7 +17,14 @@
 		"checkout": "Checkout",
 		"title": "Cart",
 		"update": "Update",
-		"remove": "Remove"
+		"remove": "Remove",
+		"empty": "Your cart is empty.",
+		"subtotal": "Subtotal",
+		"item_count": "{{ count }} items",
+		"original_total": "Original total",
+		"total_discount": "Total discount",
+		"items_subtotal": "Items subtotal after product discounts",
+		"line_total": "Line total"
 	},
 	"customers": {
 		"login": {

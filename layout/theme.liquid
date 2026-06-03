@@ -25,12 +25,12 @@
 
     {{ content_for_header }}
   </head>
-
   <body>
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}
+    <script src="{{ 'product-form.js' | asset_url }}" defer></script>
   </body>
 </html>
