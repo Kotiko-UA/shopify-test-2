@@ -1,0 +1,46 @@
+{% doc %}
+  Renders a product card.
+
+  @param {product} product - Product to display.
+  @param {boolean} [show_vendor] - Whether to display the product vendor.
+
+  @example
+  {% render 'product-card', product: product %}
+{% enddoc %}
+
+<div class="product-card">
+  {% if product.featured_image %}
+    {% render 'image',
+      class: 'product-card__image',
+      image: product.featured_image,
+      url: product.url,
+      width: 400,
+      height: 400,
+      crop: 'center'
+    %}
+  {% endif %}
+  <div class="product-card__content">
+    {% if show_vendor and product.vendor != blank %}
+      <p class="product-card__vendor">{{ product.vendor }}</p>
+    {% endif %}
+    <p>{{ product.title | escape | link_to: product.url }}</p>
+    <div class="product-card__price">
+      <span>{{ product.price | money }}</span>
+
+      {% if product.compare_at_price > product.price %}
+        <s>{{ product.compare_at_price | money }}</s>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% stylesheet %}
+  .product-card__price {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .product-card__price s {
+    opacity: 0.6;
+  }
+{% endstylesheet %}

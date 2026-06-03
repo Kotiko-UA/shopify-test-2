@@ -52,7 +52,7 @@
         "image": "shopify://shop_images/cat.jpg",
         "image_position": "right",
         "show_highlights": true,
-        "section_spacing": 72,
+        "section_spacing": 68,
         "background_color": "#f6f6f7",
         "rich_description": "<p>Add formatted text for <strong>this section</strong>.</p><ul><li><em>123</em></li><li><strong>321</strong></li></ul>",
         "button_label": "Learn More",

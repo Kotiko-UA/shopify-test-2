@@ -99,13 +99,11 @@
         <a href="{{ section.settings.featured_collection.url }}">
           {{ section.settings.featured_collection.title }}
         </a>
-        <ul class="welcome-collection-products">
+        <div class="welcome-collection-products">
           {%- for product in section.settings.featured_collection.products limit: 3 -%}
-            <li>
-              <a href="{{ product.url }}">{{ product.title }}</a>
-            </li>
+            {% render 'product-card', product: product, show_vendor: false %}
           {%- endfor -%}
-        </ul>
+        </div>
       </div>
     {%- endif -%}
     {%- if section.settings.featured_product != blank -%}
@@ -252,7 +250,8 @@
 
   .welcome-collection-products {
     margin: 0.5rem 0 0;
-    padding-left: 1.25rem;
+    display: flex;
+    gap: 0.5rem;
   }
 
   .welcome-product {

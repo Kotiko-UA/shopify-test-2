@@ -15,28 +15,7 @@
 <div class="collection-products">
   {% paginate collection.products by section.settings.products_per_page %}
     {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <div class="collection-product__price">
-            <span>{{ product.price | money }}</span>
-
-            {% if product.compare_at_price > product.price %}
-              <s>{{ product.compare_at_price | money }}</s>
-            {% endif %}
-          </div>
-        </div>
-      </div>
+      {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
     {% endfor %}
 
     {{ paginate | default_pagination }}
@@ -52,15 +31,6 @@
     margin-bottom: 1.5rem;
     max-width: 720px;
   }
-  .collection-product__price {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .collection-product__price s {
-    opacity: 0.6;
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -75,6 +45,12 @@
       "max": 24,
       "step": 4,
       "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:labels.show_vendor",
+      "default": false
     }
   ]
 }
