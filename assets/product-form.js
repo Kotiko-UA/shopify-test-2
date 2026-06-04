@@ -88,57 +88,79 @@ function formatMoney(cents, currency) {
 	}).format(cents / 100)
 }
 
-function createCartDrawerItem(item, currency, labels) {
-	const itemElement = document.createElement('div')
-	itemElement.className = 'cart-drawer__item'
-
-	if (item.image) {
-		const image = document.createElement('img')
-		image.className = 'cart-drawer__item-image'
-		image.src = item.image
-		image.alt = item.title
-		itemElement.append(image)
-	} else {
-		const imagePlaceholder = document.createElement('div')
-		imagePlaceholder.className = 'cart-drawer__item-image'
-		itemElement.append(imagePlaceholder)
+function escapeHtml(value = '') {
+	const escapeMap = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;',
 	}
 
-	const content = document.createElement('div')
-	content.className = 'cart-drawer__item-content'
+	return String(value ?? '').replace(/[&<>"']/g, character => escapeMap[character])
+}
 
-	const title = document.createElement('p')
-	title.className = 'cart-drawer__item-title'
-	title.textContent = item.product_title
-	content.append(title)
+function createCartDrawerItemHtml(item, currency, labels) {
+	const imageHtml = item.image
+		? `
+			<img
+				class="cart-drawer__item-image"
+				src="${escapeHtml(item.image)}"
+				alt="${escapeHtml(item.title || item.product_title)}"
+			>
+		`
+		: '<div class="cart-drawer__item-image"></div>'
 
-	if (item.variant_title && item.variant_title !== 'Default Title') {
-		const variant = document.createElement('p')
-		variant.className = 'cart-drawer__item-meta'
-		variant.textContent = item.variant_title
-		content.append(variant)
-	}
+	const variantHtml =
+		item.variant_title && item.variant_title !== 'Default Title'
+			? `<p class="cart-drawer__item-meta">${escapeHtml(item.variant_title)}</p>`
+			: ''
 
-	const quantity = document.createElement('p')
-	quantity.className = 'cart-drawer__item-meta'
-	quantity.textContent = `${labels.quantity}: ${item.quantity}`
-	content.append(quantity)
+	return `
+		<div class="cart-drawer__item">
+			${imageHtml}
 
-	const price = document.createElement('p')
-	price.className = 'cart-drawer__item-price'
-	price.textContent = formatMoney(item.final_line_price, currency)
-	content.append(price)
+			<div class="cart-drawer__item-content">
+				<p class="cart-drawer__item-title">${escapeHtml(item.product_title)}</p>
+				${variantHtml}
 
-	const removeButton = document.createElement('button')
-	removeButton.className = 'cart-drawer__remove'
-	removeButton.type = 'button'
-	removeButton.textContent = labels.remove
-	removeButton.dataset.lineKey = item.key
-	content.append(removeButton)
+				<div class="cart-drawer__quantity" aria-label="${escapeHtml(labels.quantity)}">
+					<button
+						class="cart-drawer__quantity-button"
+						type="button"
+						data-cart-quantity-button
+						data-line-key="${escapeHtml(item.key)}"
+						data-quantity="${item.quantity - 1}"
+					>
+						-
+					</button>
 
-	itemElement.append(content)
+					<span class="cart-drawer__quantity-value">${item.quantity}</span>
 
-	return itemElement
+					<button
+						class="cart-drawer__quantity-button"
+						type="button"
+						data-cart-quantity-button
+						data-line-key="${escapeHtml(item.key)}"
+						data-quantity="${item.quantity + 1}"
+					>
+						+
+					</button>
+				</div>
+
+				<p class="cart-drawer__item-price">${escapeHtml(formatMoney(item.final_line_price, currency))}</p>
+
+				<button
+					class="cart-drawer__remove"
+					type="button"
+					data-cart-remove-button
+					data-line-key="${escapeHtml(item.key)}"
+				>
+					${escapeHtml(labels.remove)}
+				</button>
+			</div>
+		</div>
+	`
 }
 
 function renderCartDrawer(cart) {
@@ -155,15 +177,20 @@ function renderCartDrawer(cart) {
 	total.textContent = formatMoney(cart.total_price, cart.currency)
 
 	if (cart.items.length === 0) {
-		const emptyMessage = document.createElement('p')
-		emptyMessage.className = 'cart-drawer__empty'
-		emptyMessage.textContent = cartDrawer.dataset.emptyText
-		itemsContainer.replaceChildren(emptyMessage)
+		itemsContainer.replaceChildren()
+		itemsContainer.insertAdjacentHTML(
+			'beforeend',
+			`<p class="cart-drawer__empty">${escapeHtml(cartDrawer.dataset.emptyText)}</p>`,
+		)
 		return
 	}
 
-	const itemElements = cart.items.map(item => createCartDrawerItem(item, cart.currency, labels))
-	itemsContainer.replaceChildren(...itemElements)
+	const itemsHtml = cart.items
+		.map(item => createCartDrawerItemHtml(item, cart.currency, labels))
+		.join('')
+
+	itemsContainer.replaceChildren()
+	itemsContainer.insertAdjacentHTML('beforeend', itemsHtml)
 }
 
 function openCartDrawer() {
@@ -284,7 +311,29 @@ document.querySelectorAll('[data-cart-drawer-trigger]').forEach(trigger => {
 
 if (cartDrawer) {
 	cartDrawer.addEventListener('click', async event => {
-		const removeButton = event.target.closest('[data-line-key]')
+		const quantityButton = event.target.closest('[data-cart-quantity-button]')
+
+		if (quantityButton) {
+			quantityButton.disabled = true
+
+			try {
+				const cart = await changeCartItem(
+					quantityButton.dataset.lineKey,
+					Number(quantityButton.dataset.quantity),
+				)
+
+				dispatchCartUpdated(cart, {
+					action: 'quantity',
+				})
+			} catch (error) {
+				console.error('Update cart quantity failed:', error)
+				quantityButton.disabled = false
+			}
+
+			return
+		}
+
+		const removeButton = event.target.closest('[data-cart-remove-button]')
 
 		if (!removeButton) return
 
