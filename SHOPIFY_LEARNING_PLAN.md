@@ -17,6 +17,37 @@ Learning mode:
 - 20% Learner completes feature blocks and explains the logic.
 - 10% Codex reviews code for Shopify best practices, bugs, and maintainability.
 
+## Latest Session Summary - 2026-06-04
+
+Completed today:
+
+- Updated the learning process to a faster 70/20/10 mode.
+- Refocused the project goal: this theme should become a reusable starter template for ecommerce stores.
+- Improved the current starter-template code structure.
+- Split cart-related JavaScript into `assets/cart.js`.
+- Kept `assets/product-form.js` focused only on product form submit and Ajax add-to-cart.
+- Built and reviewed Ajax cart flow with `/cart/add.js`, `/cart.js`, and `/cart/change.js`.
+- Added cart drawer item quantity controls, remove action, toast, and cart icon trigger.
+- Rendered line item properties in the drawer and filtered private properties that start with `_`.
+- Practiced event delegation for dynamically replaced header/cart elements.
+- Started Section Rendering API.
+- Added helpers for fetching and replacing rendered Shopify sections.
+- Used Section Rendering API to refresh header and cart page after cart drawer updates.
+
+Current starter-template status:
+
+- Product form Ajax add-to-cart works.
+- Cart drawer opens from product add and from the header cart icon.
+- Cart drawer quantity/remove actions work.
+- Header cart count updates.
+- Cart page refreshes when cart changes from the drawer.
+- Current drawer markup is still partly JS-rendered; next production step is to move drawer rendering toward Liquid/section rendering.
+
+Next recommended topic:
+
+- Continue Section Rendering API and cart architecture.
+- Next practical step: move cart drawer markup/rendering closer to Liquid sections, then compare JS-rendered drawer vs Liquid-rendered section drawer.
+
 ## Latest Session Summary - 2026-05-29
 
 Completed today:

@@ -5,12 +5,13 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
 {% endcomment %}
 
-<h1>{{ 'cart.title' | t }}</h1>
-<p>{{ 'cart.item_count' | t: count: cart.item_count }}</p>
-{% if cart.empty? %}
-  <p>{{ 'cart.empty' | t }}</p>
-{% else %}
-  <form class="cart-form" action="{{ routes.cart_url }}" method="post">
+<div class="cart-page" data-cart-page>
+  <h1>{{ 'cart.title' | t }}</h1>
+  <p>{{ 'cart.item_count' | t: count: cart.item_count }}</p>
+  {% if cart.empty? %}
+    <p>{{ 'cart.empty' | t }}</p>
+  {% else %}
+    <form class="cart-form" action="{{ routes.cart_url }}" method="post">
     <table class="cart-items">
       {% for item in cart.items %}
         <tr>
@@ -139,8 +140,9 @@
       <strong>{{ cart.total_price | money }}</strong>
     </div>
     <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-  </form>
-{% endif %}
+    </form>
+  {% endif %}
+</div>
 
 {% stylesheet %}
   .cart-form {
