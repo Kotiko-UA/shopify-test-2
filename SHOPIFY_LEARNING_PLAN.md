@@ -1,5 +1,22 @@
 # Shopify Theme Learning Plan
 
+## Current Learning Goal - 2026-06-04
+
+The learning goal has changed from isolated Shopify exercises to building a reusable starter theme template for future ecommerce store development.
+
+Target outcome:
+
+- A practical Shopify starter theme with reusable product cards, product page, collection grid, AJAX add-to-cart, cart drawer, cart page, localization, responsive layout, and clean theme architecture.
+- Learning continues through real features that belong in a production-ready store template.
+- Boilerplate, repetitive markup, simple styles, and locale plumbing can be implemented by Codex to keep momentum.
+- The learner focuses on key Shopify concepts, data flow, Liquid objects, Ajax behavior, theme editor architecture, and code review.
+
+Learning mode:
+
+- 70% Codex handles routine implementation: boilerplate, styles, locales, repetitive markup.
+- 20% Learner completes feature blocks and explains the logic.
+- 10% Codex reviews code for Shopify best practices, bugs, and maintainability.
+
 ## Latest Session Summary - 2026-05-29
 
 Completed today:

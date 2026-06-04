@@ -75,7 +75,7 @@
       </shopify-account>
     {% endif %}
 
-    <a class="header__cart-link" href="{{ routes.cart_url }}">
+    <a class="header__cart-link" href="{{ routes.cart_url }}" data-cart-drawer-trigger>
       <sup
         class="header__cart-count"
         {% if cart.item_count == 0 %}

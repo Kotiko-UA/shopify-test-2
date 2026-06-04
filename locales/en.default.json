@@ -18,6 +18,7 @@
 		"title": "Cart",
 		"update": "Update",
 		"remove": "Remove",
+		"quantity": "Qty",
 		"empty": "Your cart is empty.",
 		"subtotal": "Subtotal",
 		"item_count": "{{ count }} items",
@@ -27,7 +28,10 @@
 		"line_total": "Line total",
 		"adding": "Adding...",
 		"added": "Added to cart",
-		"error": "Could not add item to cart"
+		"error": "Could not add item to cart",
+		"view_cart": "View cart",
+		"drawer_title": "Cart",
+		"close": "Close"
 	},
 	"customers": {
 		"login": {
