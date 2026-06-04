@@ -24,7 +24,10 @@
 		"original_total": "Original total",
 		"total_discount": "Total discount",
 		"items_subtotal": "Items subtotal after product discounts",
-		"line_total": "Line total"
+		"line_total": "Line total",
+		"adding": "Adding...",
+		"added": "Added to cart",
+		"error": "Could not add item to cart"
 	},
 	"customers": {
 		"login": {

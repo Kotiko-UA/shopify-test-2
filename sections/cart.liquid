@@ -10,8 +10,8 @@
 {% if cart.empty? %}
   <p>{{ 'cart.empty' | t }}</p>
 {% else %}
-  <form action="{{ routes.cart_url }}" method="post">
-    <table>
+  <form class="cart-form" action="{{ routes.cart_url }}" method="post">
+    <table class="cart-items">
       {% for item in cart.items %}
         <tr>
           <td>
@@ -141,6 +141,67 @@
     <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
   </form>
 {% endif %}
+
+{% stylesheet %}
+  .cart-form {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .cart-items {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .cart-items tr {
+    border-bottom: 1px solid rgb(220, 220, 220);
+  }
+
+  .cart-items td {
+    padding: 1rem;
+    vertical-align: top;
+  }
+
+  .cart-items td:first-child {
+    width: 120px;
+  }
+
+  .cart-items .image {
+    width: 96px;
+    max-width: 96px;
+  }
+
+  .cart-items .image img {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+  }
+
+  .cart-items input[type='number'] {
+    width: 72px;
+  }
+
+  .cart-note,
+  .cart-attribute,
+  .cart-original-total,
+  .cart-discount,
+  .cart-items-subtotal,
+  .cart-summary {
+    margin-top: 1rem;
+  }
+
+  .cart-summary,
+  .cart-discount,
+  .cart-original-total,
+  .cart-items-subtotal {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 420px;
+    margin-left: auto;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "t:general.cart",
