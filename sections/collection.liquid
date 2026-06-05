@@ -11,26 +11,230 @@
     {{ collection.description }}
   </div>
 {% endif %}
+{% paginate collection.products by section.settings.products_per_page %}
+  {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
 
-<div class="collection-products">
-  {% paginate collection.products by section.settings.products_per_page %}
-    {% for product in collection.products %}
-      {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
+  <div class="collection-toolbar">
+    <p class="collection-product-count">{{ 'collections.product_count' | t: count: paginate.items }}</p>
+
+    <form class="collection-sort-form" method="get">
+      {% for filter in collection.filters %}
+        {% for active_value in filter.active_values %}
+          <input
+            type="hidden"
+            name="{{ active_value.param_name }}"
+            value="{{ active_value.value }}"
+          >
+        {% endfor %}
+      {% endfor %}
+      <label for="collection-sort">{{ 'collections.sort_by' | t }}</label>
+
+      <select id="collection-sort" name="sort_by" onchange="this.form.submit()">
+        {% for option in collection.sort_options %}
+          <option
+            value="{{ option.value }}"
+            {% if option.value == current_sort %}
+              selected
+            {% endif %}
+          >
+            {{ option.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+  {% if collection.filters.size > 0 %}
+    {% assign active_filter_count = 0 %}
+    {% for filter in collection.filters %}
+      {% assign active_filter_count = active_filter_count | plus: filter.active_values.size %}
     {% endfor %}
 
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
-</div>
+    <form class="collection-filters" method="get">
+      {% if current_sort != blank %}
+        <input type="hidden" name="sort_by" value="{{ current_sort }}">
+      {% endif %}
+
+      {% for filter in collection.filters %}
+        <fieldset class="collection-filter">
+          <legend class="collection-filter__legend">{{ filter.label }}</legend>
+
+          {% for value in filter.values %}
+            <label class="collection-filter__value">
+              <input
+                class="collection-filter__checkbox"
+                type="checkbox"
+                name="{{ value.param_name }}"
+                value="{{ value.value }}"
+                {% if value.active %}
+                  checked
+                {% endif %}
+                {% if value.count == 0 and value.active == false %}
+                  disabled
+                {% endif %}
+              >
+              <span>{{ value.label }}</span>
+              <span class="collection-filter__count">({{ value.count }})</span>
+            </label>
+          {% endfor %}
+        </fieldset>
+      {% endfor %}
+
+      <div class="collection-filters__actions">
+        <button type="submit">{{ 'collections.apply_filters' | t }}</button>
+
+        {% if active_filter_count > 0 %}
+          <a class="collection-filters__clear" href="{{ collection.url }}?sort_by={{ current_sort | url_encode }}">
+            {{ 'collections.clear_all' | t }}
+          </a>
+        {% endif %}
+      </div>
+    </form>
+  {% endif %}
+  {% if paginate.items > 0 %}
+    <div class="collection-products">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
+      {% endfor %}
+    </div>
+
+    <div class="collection-pagination">
+      {{ paginate | default_pagination }}
+    </div>
+  {% else %}
+    <p class="collection-empty">{{ 'collections.empty' | t }}</p>
+  {% endif %}
+{% endpaginate %}
 
 {% stylesheet %}
+  .collection-toolbar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-block: 1.5rem;
+  }
+
+  .collection-product-count {
+    color: rgb(92, 95, 98);
+  }
+
+  .collection-sort-form {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .collection-sort-form select {
+    min-height: 40px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(180, 180, 180);
+  }
+
+  .collection-filters {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .collection-filter {
+    display: grid;
+    gap: 0.6rem;
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 4px;
+  }
+
+  .collection-filter__legend {
+    padding-inline: 0.25rem;
+    font-weight: 700;
+  }
+
+  .collection-filter__value {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: center;
+    width: max-content;
+    max-width: 100%;
+  }
+
+  .collection-filter__checkbox {
+    width: 16px;
+    height: 16px;
+  }
+
+  .collection-filter__count {
+    color: rgb(92, 95, 98);
+    font-size: 0.875rem;
+  }
+
+  .collection-filters__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .collection-filters__actions button {
+    min-height: 40px;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .collection-filters__clear {
+    color: rgb(92, 95, 98);
+    font-size: 0.875rem;
+  }
+
   .collection-products {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1rem;
   }
+
   .collection-description {
     margin-bottom: 1.5rem;
     max-width: 720px;
+  }
+
+  .collection-pagination {
+    margin-top: 2rem;
+  }
+
+  .collection-pagination .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .collection-empty {
+    margin-block: 2rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-toolbar {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .collection-sort-form {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .collection-filters__actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .collection-filters__actions button,
+    .collection-filters__clear {
+      width: 100%;
+    }
   }
 {% endstylesheet %}
 
