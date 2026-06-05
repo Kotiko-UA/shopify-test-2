@@ -17,6 +17,37 @@ Learning mode:
 - 20% Learner completes feature blocks and explains the logic.
 - 10% Codex reviews code for Shopify best practices, bugs, and maintainability.
 
+## Latest Session Summary - 2026-06-05
+
+Completed today:
+
+- Converted cart drawer from layout markup to a dedicated `sections/cart-drawer.liquid` section.
+- Moved cart drawer rendering closer to Liquid and reduced JS-rendered HTML.
+- Updated cart JS to handle replaced sections through event delegation.
+- Practiced bundled section rendering through Cart Ajax API `sections`.
+- Added `getCartSectionIds`, `replaceSectionsFromResponse`, and related section refresh flow.
+- Added Ajax cart note, cart attributes, cart page quantity changes, and cart page remove link behavior.
+- Added discount code checkout redirect flow.
+- Cleaned up cart page and cart drawer baseline layout styles.
+- Localized cart page hardcoded UI labels.
+- Started collection page improvements.
+- Added collection sorting, product count, empty state, toolbar, and pagination wrapper.
+- Added collection filters from `collection.filters`.
+- Preserved `sort_by` when applying filters and preserved active filters when sorting.
+- Added filter `Clear all` behavior and basic collection filter styles.
+
+Current starter-template status:
+
+- Cart page and cart drawer are now mostly Ajax/section-rendering driven.
+- Cart drawer is a Shopify section and Liquid renders its line item markup.
+- Collection page has basic sorting, filtering, count, empty state, and pagination structure.
+- Collection filters are functional but still basic; price range filters and active filter chips have not been refined yet.
+
+Next recommended topic:
+
+- Continue collection filters.
+- Next practical step: add active filter chips and handle `price_range` filter type cleanly.
+
 ## Latest Session Summary - 2026-06-04
 
 Completed today:
