@@ -1,8 +1,11 @@
 ;(function () {
-	const cartDrawer = document.querySelector('[data-cart-drawer]')
 	const cartToast = document.querySelector('.cart-toast')
 	const cartToastText = document.querySelector('.cart-toast__text')
 	let cartToastTimeout
+
+	function getCartDrawer() {
+		return document.querySelector('[data-cart-drawer]')
+	}
 
 	function getShopifyRoute(path) {
 		return `${window.Shopify.routes.root}${path}`
@@ -52,6 +55,26 @@
 		currentSection.replaceWith(newSection)
 	}
 
+	function replaceSectionsFromResponse(sections = {}) {
+		Object.entries(sections).forEach(([sectionId, sectionHtml]) => {
+			if (!sectionHtml) return
+
+			const parser = new DOMParser()
+			const newDocument = parser.parseFromString(sectionHtml, 'text/html')
+
+			const currentSection = document.getElementById(
+				`shopify-section-${sectionId}`,
+			)
+			const newSection = newDocument.getElementById(
+				`shopify-section-${sectionId}`,
+			)
+
+			if (!currentSection || !newSection) return
+
+			currentSection.replaceWith(newSection)
+		})
+	}
+
 	function getSectionIdFromElement(element) {
 		const section = element?.closest('.shopify-section')
 
@@ -60,15 +83,24 @@
 		return section.id.replace('shopify-section-', '')
 	}
 
-	async function refreshRenderedSections() {
-		const sectionIds = [
-			getSectionIdFromElement(document.querySelector('[data-cart-drawer-trigger]')),
+	function getCartSectionIds() {
+		return [
+			getSectionIdFromElement(
+				document.querySelector('[data-cart-drawer-trigger]'),
+			),
+			getSectionIdFromElement(getCartDrawer()),
 			getSectionIdFromElement(document.querySelector('[data-cart-page]')),
 		].filter(Boolean)
+	}
+
+	async function refreshRenderedSections() {
+		const sectionIds = getCartSectionIds()
 
 		const uniqueSectionIds = [...new Set(sectionIds)]
 
-		await Promise.all(uniqueSectionIds.map(sectionId => replaceSection(sectionId)))
+		await Promise.all(
+			uniqueSectionIds.map(sectionId => replaceSection(sectionId)),
+		)
 	}
 
 	function updateCartCount(cart) {
@@ -96,6 +128,7 @@
 			body: JSON.stringify({
 				id: lineKey,
 				quantity,
+				sections: getCartSectionIds(),
 			}),
 		})
 
@@ -142,116 +175,9 @@
 		)
 	}
 
-	function renderCartDrawerItem(item, currency, labels) {
-		const imageHtml = item.image
-			? `
-			<img
-				class="cart-drawer__item-image"
-				src="${escapeHtml(item.image)}"
-				alt="${escapeHtml(item.title || item.product_title)}"
-			>
-		`
-			: '<div class="cart-drawer__item-image"></div>'
-
-		const variantHtml =
-			item.variant_title && item.variant_title !== 'Default Title'
-				? `<p class="cart-drawer__item-meta">${escapeHtml(item.variant_title)}</p>`
-				: ''
-
-		const itemProperties = Object.entries(item.properties || {}).filter(
-			([propertyName, propertyValue]) =>
-				propertyValue !== '' && !propertyName.startsWith('_'),
-		)
-
-		const propertiesHtml = itemProperties
-			.map(
-				([propertyName, propertyValue]) => `
-			<p class="cart-drawer__item-meta">
-				${escapeHtml(propertyName)}: ${escapeHtml(propertyValue)}
-			</p>
-		`,
-			)
-			.join('')
-
-		return `
-		<div class="cart-drawer__item">
-			${imageHtml}
-
-			<div class="cart-drawer__item-content">
-				<p class="cart-drawer__item-title">${escapeHtml(item.product_title)}</p>
-				${variantHtml}
-				${propertiesHtml}
-
-				<div class="cart-drawer__quantity" aria-label="${escapeHtml(labels.quantity)}">
-					<button
-						class="cart-drawer__quantity-button"
-						type="button"
-						data-cart-quantity-button
-						data-line-key="${escapeHtml(item.key)}"
-						data-quantity="${item.quantity - 1}"
-					>
-						-
-					</button>
-
-					<span class="cart-drawer__quantity-value">${item.quantity}</span>
-
-					<button
-						class="cart-drawer__quantity-button"
-						type="button"
-						data-cart-quantity-button
-						data-line-key="${escapeHtml(item.key)}"
-						data-quantity="${item.quantity + 1}"
-					>
-						+
-					</button>
-				</div>
-
-				<p class="cart-drawer__item-price">${escapeHtml(formatMoney(item.final_line_price, currency))}</p>
-
-				<button
-					class="cart-drawer__remove"
-					type="button"
-					data-cart-remove-button
-					data-line-key="${escapeHtml(item.key)}"
-				>
-					${escapeHtml(labels.remove)}
-				</button>
-			</div>
-		</div>
-	`
-	}
-
-	function renderCartDrawer(cart) {
-		const itemsContainer = document.querySelector('[data-cart-drawer-items]')
-		const total = document.querySelector('[data-cart-drawer-total]')
-
-		if (!cartDrawer || !itemsContainer || !total) return
-
-		const labels = {
-			quantity: cartDrawer.dataset.quantityText || 'Qty',
-			remove: cartDrawer.dataset.removeText || 'Remove',
-		}
-
-		total.textContent = formatMoney(cart.total_price, cart.currency)
-
-		if (cart.items.length === 0) {
-			itemsContainer.replaceChildren()
-			itemsContainer.insertAdjacentHTML(
-				'beforeend',
-				`<p class="cart-drawer__empty">${escapeHtml(cartDrawer.dataset.emptyText)}</p>`,
-			)
-			return
-		}
-
-		const itemsHtml = cart.items
-			.map(item => renderCartDrawerItem(item, cart.currency, labels))
-			.join('')
-
-		itemsContainer.replaceChildren()
-		itemsContainer.insertAdjacentHTML('beforeend', itemsHtml)
-	}
-
 	function openCartDrawer() {
+		const cartDrawer = getCartDrawer()
+
 		if (!cartDrawer) return
 
 		cartDrawer.hidden = false
@@ -260,6 +186,8 @@
 	}
 
 	function closeCartDrawer() {
+		const cartDrawer = getCartDrawer()
+
 		if (!cartDrawer) return
 
 		cartDrawer.hidden = true
@@ -280,22 +208,35 @@
 	})
 
 	document.addEventListener('cart:updated', event => {
-		renderCartDrawer(event.detail.cart)
-		refreshRenderedSections().catch(error => {
-			console.error('Section refresh failed:', error)
-		})
+		const currentCartDrawer = getCartDrawer()
+		const shouldOpenDrawer =
+			event.detail.action === 'add' ||
+			(currentCartDrawer && !currentCartDrawer.hidden)
 
-		if (event.detail.action === 'add') {
-			openCartDrawer()
-		}
-	})
+		const sectionsPromise = event.detail.cart.sections
+			? Promise.resolve(replaceSectionsFromResponse(event.detail.cart.sections))
+			: refreshRenderedSections()
 
-	document.querySelectorAll('[data-cart-drawer-close]').forEach(closeButton => {
-		closeButton.addEventListener('click', closeCartDrawer)
+		sectionsPromise
+			.catch(error => {
+				console.error('Section refresh failed:', error)
+			})
+			.then(() => {
+				if (shouldOpenDrawer) {
+					openCartDrawer()
+				}
+			})
 	})
 
 	document.addEventListener('click', async event => {
 		if (!(event.target instanceof Element)) return
+
+		const closeButton = event.target.closest('[data-cart-drawer-close]')
+
+		if (closeButton) {
+			closeCartDrawer()
+			return
+		}
 
 		const trigger = event.target.closest('[data-cart-drawer-trigger]')
 
@@ -303,56 +244,53 @@
 
 		event.preventDefault()
 
-		const cart = await refreshCart()
-
-		renderCartDrawer(cart)
+		await refreshCart()
+		await refreshRenderedSections()
 		openCartDrawer()
 	})
 
-	if (cartDrawer) {
-		cartDrawer.addEventListener('click', async event => {
-			if (!(event.target instanceof Element)) return
+	document.addEventListener('click', async event => {
+		if (!(event.target instanceof Element)) return
 
-			const quantityButton = event.target.closest('[data-cart-quantity-button]')
+		const quantityButton = event.target.closest('[data-cart-quantity-button]')
 
-			if (quantityButton) {
-				quantityButton.disabled = true
-
-				try {
-					const cart = await changeCartItem(
-						quantityButton.dataset.lineKey,
-						Number(quantityButton.dataset.quantity),
-					)
-
-					dispatchCartUpdated(cart, {
-						action: 'quantity',
-					})
-				} catch (error) {
-					console.error('Update cart quantity failed:', error)
-					quantityButton.disabled = false
-				}
-
-				return
-			}
-
-			const removeButton = event.target.closest('[data-cart-remove-button]')
-
-			if (!removeButton) return
-
-			removeButton.disabled = true
+		if (quantityButton) {
+			quantityButton.disabled = true
 
 			try {
-				const cart = await changeCartItem(removeButton.dataset.lineKey, 0)
+				const cart = await changeCartItem(
+					quantityButton.dataset.lineKey,
+					Number(quantityButton.dataset.quantity),
+				)
 
 				dispatchCartUpdated(cart, {
-					action: 'remove',
+					action: 'quantity',
 				})
 			} catch (error) {
-				console.error('Remove cart item failed:', error)
-				removeButton.disabled = false
+				console.error('Update cart quantity failed:', error)
+				quantityButton.disabled = false
 			}
-		})
-	}
+
+			return
+		}
+
+		const removeButton = event.target.closest('[data-cart-remove-button]')
+
+		if (!removeButton) return
+
+		removeButton.disabled = true
+
+		try {
+			const cart = await changeCartItem(removeButton.dataset.lineKey, 0)
+
+			dispatchCartUpdated(cart, {
+				action: 'remove',
+			})
+		} catch (error) {
+			console.error('Remove cart item failed:', error)
+			removeButton.disabled = false
+		}
+	})
 
 	document.addEventListener('keydown', event => {
 		if (event.key === 'Escape') {
@@ -370,10 +308,10 @@
 		dispatchCartUpdated,
 		formatMoney,
 		escapeHtml,
-		renderCartDrawer,
 		openCartDrawer,
 		closeCartDrawer,
 		replaceSection,
 		refreshRenderedSections,
+		replaceSectionsFromResponse,
 	}
 })()

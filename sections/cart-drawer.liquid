@@ -1,0 +1,115 @@
+<div
+  class="cart-drawer"
+  data-cart-drawer
+  hidden
+  aria-hidden="true"
+  data-empty-text="{{ 'cart.empty' | t }}"
+  data-quantity-text="{{ 'cart.quantity' | t }}"
+  data-remove-text="{{ 'cart.remove' | t }}"
+>
+  <div class="cart-drawer__overlay" data-cart-drawer-close></div>
+
+  <aside class="cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
+    <div class="cart-drawer__header">
+      <h2 id="cart-drawer-title">{{ 'cart.drawer_title' | t }}</h2>
+      <button type="button" data-cart-drawer-close>{{ 'cart.close' | t }}</button>
+    </div>
+
+    <div class="cart-drawer__items" data-cart-drawer-items>
+      {% if cart.empty? %}
+        <p class="cart-drawer__empty">{{ 'cart.empty' | t }}</p>
+      {% else %}
+        {% for item in cart.items %}
+          <div class="cart-drawer__item">
+            {% if item.image %}
+              {{
+                item.image
+                | image_url: width: 144
+                | image_tag: class: 'cart-drawer__item-image', alt: item.title
+              }}
+            {% else %}
+              <div class="cart-drawer__item-image"></div>
+            {% endif %}
+
+            <div class="cart-drawer__item-content">
+              <p class="cart-drawer__item-title">{{ item.product.title }}</p>
+
+              {% unless item.variant.title == 'Default Title' %}
+                <p class="cart-drawer__item-meta">{{ item.variant.title }}</p>
+              {% endunless %}
+
+              {% unless item.properties == empty %}
+                {% for property in item.properties %}
+                  {% assign first_character = property.first | slice: 0 %}
+
+                  {% if property.last != blank and first_character != '_' %}
+                    <p class="cart-drawer__item-meta">
+                      {{ property.first }}: {{ property.last }}
+                    </p>
+                  {% endif %}
+                {% endfor %}
+              {% endunless %}
+
+              <div class="cart-drawer__quantity" aria-label="{{ 'cart.quantity' | t }}">
+                <button
+                  class="cart-drawer__quantity-button"
+                  type="button"
+                  data-cart-quantity-button
+                  data-line-key="{{ item.key }}"
+                  data-quantity="{{ item.quantity | minus: 1 }}"
+                >
+                  -
+                </button>
+
+                <span class="cart-drawer__quantity-value">{{ item.quantity }}</span>
+
+                <button
+                  class="cart-drawer__quantity-button"
+                  type="button"
+                  data-cart-quantity-button
+                  data-line-key="{{ item.key }}"
+                  data-quantity="{{ item.quantity | plus: 1 }}"
+                >
+                  +
+                </button>
+              </div>
+
+              <p class="cart-drawer__item-price">{{ item.final_line_price | money }}</p>
+
+              <button
+                class="cart-drawer__remove"
+                type="button"
+                data-cart-remove-button
+                data-line-key="{{ item.key }}"
+              >
+                {{ 'cart.remove' | t }}
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="cart-drawer__footer">
+      <div class="cart-drawer__subtotal">
+        <span>{{ 'cart.subtotal' | t }}</span>
+        <strong data-cart-drawer-total>{{ cart.total_price | money }}</strong>
+      </div>
+
+      <a class="cart-drawer__view-cart" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
+
+      <form action="{{ routes.cart_url }}" method="post">
+        <button class="cart-drawer__checkout" type="submit" name="checkout">
+          {{ 'cart.checkout' | t }}
+        </button>
+      </form>
+    </div>
+  </aside>
+</div>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

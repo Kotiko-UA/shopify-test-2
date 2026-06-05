@@ -31,41 +31,7 @@
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}
-    <div
-      class="cart-drawer"
-      data-cart-drawer
-      hidden
-      aria-hidden="true"
-      data-empty-text="{{ 'cart.empty' | t }}"
-      data-quantity-text="{{ 'cart.quantity' | t }}"
-      data-remove-text="{{ 'cart.remove' | t }}"
-    >
-      <div class="cart-drawer__overlay" data-cart-drawer-close></div>
-
-      <aside class="cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
-        <div class="cart-drawer__header">
-          <h2 id="cart-drawer-title">{{ 'cart.drawer_title' | t }}</h2>
-          <button type="button" data-cart-drawer-close>{{ 'cart.close' | t }}</button>
-        </div>
-
-        <div class="cart-drawer__items" data-cart-drawer-items></div>
-
-        <div class="cart-drawer__footer">
-          <div class="cart-drawer__subtotal">
-            <span>{{ 'cart.subtotal' | t }}</span>
-            <strong data-cart-drawer-total></strong>
-          </div>
-
-          <a class="cart-drawer__view-cart" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
-
-          <form action="{{ routes.cart_url }}" method="post">
-            <button class="cart-drawer__checkout" type="submit" name="checkout">
-              {{ 'cart.checkout' | t }}
-            </button>
-          </form>
-        </div>
-      </aside>
-    </div>
+    {% section 'cart-drawer' %}
 
     <div class="cart-toast" hidden data-added-text="{{ 'cart.added' | t }}">
       <span class="cart-toast__text"></span>
