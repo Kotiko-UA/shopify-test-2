@@ -36,7 +36,14 @@
                   {% endfor %}
                 </div>
               {% endunless %}
-              {{ 'cart.remove' | t | link_to: item.url_to_remove }}
+              <a
+                class="cart-item__remove"
+                href="{{ item.url_to_remove }}"
+                data-cart-remove-button
+                data-line-key="{{ item.key }}"
+              >
+                {{ 'cart.remove' | t }}
+              </a>
               <p>
                 {% if item.original_price > item.final_price %}
                   <s>{{ item.original_price | money }}</s>
@@ -61,18 +68,20 @@
                 min="0"
                 name="updates[{{ item.key }}]"
                 value="{{ item.quantity }}"
+                data-cart-line-quantity
+                data-line-key="{{ item.key }}"
               >
             </td>
           </tr>
         {% endfor %}
       </table>
       <div class="cart-note">
-        <label for="cart-note">Order note</label>
+        <label for="cart-note">{{ 'cart.order_note' | t }}</label>
 
         <textarea id="cart-note" name="note" data-cart-note>{{ cart.note }}</textarea>
       </div>
       <div class="cart-attribute">
-        <label for="delivery-instructions">Delivery instructions</label>
+        <label for="delivery-instructions">{{ 'cart.delivery_instructions' | t }}</label>
 
         <input
           id="delivery-instructions"
@@ -83,7 +92,7 @@
         >
       </div>
       <div class="cart-attribute">
-        <label for="gift-wrap">Gift wrap</label>
+        <label for="gift-wrap">{{ 'cart.gift_wrap' | t }}</label>
 
         <select id="gift-wrap" name="attributes[Gift wrap]" data-cart-attribute>
           <option
@@ -92,7 +101,7 @@
               selected
             {% endif %}
           >
-            No
+            {{ 'cart.no' | t }}
           </option>
 
           <option
@@ -101,11 +110,11 @@
               selected
             {% endif %}
           >
-            Yes
+            {{ 'cart.yes' | t }}
           </option>
         </select>
       </div>
-      <input type="submit" name="update" value="{{ 'cart.update' | t }}">
+      <input class="cart-update-button" type="submit" name="update" value="{{ 'cart.update' | t }}">
       {% if cart.original_total_price > cart.total_price %}
         <div class="cart-original-total">
           <span>{{ 'cart.original_total' | t }}</span>
@@ -139,6 +148,14 @@
       <div class="cart-summary">
         <span>{{ 'cart.subtotal' | t }}</span>
         <strong>{{ cart.total_price | money }}</strong>
+      </div>
+      <div class="cart-discount-code">
+        <label for="cart-discount-code">{{ 'cart.discount_code' | t }}</label>
+
+        <div class="cart-discount-code__row">
+          <input id="cart-discount-code" type="text" data-cart-discount-code>
+          <button type="button" data-cart-discount-apply>{{ 'cart.apply_discount' | t }}</button>
+        </div>
       </div>
       <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
     </form>
@@ -204,6 +221,17 @@
     gap: 0.4rem;
   }
 
+  .cart-item__remove {
+    justify-self: start;
+    color: rgb(92, 95, 98);
+    font-size: 0.875rem;
+  }
+
+  .cart-item__remove[aria-disabled='true'] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
   .cart-items input[type='number'] {
     width: 72px;
     min-height: 40px;
@@ -241,8 +269,36 @@
     cursor: pointer;
   }
 
-  .cart-form input[name='update'] {
+  .cart-update-button {
     justify-self: start;
+    background-color: transparent;
+    color: currentcolor;
+    opacity: 0.75;
+  }
+
+  .cart-update-button:hover,
+  .cart-update-button:focus-visible {
+    opacity: 1;
+  }
+
+  .cart-discount-code {
+    display: grid;
+    gap: 0.4rem;
+    max-width: 420px;
+    margin-left: auto;
+    width: 100%;
+  }
+
+  .cart-discount-code__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
+  }
+
+  .cart-discount-code input {
+    min-height: 42px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgb(180, 180, 180);
   }
 
   .cart-summary,
@@ -303,8 +359,13 @@
     .cart-summary,
     .cart-discount,
     .cart-original-total,
-    .cart-items-subtotal {
+    .cart-items-subtotal,
+    .cart-discount-code {
       max-width: none;
+    }
+
+    .cart-discount-code__row {
+      grid-template-columns: 1fr;
     }
 
     .cart-form input[name='checkout'] {

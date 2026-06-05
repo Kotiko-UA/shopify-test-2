@@ -31,7 +31,14 @@
 		"error": "Could not add item to cart",
 		"view_cart": "View cart",
 		"drawer_title": "Cart",
-		"close": "Close"
+		"close": "Close",
+		"order_note": "Order note",
+		"delivery_instructions": "Delivery instructions",
+		"gift_wrap": "Gift wrap",
+		"yes": "Yes",
+		"no": "No",
+		"discount_code": "Discount code",
+		"apply_discount": "Apply"
 	},
 	"customers": {
 		"login": {

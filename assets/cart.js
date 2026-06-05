@@ -260,6 +260,23 @@
 			return
 		}
 
+		const discountApplyButton = event.target.closest(
+			'[data-cart-discount-apply]',
+		)
+
+		if (discountApplyButton) {
+			const discountField = document.querySelector('[data-cart-discount-code]')
+			const discountCode = discountField?.value.trim()
+
+			if (!discountCode) return
+
+			window.location.href = `${window.Shopify.routes.root}discount/${encodeURIComponent(
+				discountCode,
+			)}?redirect=/checkout`
+
+			return
+		}
+
 		const trigger = event.target.closest('[data-cart-drawer-trigger]')
 
 		if (!trigger) return
@@ -300,7 +317,13 @@
 
 		if (!removeButton) return
 
-		removeButton.disabled = true
+		event.preventDefault()
+
+		removeButton.setAttribute('aria-disabled', 'true')
+
+		if ('disabled' in removeButton) {
+			removeButton.disabled = true
+		}
 
 		try {
 			const cart = await changeCartItem(removeButton.dataset.lineKey, 0)
@@ -310,12 +333,38 @@
 			})
 		} catch (error) {
 			console.error('Remove cart item failed:', error)
-			removeButton.disabled = false
+			removeButton.removeAttribute('aria-disabled')
+
+			if ('disabled' in removeButton) {
+				removeButton.disabled = false
+			}
 		}
 	})
 
 	document.addEventListener('change', async event => {
 		if (!(event.target instanceof Element)) return
+
+		const quantityField = event.target.closest('[data-cart-line-quantity]')
+
+		if (quantityField) {
+			quantityField.disabled = true
+
+			try {
+				const cart = await changeCartItem(
+					quantityField.dataset.lineKey,
+					Number(quantityField.value),
+				)
+
+				dispatchCartUpdated(cart, {
+					action: 'quantity',
+				})
+			} catch (error) {
+				console.error('Update cart line quantity failed:', error)
+				quantityField.disabled = false
+			}
+
+			return
+		}
 
 		const noteField = event.target.closest('[data-cart-note]')
 
