@@ -12,147 +12,160 @@
     <p>{{ 'cart.empty' | t }}</p>
   {% else %}
     <form class="cart-form" action="{{ routes.cart_url }}" method="post">
-    <table class="cart-items">
-      {% for item in cart.items %}
-        <tr>
-          <td>
-            {% render 'image', image: item.image, url: item.url %}
-          </td>
-          <td>
-            <p>{{ item.product.title }}</p>
-            {% unless item.variant.title == 'Default Title' %}
-              <p>{{ item.variant.title }}</p>
-            {% endunless %}
-            {% unless item.properties == empty %}
-              <div class="cart-item__properties">
-                {% for property in item.properties %}
-                  {% assign first_character = property.first | slice: 0 %}
-                  {% if property.last != blank and first_character != '_' %}
-                    <p>
-                      <strong>{{ property.first }}:</strong>
-                      {{ property.last }}
-                    </p>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            {% endunless %}
-            {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-            <p>
-              {% if item.original_price > item.final_price %}
-                <s>{{ item.original_price | money }}</s>
+      <table class="cart-items">
+        {% for item in cart.items %}
+          <tr>
+            <td>
+              {% render 'image', image: item.image, url: item.url %}
+            </td>
+            <td>
+              <p>{{ item.product.title }}</p>
+              {% unless item.variant.title == 'Default Title' %}
+                <p>{{ item.variant.title }}</p>
+              {% endunless %}
+              {% unless item.properties == empty %}
+                <div class="cart-item__properties">
+                  {% for property in item.properties %}
+                    {% assign first_character = property.first | slice: 0 %}
+                    {% if property.last != blank and first_character != '_' %}
+                      <p>
+                        <strong>{{ property.first }}:</strong>
+                        {{ property.last }}
+                      </p>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endunless %}
+              {{ 'cart.remove' | t | link_to: item.url_to_remove }}
+              <p>
+                {% if item.original_price > item.final_price %}
+                  <s>{{ item.original_price | money }}</s>
+                {% endif %}
+                {{ item.final_price | money }} x {{ item.quantity }}
+              </p>
+              <p>{{ 'cart.line_total' | t }}: {{ item.final_line_price | money }}</p>
+              {% if item.line_level_discount_allocations.size > 0 %}
+                <ul class="cart-item__discounts">
+                  {% for discount_allocation in item.line_level_discount_allocations %}
+                    <li>
+                      {{ discount_allocation.discount_application.title }}
+                      - {{ discount_allocation.amount | money }}
+                    </li>
+                  {% endfor %}
+                </ul>
               {% endif %}
-              {{ item.final_price | money }} x {{ item.quantity }}
-            </p>
-            <p>{{ 'cart.line_total' | t }}: {{ item.final_line_price | money }}</p>
-            {% if item.line_level_discount_allocations.size > 0 %}
-              <ul class="cart-item__discounts">
-                {% for discount_allocation in item.line_level_discount_allocations %}
-                  <li>
-                    {{ discount_allocation.discount_application.title }}
-                    - {{ discount_allocation.amount | money }}
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          </td>
-          <td>
-            <input
-              type="number"
-              min="0"
-              name="updates[{{ item.key }}]"
-              value="{{ item.quantity }}"
-            >
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-    <div class="cart-note">
-      <label for="cart-note">Order note</label>
-
-      <textarea id="cart-note" name="note">{{ cart.note }}</textarea>
-    </div>
-    <div class="cart-attribute">
-      <label for="delivery-instructions">Delivery instructions</label>
-
-      <input
-        id="delivery-instructions"
-        type="text"
-        name="attributes[Delivery instructions]"
-        value="{{ cart.attributes['Delivery instructions'] }}"
-      >
-    </div>
-    <div class="cart-attribute">
-      <label for="gift-wrap">Gift wrap</label>
-
-      <select id="gift-wrap" name="attributes[Gift wrap]">
-        <option
-          value="No"
-          {% if cart.attributes['Gift wrap'] == 'No' %}
-            selected
-          {% endif %}
-        >
-          No
-        </option>
-
-        <option
-          value="Yes"
-          {% if cart.attributes['Gift wrap'] == 'Yes' %}
-            selected
-          {% endif %}
-        >
-          Yes
-        </option>
-      </select>
-    </div>
-    <input type="submit" name="update" value="{{ 'cart.update' | t }}">
-    {% if cart.original_total_price > cart.total_price %}
-      <div class="cart-original-total">
-        <span>{{ 'cart.original_total' | t }}</span>
-        <s>{{ cart.original_total_price | money }}</s>
-      </div>
-    {% endif %}
-
-    <div class="cart-items-subtotal">
-      <span>{{ 'cart.items_subtotal' | t }}</span>
-      <strong>{{ cart.items_subtotal_price | money }}</strong>
-    </div>
-
-    {% if cart.cart_level_discount_applications.size > 0 %}
-      <ul class="cart-discounts">
-        {% for discount_application in cart.cart_level_discount_applications %}
-          <li>
-            {{ discount_application.title }}
-            - {{ discount_application.total_allocated_amount | money }}
-          </li>
+            </td>
+            <td>
+              <input
+                type="number"
+                min="0"
+                name="updates[{{ item.key }}]"
+                value="{{ item.quantity }}"
+              >
+            </td>
+          </tr>
         {% endfor %}
-      </ul>
-    {% endif %}
+      </table>
+      <div class="cart-note">
+        <label for="cart-note">Order note</label>
 
-    {% if cart.total_discount > 0 %}
-      <div class="cart-discount">
-        <span>{{ 'cart.total_discount' | t }}</span>
-        <strong>-{{ cart.total_discount | money }}</strong>
+        <textarea id="cart-note" name="note" data-cart-note>{{ cart.note }}</textarea>
       </div>
-    {% endif %}
+      <div class="cart-attribute">
+        <label for="delivery-instructions">Delivery instructions</label>
 
-    <div class="cart-summary">
-      <span>{{ 'cart.subtotal' | t }}</span>
-      <strong>{{ cart.total_price | money }}</strong>
-    </div>
-    <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
+        <input
+          id="delivery-instructions"
+          type="text"
+          name="attributes[Delivery instructions]"
+          value="{{ cart.attributes['Delivery instructions'] }}"
+          data-cart-attribute
+        >
+      </div>
+      <div class="cart-attribute">
+        <label for="gift-wrap">Gift wrap</label>
+
+        <select id="gift-wrap" name="attributes[Gift wrap]" data-cart-attribute>
+          <option
+            value="No"
+            {% if cart.attributes['Gift wrap'] == 'No' %}
+              selected
+            {% endif %}
+          >
+            No
+          </option>
+
+          <option
+            value="Yes"
+            {% if cart.attributes['Gift wrap'] == 'Yes' %}
+              selected
+            {% endif %}
+          >
+            Yes
+          </option>
+        </select>
+      </div>
+      <input type="submit" name="update" value="{{ 'cart.update' | t }}">
+      {% if cart.original_total_price > cart.total_price %}
+        <div class="cart-original-total">
+          <span>{{ 'cart.original_total' | t }}</span>
+          <s>{{ cart.original_total_price | money }}</s>
+        </div>
+      {% endif %}
+
+      <div class="cart-items-subtotal">
+        <span>{{ 'cart.items_subtotal' | t }}</span>
+        <strong>{{ cart.items_subtotal_price | money }}</strong>
+      </div>
+
+      {% if cart.cart_level_discount_applications.size > 0 %}
+        <ul class="cart-discounts">
+          {% for discount_application in cart.cart_level_discount_applications %}
+            <li>
+              {{ discount_application.title }}
+              - {{ discount_application.total_allocated_amount | money }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if cart.total_discount > 0 %}
+        <div class="cart-discount">
+          <span>{{ 'cart.total_discount' | t }}</span>
+          <strong>-{{ cart.total_discount | money }}</strong>
+        </div>
+      {% endif %}
+
+      <div class="cart-summary">
+        <span>{{ 'cart.subtotal' | t }}</span>
+        <strong>{{ cart.total_price | money }}</strong>
+      </div>
+      <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
     </form>
   {% endif %}
 </div>
 
 {% stylesheet %}
+  .cart-page {
+    width: 100%;
+    padding-block: 2rem 3rem;
+  }
+
+  .cart-page h1 {
+    margin-bottom: 0.5rem;
+  }
+
   .cart-form {
+    display: grid;
+    gap: 1.25rem;
     max-width: 960px;
-    margin: 0 auto;
+    margin-top: 1.5rem;
   }
 
   .cart-items {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
   }
 
   .cart-items tr {
@@ -160,12 +173,19 @@
   }
 
   .cart-items td {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
     vertical-align: top;
   }
 
   .cart-items td:first-child {
-    width: 120px;
+    width: 112px;
+    padding-left: 0;
+  }
+
+  .cart-items td:last-child {
+    width: 96px;
+    padding-right: 0;
+    text-align: right;
   }
 
   .cart-items .image {
@@ -179,17 +199,50 @@
     object-fit: cover;
   }
 
+  .cart-items td:nth-child(2) {
+    display: grid;
+    gap: 0.4rem;
+  }
+
   .cart-items input[type='number'] {
     width: 72px;
+    min-height: 40px;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid rgb(180, 180, 180);
   }
 
   .cart-note,
-  .cart-attribute,
-  .cart-original-total,
-  .cart-discount,
-  .cart-items-subtotal,
-  .cart-summary {
-    margin-top: 1rem;
+  .cart-attribute {
+    display: grid;
+    gap: 0.4rem;
+    max-width: 520px;
+  }
+
+  .cart-note textarea,
+  .cart-attribute input,
+  .cart-attribute select {
+    width: 100%;
+    min-height: 42px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgb(180, 180, 180);
+  }
+
+  .cart-note textarea {
+    min-height: 96px;
+    resize: vertical;
+  }
+
+  .cart-form input[type='submit'],
+  .cart-form button {
+    min-height: 42px;
+    padding: 0.65rem 1rem;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .cart-form input[name='update'] {
+    justify-self: start;
   }
 
   .cart-summary,
@@ -201,6 +254,63 @@
     gap: 1rem;
     max-width: 420px;
     margin-left: auto;
+    width: 100%;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgb(220, 220, 220);
+  }
+
+  .cart-form input[name='checkout'] {
+    justify-self: end;
+    min-width: 180px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-items,
+    .cart-items tbody,
+    .cart-items tr,
+    .cart-items td {
+      display: block;
+      width: 100%;
+    }
+
+    .cart-items tr {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 0.75rem;
+      padding-block: 1rem;
+    }
+
+    .cart-items td {
+      padding: 0;
+    }
+
+    .cart-items td:first-child,
+    .cart-items td:last-child {
+      width: auto;
+      text-align: left;
+    }
+
+    .cart-items td:last-child {
+      grid-column: 2;
+    }
+
+    .cart-items .image,
+    .cart-items .image img {
+      width: 88px;
+      height: 88px;
+    }
+
+    .cart-summary,
+    .cart-discount,
+    .cart-original-total,
+    .cart-items-subtotal {
+      max-width: none;
+    }
+
+    .cart-form input[name='checkout'] {
+      justify-self: stretch;
+      width: 100%;
+    }
   }
 {% endstylesheet %}
 

@@ -142,6 +142,28 @@
 		return cart
 	}
 
+	async function updateCart(payload) {
+		const response = await fetch(getShopifyRoute('cart/update.js'), {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				...payload,
+				sections: getCartSectionIds(),
+			}),
+		})
+
+		const cart = await response.json()
+
+		if (!response.ok) {
+			throw new Error(cart.description || 'Could not update cart')
+		}
+
+		updateCartCount(cart)
+		return cart
+	}
+
 	function dispatchCartUpdated(cart, detail = {}) {
 		document.dispatchEvent(
 			new CustomEvent('cart:updated', {
@@ -292,6 +314,50 @@
 		}
 	})
 
+	document.addEventListener('change', async event => {
+		if (!(event.target instanceof Element)) return
+
+		const noteField = event.target.closest('[data-cart-note]')
+
+		if (noteField) {
+			try {
+				const cart = await updateCart({
+					note: noteField.value,
+				})
+
+				dispatchCartUpdated(cart, {
+					action: 'note',
+				})
+			} catch (error) {
+				console.error('Update cart note failed:', error)
+			}
+
+			return
+		}
+
+		const attributeField = event.target.closest('[data-cart-attribute]')
+
+		if (!attributeField) return
+
+		const attributeName = attributeField.name.match(/^attributes\[(.+)\]$/)?.[1]
+
+		if (!attributeName) return
+
+		try {
+			const cart = await updateCart({
+				attributes: {
+					[attributeName]: attributeField.value,
+				},
+			})
+
+			dispatchCartUpdated(cart, {
+				action: 'attribute',
+			})
+		} catch (error) {
+			console.error('Update cart attribute failed:', error)
+		}
+	})
+
 	document.addEventListener('keydown', event => {
 		if (event.key === 'Escape') {
 			closeCartDrawer()
@@ -313,5 +379,7 @@
 		replaceSection,
 		refreshRenderedSections,
 		replaceSectionsFromResponse,
+		getCartSectionIds,
+		updateCart,
 	}
 })()
