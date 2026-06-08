@@ -1,0 +1,128 @@
+{% doc %}
+  Renders an article card.
+
+  @param {article} article - Article to display.
+  @param {boolean} [show_image] - Whether to display article image.
+  @param {boolean} [show_excerpt] - Whether to display article excerpt.
+  @param {boolean} [show_author] - Whether to display article author.
+  @param {boolean} [show_date] - Whether to display article published date.
+  @param {boolean} [show_tags] - Whether to display article tags.
+
+  @example
+  {% render 'article-card', article: article %}
+{% enddoc %}
+
+<article class="article-card">
+  {% if show_image != false and article.image %}
+    {% render 'image',
+      class: 'article-card__image',
+      image: article.image,
+      url: article.url,
+      width: 800,
+      height: 520,
+      crop: 'center'
+    %}
+  {% endif %}
+
+  <div class="article-card__content">
+    <h2 class="article-card__title">
+      <a href="{{ article.url }}">{{ article.title | escape }}</a>
+    </h2>
+
+    {% if show_author != false or show_date != false %}
+      {% assign date = article.published_at | time_tag: format: 'date' %}
+      <p class="article-card__meta">
+        {% if show_author != false and show_date != false %}
+          {{ 'blog.article_metadata_html' | t: date: date, author: article.author }}
+        {% elsif show_date != false %}
+          {{ date }}
+        {% elsif show_author != false %}
+          {{ article.author }}
+        {% endif %}
+      </p>
+    {% endif %}
+
+    {% if show_excerpt != false %}
+      {% assign excerpt = article.excerpt_or_content | strip_html | truncate: 160 %}
+      {% if excerpt != blank %}
+        <p class="article-card__excerpt">{{ excerpt }}</p>
+      {% endif %}
+    {% endif %}
+
+    {% if show_tags and article.tags.size > 0 %}
+      <ul class="article-card__tags">
+        {% for tag in article.tags %}
+          <li>{{ tag | link_to_tag: tag }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <a class="article-card__read-more" href="{{ article.url }}">{{ 'blog.read_article' | t }}</a>
+  </div>
+</article>
+
+{% stylesheet %}
+  .article-card {
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    background: white;
+  }
+
+  .article-card__image img {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .article-card__content {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .article-card__title {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.35;
+  }
+
+  .article-card__title a,
+  .article-card__read-more {
+    color: inherit;
+  }
+
+  .article-card__meta,
+  .article-card__excerpt {
+    margin: 0;
+    color: rgb(92, 95, 98);
+  }
+
+  .article-card__meta {
+    font-size: 0.875rem;
+  }
+
+  .article-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-card__tags a {
+    display: inline-flex;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 4px;
+    color: inherit;
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
+  .article-card__read-more {
+    justify-self: start;
+    font-weight: 700;
+  }
+{% endstylesheet %}

@@ -66,17 +66,14 @@
                 {% render 'product-card', product: result, show_vendor: section.settings.show_vendor %}
 
               {% when 'article' %}
-                <article class="search-result-card">
-                  <p class="search-result-card__type">{{ 'search.types.article' | t }}</p>
-                  <h2 class="search-result-card__title">
-                    <a href="{{ result.url }}">{{ result.title | escape }}</a>
-                  </h2>
-                  {% if result.excerpt_or_content != blank %}
-                    <p class="search-result-card__text">
-                      {{ result.excerpt_or_content | strip_html | truncate: 160 }}
-                    </p>
-                  {% endif %}
-                </article>
+                {% render 'article-card',
+                  article: result,
+                  show_image: false,
+                  show_excerpt: true,
+                  show_author: false,
+                  show_date: true,
+                  show_tags: false
+                %}
 
               {% when 'page' %}
                 <article class="search-result-card">
