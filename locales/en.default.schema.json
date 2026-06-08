@@ -51,6 +51,7 @@
 		"text": "Text",
 		"featured_collection": "Featured collection",
 		"menu_position": "Menu position",
+		"results_per_page": "Results per page",
 		"show_vendor": "Show vendor",
 		"products_per_page": "Products per page"
 	},

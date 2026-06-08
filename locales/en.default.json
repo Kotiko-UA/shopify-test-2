@@ -54,7 +54,9 @@
 		"product_count": "{{ count }} products",
 		"empty": "No products found.",
 		"apply_filters": "Apply filters",
-		"clear_all": "Clear all"
+		"clear_all": "Clear all",
+		"search_products": "Search products",
+		"search_placeholder": "Search by product name"
 	},
 	"gift_card": {
 		"add_to_apple_wallet": "Add to Apple Wallet",
@@ -73,7 +75,18 @@
 		"placeholder": "Search articles, pages, or products",
 		"submit": "Search",
 		"no_results_html": "No results found for {{ terms }}",
-		"results_for_html": "{{ count }} results found for {{ terms }}"
+		"results_for_html": "{{ count }} results found for {{ terms }}",
+		"types": {
+			"article": "Article",
+			"page": "Page",
+			"product": "Product"
+		},
+		"predictive": {
+			"articles": "Articles",
+			"pages": "Pages",
+			"products": "Products",
+			"search_for_html": "Search for {{ terms }}"
+		}
 	},
 	"hello_world": {
 		"featured_collection": "Featured collection:",

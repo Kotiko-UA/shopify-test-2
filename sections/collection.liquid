@@ -5,6 +5,8 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
+<script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
+
 <h1>{{ collection.title }}</h1>
 {% if collection.description != blank %}
   <div class="collection-description">
@@ -17,15 +19,69 @@
   <div class="collection-toolbar">
     <p class="collection-product-count">{{ 'collections.product_count' | t: count: paginate.items }}</p>
 
+    <predictive-search
+      class="collection-predictive-search"
+      data-predictive-search-url="{{ routes.predictive_search_url }}"
+      data-predictive-search-types="product"
+    >
+      <form class="collection-search-form" action="{{ routes.search_url }}" method="get" role="search">
+        <label for="CollectionProductSearch">{{ 'collections.search_products' | t }}</label>
+        <div class="collection-search-form__row">
+          <input
+            id="CollectionProductSearch"
+            type="search"
+            name="q"
+            placeholder="{{ 'collections.search_placeholder' | t }}"
+            autocomplete="off"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="collection-predictive-search"
+            aria-haspopup="listbox"
+            data-predictive-search-input
+          >
+          <input type="hidden" name="type" value="product">
+          <input type="hidden" name="options[prefix]" value="last">
+          <input type="hidden" name="options[unavailable_products]" value="last">
+          <button type="submit">{{ 'search.submit' | t }}</button>
+        </div>
+
+        <div
+          id="collection-predictive-search"
+          class="predictive-search__panel"
+          tabindex="-1"
+          data-predictive-search-results
+          hidden
+        ></div>
+      </form>
+    </predictive-search>
+
     <form class="collection-sort-form" method="get">
       {% for filter in collection.filters %}
-        {% for active_value in filter.active_values %}
-          <input
-            type="hidden"
-            name="{{ active_value.param_name }}"
-            value="{{ active_value.value }}"
-          >
-        {% endfor %}
+        {% if filter.type == 'price_range' %}
+          {% if filter.min_value.value != blank %}
+            <input
+              type="hidden"
+              name="{{ filter.min_value.param_name }}"
+              value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+            >
+          {% endif %}
+
+          {% if filter.max_value.value != blank %}
+            <input
+              type="hidden"
+              name="{{ filter.max_value.param_name }}"
+              value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+            >
+          {% endif %}
+        {% else %}
+          {% for active_value in filter.active_values %}
+            <input
+              type="hidden"
+              name="{{ active_value.param_name }}"
+              value="{{ active_value.value }}"
+            >
+          {% endfor %}
+        {% endif %}
       {% endfor %}
       <label for="collection-sort">{{ 'collections.sort_by' | t }}</label>
 
@@ -46,8 +102,51 @@
   {% if collection.filters.size > 0 %}
     {% assign active_filter_count = 0 %}
     {% for filter in collection.filters %}
-      {% assign active_filter_count = active_filter_count | plus: filter.active_values.size %}
+      {% if filter.type == 'price_range' %}
+        {% if filter.min_value.value != blank or filter.max_value.value != blank %}
+          {% assign active_filter_count = active_filter_count | plus: 1 %}
+        {% endif %}
+      {% else %}
+        {% assign active_filter_count = active_filter_count | plus: filter.active_values.size %}
+      {% endif %}
     {% endfor %}
+    {% if active_filter_count > 0 %}
+      <div class="collection-active-filters">
+        {% for filter in collection.filters %}
+          {% case filter.type %}
+            {% when 'price_range' %}
+              {% if filter.min_value.value != blank or filter.max_value.value != blank %}
+                <a class="collection-active-filter" href="{{ filter.url_to_remove }}">
+                  {{ filter.label }}:
+                  {% if filter.min_value.value != blank %}
+                    {{ filter.min_value.value | money }}
+                  {% else %}
+                    {{ 0 | money }}
+                  {% endif %}
+                  -
+                  {% if filter.max_value.value != blank %}
+                    {{ filter.max_value.value | money }}
+                  {% else %}
+                    {{ filter.range_max | money }}
+                  {% endif %}
+                  <span aria-hidden="true">&times;</span>
+                </a>
+              {% endif %}
+
+            {% else %}
+              {% for active_value in filter.active_values %}
+                <a class="collection-active-filter" href="{{ active_value.url_to_remove }}">
+                  {{ filter.label }}: {{ active_value.label }}
+                  <span aria-hidden="true">&times;</span>
+                </a>
+              {% endfor %}
+          {% endcase %}
+        {% endfor %}
+        <a class="collection-active-filters__clear" href="{{ collection.url }}?sort_by={{ current_sort | url_encode }}">
+          {{ 'collections.clear_all' | t }}
+        </a>
+      </div>
+    {% endif %}
 
     <form class="collection-filters" method="get">
       {% if current_sort != blank %}
@@ -58,24 +157,67 @@
         <fieldset class="collection-filter">
           <legend class="collection-filter__legend">{{ filter.label }}</legend>
 
-          {% for value in filter.values %}
-            <label class="collection-filter__value">
-              <input
-                class="collection-filter__checkbox"
-                type="checkbox"
-                name="{{ value.param_name }}"
-                value="{{ value.value }}"
-                {% if value.active %}
-                  checked
-                {% endif %}
-                {% if value.count == 0 and value.active == false %}
-                  disabled
-                {% endif %}
-              >
-              <span>{{ value.label }}</span>
-              <span class="collection-filter__count">({{ value.count }})</span>
-            </label>
-          {% endfor %}
+          {% case filter.type %}
+            {% when 'price_range' %}
+              {% assign max_price = filter.range_max | money_without_currency | replace: ',', '' %}
+              {% assign min_value = '' %}
+              {% assign max_value = '' %}
+
+              {% if filter.min_value.value != blank %}
+                {% assign min_value = filter.min_value.value | money_without_currency | replace: ',', '' %}
+              {% endif %}
+
+              {% if filter.max_value.value != blank %}
+                {% assign max_value = filter.max_value.value | money_without_currency | replace: ',', '' %}
+              {% endif %}
+
+              <div class="collection-filter__price">
+                <label class="collection-filter__price-field">
+                  <span>Min</span>
+                  <input
+                    type="number"
+                    name="{{ filter.min_value.param_name }}"
+                    value="{{ min_value }}"
+                    min="0"
+                    max="{{ max_price }}"
+                    placeholder="0"
+                  >
+                </label>
+
+                <label class="collection-filter__price-field">
+                  <span>Max</span>
+                  <input
+                    type="number"
+                    name="{{ filter.max_value.param_name }}"
+                    value="{{ max_value }}"
+                    min="0"
+                    max="{{ max_price }}"
+                    placeholder="{{ max_price }}"
+                  >
+                </label>
+              </div>
+
+            {% else %}
+              {% for value in filter.values %}
+                <label class="collection-filter__value">
+                  <input
+                    class="collection-filter__checkbox"
+                    type="checkbox"
+                    name="{{ value.param_name }}"
+                    value="{{ value.value }}"
+                    onchange="this.form.submit()"
+                    {% if value.active %}
+                      checked
+                    {% endif %}
+                    {% if value.count == 0 and value.active == false %}
+                      disabled
+                    {% endif %}
+                  >
+                  <span>{{ value.label }}</span>
+                  <span class="collection-filter__count">({{ value.count }})</span>
+                </label>
+              {% endfor %}
+          {% endcase %}
         </fieldset>
       {% endfor %}
 
@@ -116,6 +258,41 @@
 
   .collection-product-count {
     color: rgb(92, 95, 98);
+  }
+
+  .collection-search-form {
+    position: relative;
+    display: grid;
+    gap: 0.35rem;
+    min-width: min(100%, 320px);
+  }
+
+  .collection-search-form label {
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .collection-search-form__row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .collection-search-form input[type='search'] {
+    min-height: 40px;
+    min-width: 0;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 4px;
+  }
+
+  .collection-search-form button {
+    min-height: 40px;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid rgb(20, 20, 20);
+    border-radius: 4px;
+    background: rgb(20, 20, 20);
+    color: white;
+    cursor: pointer;
   }
 
   .collection-sort-form {
@@ -169,6 +346,25 @@
     font-size: 0.875rem;
   }
 
+  .collection-filter__price {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .collection-filter__price-field {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 140px;
+  }
+
+  .collection-filter__price-field input {
+    min-height: 40px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 4px;
+  }
+
   .collection-filters__actions {
     display: flex;
     flex-wrap: wrap;
@@ -214,6 +410,29 @@
   .collection-empty {
     margin-block: 2rem;
   }
+  .collection-active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .collection-active-filter,
+  .collection-active-filters__clear {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    min-height: 34px;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 4px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .collection-active-filters__clear {
+    color: rgb(92, 95, 98);
+  }
 
   @media screen and (max-width: 749px) {
     .collection-toolbar {
@@ -224,6 +443,19 @@
     .collection-sort-form {
       align-items: stretch;
       flex-direction: column;
+    }
+
+    .collection-search-form,
+    .collection-search-form__row {
+      width: 100%;
+    }
+
+    .collection-search-form__row {
+      flex-direction: column;
+    }
+
+    .collection-search-form button {
+      width: 100%;
     }
 
     .collection-filters__actions {

@@ -1,0 +1,82 @@
+{% comment %}
+  This section is rendered by the Predictive Search API.
+
+  It is not meant to be placed in a JSON template directly. JavaScript requests
+  this section and injects the rendered HTML into the search form dropdown.
+
+  https://shopify.dev/docs/storefronts/themes/navigation-search/search/predictive-search
+{% endcomment %}
+
+{% if predictive_search.performed %}
+  <div id="predictive-search-results" class="predictive-search-results">
+    {% if predictive_search.resources.products.size > 0 %}
+      <div class="predictive-search-results__group">
+        <h2 class="predictive-search-results__heading">{{ 'search.predictive.products' | t }}</h2>
+
+        <ul class="predictive-search-results__list" role="listbox">
+          {% for product in predictive_search.resources.products %}
+            <li class="predictive-search-results__item" role="option">
+              <a class="predictive-search-results__link" href="{{ product.url }}">
+                {% if product.featured_image %}
+                  {{
+                    product.featured_image
+                    | image_url: width: 96, height: 96, crop: 'center'
+                    | image_tag: class: 'predictive-search-results__image', loading: 'lazy'
+                  }}
+                {% endif %}
+
+                <span class="predictive-search-results__content">
+                  <span class="predictive-search-results__title">{{ product.title | escape }}</span>
+                  <span class="predictive-search-results__price">{{ product.price | money }}</span>
+                </span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if predictive_search.resources.pages.size > 0 %}
+      <div class="predictive-search-results__group">
+        <h2 class="predictive-search-results__heading">{{ 'search.predictive.pages' | t }}</h2>
+
+        <ul class="predictive-search-results__list" role="listbox">
+          {% for page in predictive_search.resources.pages %}
+            <li class="predictive-search-results__item" role="option">
+              <a class="predictive-search-results__link" href="{{ page.url }}">
+                <span class="predictive-search-results__title">{{ page.title | escape }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if predictive_search.resources.articles.size > 0 %}
+      <div class="predictive-search-results__group">
+        <h2 class="predictive-search-results__heading">{{ 'search.predictive.articles' | t }}</h2>
+
+        <ul class="predictive-search-results__list" role="listbox">
+          {% for article in predictive_search.resources.articles %}
+            <li class="predictive-search-results__item" role="option">
+              <a class="predictive-search-results__link" href="{{ article.url }}">
+                <span class="predictive-search-results__title">{{ article.title | escape }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <a class="predictive-search-results__submit" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}">
+      {{ 'search.predictive.search_for_html' | t: terms: predictive_search.terms }}
+    </a>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "settings": []
+}
+{% endschema %}
