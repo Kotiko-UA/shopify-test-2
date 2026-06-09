@@ -1,0 +1,24 @@
+{% comment %}
+  Renders a product feature metaobject card.
+
+  Accepts:
+  - feature: {Metaobject}
+{% endcomment %}
+
+{% if feature != blank %}
+  <article class="product-feature">
+    {% if feature.icon != blank %}
+      {% render 'image', image: feature.icon.value, class: 'product-feature__icon', width: 120 %}
+    {% endif %}
+
+    {% if feature.title != blank %}
+      <h3>{{ feature.title.value }}</h3>
+    {% endif %}
+
+    {% if feature.text != blank %}
+      <div class="product-feature__text">
+        {{ feature.text | metafield_tag }}
+      </div>
+    {% endif %}
+  </article>
+{% endif %}

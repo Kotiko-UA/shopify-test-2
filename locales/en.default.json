@@ -52,7 +52,9 @@
 		"apply_discount": "Apply"
 	},
 	"contact": {
+		"description_html": "<p>Have a question? Send us a message and we will get back to you.</p>",
 		"email": "Email",
+		"heading": "Contact us",
 		"message": "Message",
 		"name": "Name",
 		"phone": "Phone",
@@ -97,6 +99,16 @@
 		"password": "Password",
 		"enter": "Enter"
 	},
+	"products": {
+		"metafields": {
+			"specifications": "Specifications",
+			"snowboard_binding_mount": "Binding mount",
+			"snowboard_length": "Snowboard length"
+		},
+		"metaobjects": {
+			"features": "Features"
+		}
+	},
 	"search": {
 		"title": "Search",
 		"placeholder": "Search articles, pages, or products",
@@ -124,7 +136,9 @@
 		"menu": "Menu"
 	},
 	"newsletter": {
+		"description_html": "<p>Get updates, product news, and offers in your inbox.</p>",
 		"email": "Email",
+		"heading": "Join our newsletter",
 		"placeholder": "Enter your email",
 		"submit": "Subscribe",
 		"success": "Thanks for subscribing."

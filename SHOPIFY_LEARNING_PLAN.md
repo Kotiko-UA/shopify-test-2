@@ -17,6 +17,45 @@ Learning mode:
 - 20% Learner completes feature blocks and explains the logic.
 - 10% Codex reviews code for Shopify best practices, bugs, and maintainability.
 
+## Latest Session Summary - 2026-06-08
+
+Completed today:
+
+- Practiced product metafields in the Shopify admin and Liquid.
+- Clarified the difference between admin label and technical `namespace.key`.
+- Rewired product metafields to the real existing keys:
+  - `test_data.binding_mount`
+  - `test_data.snowboard_length`
+- Rendered product metafields on the product page as a `Specifications` block.
+- Used `.value` for plain text metafields.
+- Used `metafield_tag` for richer/special typed metafields such as dimensions.
+- Created and reviewed a `Snowboard feature` metaobject definition with `title`, `text`, and `icon` fields.
+- Clarified the difference between:
+  - product metafield path: `custom.features`
+  - metaobject type: `snowboard_feature`
+- Connected a product metafield reference to a metaobject entry.
+- Rendered the selected metaobject entry from `product.metafields.custom.features.value`.
+- Removed the confusing fallback that rendered all metaobject entries directly from `metaobjects.snowboard_feature.values`.
+
+Current starter-template status:
+
+- Product page can render real product specifications through metafields.
+- Product page can render a selected structured feature through a metaobject reference.
+- Current metaobject example supports one selected feature entry. A production-ready extension would support a list of feature entries.
+
+Progress update:
+
+- Point 31, Metafields, is completed for the practical product-page basics.
+- Point 32, Metaobjects, is partially completed: definition, entry, reference, and rendering are covered. Next session should reinforce when to use metafields vs metaobjects and add a list-based metaobject reference example.
+
+Next recommended topic:
+
+- Return to metafields/metaobjects with practical decision cases:
+  - simple product value -> metafield
+  - reusable structured content -> metaobject
+  - editable section-only content -> section setting or block
+- Then upgrade `custom.features` from a single metaobject reference to a list of metaobject references if useful for the starter template.
+
 ## Latest Session Summary - 2026-06-05
 
 Completed today:

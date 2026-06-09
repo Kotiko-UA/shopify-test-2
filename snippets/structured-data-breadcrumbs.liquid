@@ -1,0 +1,73 @@
+{% comment %}
+  Renders JSON-LD BreadcrumbList structured data for common storefront pages.
+{% endcomment %}
+
+{%- liquid
+  assign second_name = blank
+  assign second_url = blank
+  assign third_name = blank
+  assign third_url = blank
+
+  case request.page_type
+    when 'product'
+      if collection
+        assign second_name = collection.title
+        assign second_url = collection.url
+        assign third_name = product.title
+        assign third_url = product.url
+      else
+        assign second_name = product.title
+        assign second_url = product.url
+      endif
+    when 'collection'
+      assign second_name = collection.title
+      assign second_url = collection.url
+    when 'page'
+      assign second_name = page.title
+      assign second_url = page.url
+    when 'blog'
+      assign second_name = blog.title
+      assign second_url = blog.url
+    when 'article'
+      assign second_name = blog.title
+      assign second_url = blog.url
+      assign third_name = article.title
+      assign third_url = article.url
+  endcase
+
+  assign root_url = routes.root_url | prepend: request.origin
+  assign second_absolute_url = second_url | prepend: request.origin
+  assign third_absolute_url = third_url | prepend: request.origin
+-%}
+
+{%- if second_name != blank -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ shop.name | json }},
+          "item": {{ root_url | json }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ second_name | json }},
+          "item": {{ second_absolute_url | json }}
+        }
+        {%- if third_name != blank -%}
+          ,
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": {{ third_name | json }},
+            "item": {{ third_absolute_url | json }}
+          }
+        {%- endif -%}
+      ]
+    }
+  </script>
+{%- endif -%}

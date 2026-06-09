@@ -6,16 +6,26 @@
 {% endcomment %}
 
 {% assign newsletter_form_id = 'NewsletterForm-' | append: section.id %}
+{% assign newsletter_heading = section.settings.heading %}
+{% assign newsletter_description = section.settings.description %}
+
+{% if newsletter_heading == blank %}
+  {% assign newsletter_heading = 'newsletter.heading' | t %}
+{% endif %}
+
+{% if newsletter_description == blank %}
+  {% assign newsletter_description = 'newsletter.description_html' | t %}
+{% endif %}
 
 <section class="newsletter-section">
   <div class="newsletter-section__content">
-    {% if section.settings.heading != blank %}
-      <h2>{{ section.settings.heading | escape }}</h2>
+    {% if newsletter_heading != blank %}
+      <h2>{{ newsletter_heading | escape }}</h2>
     {% endif %}
 
-    {% if section.settings.description != blank %}
+    {% if newsletter_description != blank %}
       <div class="newsletter-section__description">
-        {{ section.settings.description }}
+        {{ newsletter_description }}
       </div>
     {% endif %}
   </div>
@@ -142,14 +152,12 @@
     {
       "type": "text",
       "id": "heading",
-      "label": "t:labels.heading",
-      "default": "Join our newsletter"
+      "label": "t:labels.heading"
     },
     {
       "type": "richtext",
       "id": "description",
-      "label": "t:labels.description",
-      "default": "<p>Get updates, product news, and offers in your inbox.</p>"
+      "label": "t:labels.description"
     }
   ],
   "presets": [

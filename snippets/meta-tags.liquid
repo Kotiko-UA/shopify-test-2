@@ -70,7 +70,13 @@
     property="og:price:currency"
     content="{{ cart.currency.iso_code }}"
   >
+{%- elsif request.page_type == 'article' -%}
+  <script type="application/ld+json">
+    {{ article | structured_data }}
+  </script>
 {%- endif -%}
+
+{% render 'structured-data-breadcrumbs' %}
 
 <meta
   name="twitter:card"
