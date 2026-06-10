@@ -1,0 +1,548 @@
+<section class="starter-library">
+  <header class="starter-library__hero">
+    <p class="starter-library__eyebrow">Starter template documentation</p>
+    <h1>Theme component library</h1>
+    <p>
+      A built-in reference page for developers and merchants. Use it to see what this theme includes,
+      where each piece lives, and which files to customize.
+    </p>
+    <div class="starter-library__route">
+      <span>Page template</span>
+      <code>templates/page.starter-library.json</code>
+    </div>
+  </header>
+
+  <div class="starter-library__note">
+    <strong>Included by default:</strong>
+    this theme ships with <code>templates/page.starter-library.json</code>, including the visual demo sections below.
+    Shopify still requires a page record in the admin to expose a store URL. Create any page and assign the
+    <code>starter-library</code> template, or preview it with <code>/pages/page-handle?view=starter-library</code>.
+  </div>
+
+  <nav class="starter-library__nav" aria-label="Library navigation">
+    <a href="#library-sections">Sections</a>
+    <a href="#library-templates">Templates</a>
+    <a href="#library-snippets">Snippets</a>
+    <a href="#library-assets">Assets</a>
+    <a href="#library-blocks">Theme blocks</a>
+  </nav>
+
+  <div class="starter-library__summary">
+    <div>
+      <strong>19</strong>
+      <span>Reusable ecommerce sections</span>
+    </div>
+    <div>
+      <strong>10</strong>
+      <span>Core page templates</span>
+    </div>
+    <div>
+      <strong>8</strong>
+      <span>Reusable snippets</span>
+    </div>
+    <div>
+      <strong>10</strong>
+      <span>Theme JavaScript/CSS assets</span>
+    </div>
+  </div>
+
+  <section class="starter-library__group" id="library-sections">
+    <header class="starter-library__heading">
+      <p>Reusable sections</p>
+      <h2>Store-building blocks</h2>
+    </header>
+
+    <div class="starter-library__grid">
+      <article class="starter-library-card">
+        <span>Global promo</span>
+        <h3>Announcement bar</h3>
+        <code>sections/announcement-bar.liquid</code>
+        <p>Header-group promotion strip for shipping messages, sale links, or store-wide notices.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Homepage</span>
+        <h3>Hero</h3>
+        <code>sections/hero.liquid</code>
+        <p>First-screen campaign block with heading, rich text, image, and primary/secondary buttons.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Merchandising</span>
+        <h3>Featured collection</h3>
+        <code>sections/featured-collection.liquid</code>
+        <p>Shows products from a selected collection as a grid or horizontal slider.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Merchandising</span>
+        <h3>Product slider</h3>
+        <code>sections/product-slider.liquid</code>
+        <p>Manual product carousel built from product blocks selected in the theme editor.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Content</span>
+        <h3>Media with text</h3>
+        <code>sections/media-with-text.liquid</code>
+        <p>Image plus text layout for brand stories, product benefits, or collection introductions.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Social proof</span>
+        <h3>Logo marquee</h3>
+        <code>sections/logo-marquee.liquid</code>
+        <p>Scrolling or text-based logo row for partner brands, press mentions, or client logos.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Promotion</span>
+        <h3>Countdown promo</h3>
+        <code>sections/countdown-promo.liquid</code>
+        <code>assets/countdown-promo.js</code>
+        <p>Deadline-driven promotion with days, hours, minutes, and seconds.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Content marketing</span>
+        <h3>Featured blog</h3>
+        <code>sections/featured-blog.liquid</code>
+        <p>Displays latest articles from a selected blog using the shared article card snippet.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Support</span>
+        <h3>FAQ</h3>
+        <code>sections/faq.liquid</code>
+        <p>Accordion-style question and answer blocks for shipping, returns, sizing, or product details.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Trust</span>
+        <h3>Trust badges</h3>
+        <code>sections/trust-badges.liquid</code>
+        <p>Benefit cards for free shipping, returns, secure checkout, warranties, and guarantees.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Social proof</span>
+        <h3>Testimonials</h3>
+        <code>sections/testimonials.liquid</code>
+        <p>Customer quotes with rating, author details, and optional customer image.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Campaigns</span>
+        <h3>Promo grid</h3>
+        <code>sections/promo-grid.liquid</code>
+        <p>Card grid for categories, seasonal offers, collection links, and landing page promos.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Navigation</span>
+        <h3>Collection list</h3>
+        <code>sections/collection-list.liquid</code>
+        <p>Selectable collection cards with collection images and product counts.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Email capture</span>
+        <h3>Newsletter promo</h3>
+        <code>sections/newsletter-promo.liquid</code>
+        <p>Stronger visual newsletter signup section for homepage and landing pages.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Decision support</span>
+        <h3>Comparison table</h3>
+        <code>sections/comparison-table.liquid</code>
+        <p>Responsive comparison table for plans, variants, bundles, or product lines.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Content</span>
+        <h3>Tabs</h3>
+        <code>sections/tabs.liquid</code>
+        <code>assets/tabs.js</code>
+        <p>Tabbed content for product details, shipping, materials, sizing, or page content.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Product page</span>
+        <h3>Product recommendations</h3>
+        <code>sections/product-recommendations.liquid</code>
+        <code>assets/product-recommendations.js</code>
+        <p>Shopify recommendations endpoint integration for related products.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Product discovery</span>
+        <h3>Recently viewed products</h3>
+        <code>sections/recently-viewed-products.liquid</code>
+        <code>assets/recently-viewed-products.js</code>
+        <p>LocalStorage-powered product history shown as a reusable product grid.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Conversion</span>
+        <h3>Sticky add to cart</h3>
+        <code>sections/sticky-add-to-cart.liquid</code>
+        <code>assets/sticky-add-to-cart.js</code>
+        <p>Product-page sticky bar that follows the selected variant and uses Ajax add-to-cart.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="starter-library__group" id="library-templates">
+    <header class="starter-library__heading">
+      <p>Templates</p>
+      <h2>Core page structures</h2>
+    </header>
+
+    <div class="starter-library__table" role="table">
+      <div class="starter-library__row starter-library__row--head" role="row">
+        <span role="columnheader">Template</span>
+        <span role="columnheader">Path</span>
+        <span role="columnheader">Purpose</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Homepage</span>
+        <code role="cell">templates/index.json</code>
+        <span role="cell">Default landing page skeleton.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Product</span>
+        <code role="cell">templates/product.json</code>
+        <span role="cell">Product page with gallery, form, recommendations, recently viewed, and sticky add-to-cart.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Collection</span>
+        <code role="cell">templates/collection.json</code>
+        <span role="cell">Product grid, filters, sorting, search, and pagination.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Cart</span>
+        <code role="cell">templates/cart.json</code>
+        <span role="cell">Cart lines, notes, attributes, discounts, and checkout flow.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Blog</span>
+        <code role="cell">templates/blog.json</code>
+        <span role="cell">Article listing with search, tags, and pagination.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Article</span>
+        <code role="cell">templates/article.json</code>
+        <span role="cell">Article page with metadata, image, comments, and structured data.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Search</span>
+        <code role="cell">templates/search.json</code>
+        <span role="cell">Search page with predictive search and mixed result cards.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Contact page</span>
+        <code role="cell">templates/page.contact.json</code>
+        <span role="cell">Contact form page template.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">List collections</span>
+        <code role="cell">templates/list-collections.json</code>
+        <span role="cell">All collections grid with pagination.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Starter library</span>
+        <code role="cell">templates/page.starter-library.json</code>
+        <span role="cell">This documentation and demo page.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="starter-library__group" id="library-snippets">
+    <header class="starter-library__heading">
+      <p>Snippets</p>
+      <h2>Reusable Liquid building blocks</h2>
+    </header>
+
+    <div class="starter-library__grid starter-library__grid--small">
+      <article class="starter-library-card">
+        <h3>Section header</h3>
+        <code>snippets/section-header.liquid</code>
+        <p>Shared heading, eyebrow, description, and alignment markup.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Main button</h3>
+        <code>snippets/main-button.liquid</code>
+        <p>Reusable button link with primary, secondary, and accent variants.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Product card</h3>
+        <code>snippets/product-card.liquid</code>
+        <p>Product image, title, vendor, price, and compare-at price.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Article card</h3>
+        <code>snippets/article-card.liquid</code>
+        <p>Blog/article teaser card with image, metadata, excerpt, and tags.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Image</h3>
+        <code>snippets/image.liquid</code>
+        <p>Responsive image helper with optional link wrapper and loading controls.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Meta tags</h3>
+        <code>snippets/meta-tags.liquid</code>
+        <p>SEO title, description, canonical, social tags, and structured data basics.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>CSS variables</h3>
+        <code>snippets/css-variables.liquid</code>
+        <p>Global theme CSS custom properties from theme settings.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Structured breadcrumbs</h3>
+        <code>snippets/structured-data-breadcrumbs.liquid</code>
+        <p>Breadcrumb JSON-LD for SEO-friendly page context.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="starter-library__group" id="library-assets">
+    <header class="starter-library__heading">
+      <p>Assets</p>
+      <h2>JavaScript and CSS helpers</h2>
+    </header>
+
+    <div class="starter-library__grid starter-library__grid--small">
+      <article class="starter-library-card"><h3>Cart</h3><code>assets/cart.js</code><p>Ajax cart, drawer, section rendering, cart count, notes, attributes, and discounts.</p></article>
+      <article class="starter-library-card"><h3>Product form</h3><code>assets/product-form.js</code><p>Ajax add-to-cart for product forms.</p></article>
+      <article class="starter-library-card"><h3>Product gallery</h3><code>assets/product-gallery.js</code><p>Product media thumbnail switching.</p></article>
+      <article class="starter-library-card"><h3>Predictive search</h3><code>assets/predictive-search.js</code><code>assets/predictive-search.css</code><p>Keyboard-friendly predictive search dropdown.</p></article>
+      <article class="starter-library-card"><h3>Blog filters</h3><code>assets/blog.js</code><p>Blog tag select behavior.</p></article>
+      <article class="starter-library-card"><h3>Countdown promo</h3><code>assets/countdown-promo.js</code><p>Live countdown timer values.</p></article>
+      <article class="starter-library-card"><h3>Tabs</h3><code>assets/tabs.js</code><p>Accessible tab switching.</p></article>
+      <article class="starter-library-card"><h3>Recommendations</h3><code>assets/product-recommendations.js</code><p>Fetches Shopify product recommendations section HTML.</p></article>
+      <article class="starter-library-card"><h3>Recently viewed</h3><code>assets/recently-viewed-products.js</code><p>Tracks product handles and renders recently viewed cards.</p></article>
+      <article class="starter-library-card"><h3>Sticky add to cart</h3><code>assets/sticky-add-to-cart.js</code><p>Shows a sticky product form after the main form scrolls away.</p></article>
+    </div>
+  </section>
+
+  <section class="starter-library__group" id="library-blocks">
+    <header class="starter-library__heading">
+      <p>Theme blocks</p>
+      <h2>Reusable editor blocks</h2>
+    </header>
+
+    <div class="starter-library__grid starter-library__grid--small">
+      <article class="starter-library-card">
+        <h3>Group</h3>
+        <code>blocks/group.liquid</code>
+        <p>Nestable layout wrapper for horizontal or vertical groups of theme blocks.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Text</h3>
+        <code>blocks/text.liquid</code>
+        <p>Reusable text block with title, subtitle, and normal text styles.</p>
+      </article>
+    </div>
+  </section>
+</section>
+
+{% stylesheet %}
+  .starter-library {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 3rem;
+  }
+
+  .starter-library__hero {
+    display: grid;
+    gap: 1rem;
+    max-width: 860px;
+  }
+
+  .starter-library__hero h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    line-height: 1;
+  }
+
+  .starter-library__hero p {
+    max-width: 70ch;
+    color: rgb(92, 95, 98);
+    line-height: 1.6;
+  }
+
+  .starter-library__eyebrow,
+  .starter-library__heading p,
+  .starter-library-card > span {
+    margin: 0;
+    color: rgb(92, 95, 98);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .starter-library__route,
+  .starter-library__note {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    background: rgb(250, 251, 251);
+  }
+
+  .starter-library__route span {
+    color: rgb(92, 95, 98);
+    font-size: 0.85rem;
+  }
+
+  .starter-library code {
+    display: inline-flex;
+    width: max-content;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    background: rgb(244, 244, 245);
+    color: rgb(32, 34, 35);
+    font-size: 0.85rem;
+  }
+
+  .starter-library__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .starter-library__nav a {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 4px;
+    color: currentcolor;
+    text-decoration: none;
+  }
+
+  .starter-library__summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .starter-library__summary > div {
+    display: grid;
+    gap: 0.25rem;
+    padding: 1rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+  }
+
+  .starter-library__summary strong {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .starter-library__summary span {
+    color: rgb(92, 95, 98);
+  }
+
+  .starter-library__group {
+    display: grid;
+    gap: 1.25rem;
+    scroll-margin-top: 2rem;
+  }
+
+  .starter-library__heading {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .starter-library__heading h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+  }
+
+  .starter-library__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .starter-library__grid--small {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .starter-library-card {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    background: white;
+  }
+
+  .starter-library-card h3,
+  .starter-library-card p {
+    margin: 0;
+  }
+
+  .starter-library-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .starter-library-card p {
+    color: rgb(92, 95, 98);
+    line-height: 1.5;
+  }
+
+  .starter-library__table {
+    overflow: hidden;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+  }
+
+  .starter-library__row {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.6fr) minmax(220px, 0.9fr) minmax(240px, 1.5fr);
+  }
+
+  .starter-library__row > * {
+    padding: 0.85rem;
+    border-top: 1px solid rgb(220, 220, 220);
+  }
+
+  .starter-library__row > * + * {
+    border-left: 1px solid rgb(220, 220, 220);
+  }
+
+  .starter-library__row--head {
+    background: rgb(246, 246, 247);
+    font-weight: 700;
+  }
+
+  .starter-library__row--head > * {
+    border-top: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .starter-library__table {
+      overflow-x: auto;
+    }
+
+    .starter-library__row {
+      min-width: 760px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Starter template library",
+  "settings": [],
+  "presets": [{ "name": "Starter template library" }]
+}
+{% endschema %}

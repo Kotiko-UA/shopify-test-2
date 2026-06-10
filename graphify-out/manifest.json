@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "assets/product-form.js": {
-    "mtime": 1781077075.6431754,
-    "ast_hash": "fea73a30b480116155a199bc10865775",
+    "mtime": 1781096273.2572784,
+    "ast_hash": "69e4011386ea6d691c2229cf67452f21",
     "semantic_hash": ""
   },
   "config/settings_data.json": {
@@ -35,13 +35,13 @@
     "semantic_hash": ""
   },
   "locales/en.default.json": {
-    "mtime": 1781079529.7805488,
-    "ast_hash": "ed8e5810caf2100da42fa94e1e544332",
+    "mtime": 1781096105.1719518,
+    "ast_hash": "2ff7b22d239421d37ed1c03fc2ee2466",
     "semantic_hash": ""
   },
   "locales/en.default.schema.json": {
-    "mtime": 1781086314.5675898,
-    "ast_hash": "0fba1e4654d98dcf1a780b6ef63a2be1",
+    "mtime": 1781097242.6715994,
+    "ast_hash": "9b97a6da1dfaf613a1bbdd242fa6a356",
     "semantic_hash": ""
   },
   "sections/footer-group.json": {
@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "sections/header-group.json": {
-    "mtime": 1780385325.747588,
-    "ast_hash": "8fef27f90f0f170f6c757a603020fb0d",
+    "mtime": 1781096054.9675777,
+    "ast_hash": "54b477ea7622cdd80c348286cea876e0",
     "semantic_hash": ""
   },
   "templates/404.json": {
@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "templates/index.json": {
-    "mtime": 1780474176.1957407,
-    "ast_hash": "fad946c4700180729083ba692282a04a",
+    "mtime": 1781096155.7117438,
+    "ast_hash": "2a47870340539f34c3e4ef72f9826ffc",
     "semantic_hash": ""
   },
   "templates/list-collections.json": {
@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "templates/product.json": {
-    "mtime": 1779878639.9667468,
-    "ast_hash": "bbd8b0557697a53cc6c0eece1e9f9556",
+    "mtime": 1781096054.8876615,
+    "ast_hash": "5e2536918a54744a3d999fbf517f02b9",
     "semantic_hash": ""
   },
   "templates/search.json": {
@@ -135,13 +135,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1779878639.954902,
-    "ast_hash": "248e0ab84fafa1d056e4ebb6188215b5",
-    "semantic_hash": ""
-  },
-  "SHOPIFY_LEARNING_PLAN.md": {
-    "mtime": 1781086489.2828417,
-    "ast_hash": "bceaadfcb1b5c7a48f66ac9f78e0b655",
+    "mtime": 1781099387.429716,
+    "ast_hash": "2ea9ba1a2100a68d14848efb577f48fc",
     "semantic_hash": ""
   },
   "assets/icon-account.svg": {
@@ -154,9 +149,39 @@
     "ast_hash": "df246a0e458f17459afc3930ed5388fb",
     "semantic_hash": ""
   },
-  "assets/shoppy-x-ray.svg": {
-    "mtime": 1779878639.9563768,
-    "ast_hash": "fae5863a2cd40905d9be073d97783a6f",
+  "assets/countdown-promo.js": {
+    "mtime": 1781095828.5480824,
+    "ast_hash": "1ac81635c1e7b4809145efc62dbb147d",
+    "semantic_hash": ""
+  },
+  "assets/product-gallery.js": {
+    "mtime": 1781087528.5102105,
+    "ast_hash": "0a76eb219fd2aa0b3153e130211bb354",
+    "semantic_hash": ""
+  },
+  "assets/product-recommendations.js": {
+    "mtime": 1781096034.9911337,
+    "ast_hash": "d550551251cd2fc63dd64987c76857fc",
+    "semantic_hash": ""
+  },
+  "assets/recently-viewed-products.js": {
+    "mtime": 1781096035.1118112,
+    "ast_hash": "d7c555bdf6c6ebf9b830ae0ce49788fd",
+    "semantic_hash": ""
+  },
+  "assets/sticky-add-to-cart.js": {
+    "mtime": 1781096035.2273257,
+    "ast_hash": "c4183fd787ca689d9b2521ac8d29ae06",
+    "semantic_hash": ""
+  },
+  "assets/tabs.js": {
+    "mtime": 1781096034.902415,
+    "ast_hash": "040a2df6f6e5540743a6149d577c6002",
+    "semantic_hash": ""
+  },
+  "templates/page.starter-library.json": {
+    "mtime": 1781099359.0999157,
+    "ast_hash": "6eebba7c48ed11af8a949c2d738e3344",
     "semantic_hash": ""
   }
 }

@@ -37,6 +37,15 @@ Preview this theme using Shopify CLI:
 shopify theme dev
 ```
 
+### Starter library
+
+This theme includes a built-in component reference page:
+
+- Template: `templates/page.starter-library.json`
+- Catalog section: `sections/starter-template-library.liquid`
+
+The `starter-library` page template ships with visual demo sections by default. Shopify themes cannot create admin page records, so create one Shopify page and assign the `starter-library` template to expose it as a storefront URL. During development, you can also preview it on any existing page with `?view=starter-library`.
+
 ## Theme architecture
 
 ```bash
