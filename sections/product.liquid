@@ -104,6 +104,8 @@
         {% for variant in product.variants %}
           <option
             value="{{ variant.id }}"
+            data-variant-price="{{ variant.price | money }}"
+            data-variant-available="{{ variant.available }}"
             {% if variant == current_variant %}
               selected="selected"
             {% endif %}

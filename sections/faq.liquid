@@ -1,0 +1,113 @@
+<section class="faq-section">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    text: section.settings.description,
+    alignment: section.settings.alignment
+  %}
+
+  <div class="faq-section__items">
+    {% for block in section.blocks %}
+      <details class="faq-section__item" {{ block.shopify_attributes }}>
+        <summary>{{ block.settings.question | escape }}</summary>
+        <div class="faq-section__answer">
+          {{ block.settings.answer }}
+        </div>
+      </details>
+    {% endfor %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .faq-section {
+    padding-block: 3rem;
+  }
+
+  .faq-section__items {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .faq-section__item {
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 6px;
+    background-color: white;
+  }
+
+  .faq-section__item summary {
+    cursor: pointer;
+    padding: 1rem;
+    font-weight: 700;
+  }
+
+  .faq-section__answer {
+    padding: 0 1rem 1rem;
+    color: rgb(92, 95, 98);
+    line-height: 1.6;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Questions and answers"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "t:general.question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:labels.question",
+          "default": "What should customers know?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:labels.answer",
+          "default": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.faq",
+      "blocks": [
+        { "type": "question" },
+        { "type": "question" },
+        { "type": "question" }
+      ]
+    }
+  ]
+}
+{% endschema %}

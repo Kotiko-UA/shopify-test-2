@@ -28,6 +28,29 @@ Completed today:
   - removed product metafield/metaobject demo rendering from the default product page
   - kept `snippets/main-button.liquid` and added an `accent` variant
   - renamed the product line item property field to a generic order requests field
+- Expanded the starter template with a reusable ecommerce section library:
+  - hero
+  - featured collection
+  - manual product slider
+  - media with text
+  - logo marquee
+  - countdown promo
+  - featured blog
+  - FAQ
+  - trust badges
+  - testimonials
+  - promo grid
+  - collection list
+  - newsletter promo
+  - comparison table
+  - tabs
+  - announcement bar
+  - product recommendations
+  - recently viewed products
+  - sticky add to cart
+- Added a shared `section-header` snippet for consistent reusable section headings.
+- Added a production-oriented default homepage skeleton in `templates/index.json`.
+- Added product-page starter enhancements in `templates/product.json`.
 - Completed accessibility basics for the starter theme:
   - skip link
   - semantic `main`

@@ -8,6 +8,157 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "New collection",
+        "heading": "Build your next storefront",
+        "description": "<p>A clean starter layout for ecommerce stores, campaigns, and product launches.</p>",
+        "image": "",
+        "image_position": "right",
+        "prioritize_image": true,
+        "primary_label": "Shop now",
+        "primary_link": "",
+        "primary_variant": "primary",
+        "secondary_label": "",
+        "secondary_link": "",
+        "background_color": "#f6f6f7",
+        "padding": 72
+      }
+    },
+    "trust_badges": {
+      "type": "trust-badges",
+      "blocks": {
+        "free_shipping": {
+          "type": "badge",
+          "settings": {
+            "icon": "",
+            "heading": "Free shipping",
+            "text": "<p>Add your shipping threshold or delivery promise.</p>"
+          }
+        },
+        "returns": {
+          "type": "badge",
+          "settings": {
+            "icon": "",
+            "heading": "Easy returns",
+            "text": "<p>Reassure customers before they buy.</p>"
+          }
+        },
+        "secure_checkout": {
+          "type": "badge",
+          "settings": {
+            "icon": "",
+            "heading": "Secure checkout",
+            "text": "<p>Highlight payment safety and trust.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "free_shipping",
+        "returns",
+        "secure_checkout"
+      ],
+      "settings": {
+        "heading": "",
+        "description": "",
+        "alignment": "center"
+      }
+    },
+    "promo_grid": {
+      "type": "promo-grid",
+      "blocks": {
+        "new_arrivals": {
+          "type": "promo",
+          "settings": {
+            "image": "",
+            "heading": "New arrivals",
+            "text": "<p>Feature a category, collection, or campaign.</p>",
+            "button_label": "Shop now",
+            "link": ""
+          }
+        },
+        "best_sellers": {
+          "type": "promo",
+          "settings": {
+            "image": "",
+            "heading": "Best sellers",
+            "text": "<p>Guide customers toward popular products.</p>",
+            "button_label": "Explore",
+            "link": ""
+          }
+        },
+        "sale": {
+          "type": "promo",
+          "settings": {
+            "image": "",
+            "heading": "Limited offers",
+            "text": "<p>Use this card for seasonal promotions.</p>",
+            "button_label": "View deals",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "new_arrivals",
+        "best_sellers",
+        "sale"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Shop by category",
+        "description": "",
+        "alignment": "left"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "shipping": {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Add your delivery timelines and regions here.</p>"
+          }
+        },
+        "returns": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Add the key points of your returns and exchanges policy.</p>"
+          }
+        },
+        "support": {
+          "type": "question",
+          "settings": {
+            "question": "How can customers contact support?",
+            "answer": "<p>Add your support email, chat, or contact page details.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "shipping",
+        "returns",
+        "support"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Questions and answers",
+        "description": "",
+        "alignment": "left"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "trust_badges",
+    "promo_grid",
+    "faq",
+    "newsletter"
+  ]
 }

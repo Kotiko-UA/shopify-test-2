@@ -1,0 +1,68 @@
+{% comment %}
+  Renders a reusable section heading block.
+
+  Accepts:
+  - eyebrow: optional short label
+  - heading: section heading
+  - text: optional rich text/body copy
+  - alignment: left, center, right
+{% endcomment %}
+
+{% assign section_header_alignment = alignment | default: 'left' %}
+
+{% if eyebrow != blank or heading != blank or text != blank %}
+  <header class="section-header section-header--{{ section_header_alignment }}">
+    {% if eyebrow != blank %}
+      <p class="section-header__eyebrow">{{ eyebrow | escape }}</p>
+    {% endif %}
+
+    {% if heading != blank %}
+      <h2>{{ heading | escape }}</h2>
+    {% endif %}
+
+    {% if text != blank %}
+      <div class="section-header__text">
+        {{ text }}
+      </div>
+    {% endif %}
+  </header>
+{% endif %}
+
+{% stylesheet %}
+  .section-header {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 720px;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-header--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section-header--right {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .section-header__eyebrow {
+    margin: 0;
+    color: rgb(92, 95, 98);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .section-header h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.1;
+  }
+
+  .section-header__text {
+    color: rgb(92, 95, 98);
+    line-height: 1.6;
+  }
+{% endstylesheet %}

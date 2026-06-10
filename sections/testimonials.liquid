@@ -1,0 +1,191 @@
+<section class="testimonials">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    text: section.settings.description,
+    alignment: section.settings.alignment
+  %}
+
+  <div class="testimonials__grid">
+    {% for block in section.blocks %}
+      <figure class="testimonial" {{ block.shopify_attributes }}>
+        {% if block.settings.rating > 0 %}
+          <div class="testimonial__rating" aria-label="{{ block.settings.rating }} out of 5">
+            {% for index in (1..block.settings.rating) %}
+              <span aria-hidden="true">*</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if block.settings.quote != blank %}
+          <blockquote>{{ block.settings.quote }}</blockquote>
+        {% endif %}
+
+        <figcaption>
+          {% if block.settings.image != blank %}
+            {% render 'image',
+              class: 'testimonial__image',
+              image: block.settings.image,
+              alt: block.settings.author,
+              width: 96,
+              height: 96,
+              crop: 'center',
+              widths: '48, 72, 96',
+              sizes: '48px'
+            %}
+          {% endif %}
+
+          <span>
+            {% if block.settings.author != blank %}
+              <strong>{{ block.settings.author | escape }}</strong>
+            {% endif %}
+            {% if block.settings.detail != blank %}
+              <small>{{ block.settings.detail | escape }}</small>
+            {% endif %}
+          </span>
+        </figcaption>
+      </figure>
+    {% endfor %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .testimonials {
+    padding-block: 3rem;
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .testimonial {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 1.25rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  .testimonial__rating {
+    display: flex;
+    gap: 0.15rem;
+    font-weight: 700;
+  }
+
+  .testimonial blockquote {
+    margin: 0;
+    color: rgb(60, 60, 60);
+    line-height: 1.6;
+  }
+
+  .testimonial figcaption {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .testimonial__image {
+    width: 48px;
+  }
+
+  .testimonial__image img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .testimonial small {
+    display: block;
+    color: rgb(92, 95, 98);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Customer stories"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "t:general.testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "t:labels.rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "t:labels.quote",
+          "default": "<p>Add a short customer quote that explains why people trust this store.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "t:labels.author",
+          "default": "Customer name"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "t:labels.detail",
+          "default": "Verified buyer"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:labels.image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

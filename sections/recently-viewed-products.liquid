@@ -1,0 +1,101 @@
+<script src="{{ 'recently-viewed-products.js' | asset_url }}" defer></script>
+
+<section
+  class="recently-viewed-products"
+  data-recently-viewed-products
+  data-current-product-handle="{% if product != blank %}{{ product.handle }}{% endif %}"
+  data-product-limit="{{ section.settings.product_limit }}"
+>
+  {% render 'section-header',
+    heading: section.settings.heading,
+    text: section.settings.description,
+    alignment: section.settings.alignment
+  %}
+
+  <div class="recently-viewed-products__grid" data-recently-viewed-products-list></div>
+</section>
+
+{% stylesheet %}
+  .recently-viewed-products {
+    padding-block: 3rem;
+  }
+
+  .recently-viewed-products:has(.recently-viewed-products__grid:empty) {
+    display: none;
+  }
+
+  .recently-viewed-products__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .recently-viewed-card {
+    overflow: hidden;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  .recently-viewed-card__image {
+    aspect-ratio: 1;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .recently-viewed-card__content {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .recently-viewed-card__title {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .recently-viewed-card__price {
+    color: rgb(92, 95, 98);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.recently_viewed_products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Recently viewed"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "t:labels.product_limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "presets": [{ "name": "t:general.recently_viewed_products" }]
+}
+{% endschema %}

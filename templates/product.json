@@ -12,9 +12,24 @@
     "main": {
       "type": "product",
       "settings": {}
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {}
+    },
+    "recently_viewed": {
+      "type": "recently-viewed-products",
+      "settings": {}
+    },
+    "sticky_add_to_cart": {
+      "type": "sticky-add-to-cart",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "recommendations",
+    "recently_viewed",
+    "sticky_add_to_cart"
   ]
 }

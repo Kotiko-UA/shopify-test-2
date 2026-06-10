@@ -1,6 +1,4 @@
 ;(function () {
-	const productForms = document.querySelectorAll('.js-product-form')
-
 	if (!window.themeCart) {
 		throw new Error('themeCart is required before product-form.js')
 	}
@@ -30,73 +28,84 @@
 		form.setAttribute('aria-busy', String(isBusy))
 	}
 
-	productForms.forEach(form => {
-		form.addEventListener('submit', async event => {
-			event.preventDefault()
+	function initProductForms() {
+		const productForms = document.querySelectorAll('.js-product-form')
 
-			const formData = new FormData(form)
-			formData.append('sections', getCartSectionIds().join(','))
+		productForms.forEach(form => {
+			if (form.dataset.productFormInitialized === 'true') return
 
-			const submitButton = form.querySelector('[type="submit"]')
-			const message = form.querySelector('.product-form__message')
-			const originalButtonText = submitButton.value
-			const addingText = form.dataset.addingText
-			const addedText = form.dataset.addedText
-			const errorText = form.dataset.errorText
+			form.dataset.productFormInitialized = 'true'
 
-			setSubmitButtonState(submitButton, {
-				disabled: true,
-				text: addingText,
-			})
-			setFormBusyState(form, true)
+			form.addEventListener('submit', async event => {
+				event.preventDefault()
 
-			setFormMessage(message)
+				const formData = new FormData(form)
+				formData.append('sections', getCartSectionIds().join(','))
 
-			try {
-				const response = await fetch(getShopifyRoute('cart/add.js'), {
-					method: 'POST',
-					body: formData,
-				})
-
-				const result = await response.json()
-
-				if (!response.ok) {
-					throw new Error(result.description || 'Could not add item to cart')
-				}
-
-				const cart = await refreshCart()
-				cart.sections = result.sections
-
-				dispatchCartUpdated(cart, {
-					action: 'add',
-					item: result,
-				})
+				const submitButton = form.querySelector('[type="submit"]')
+				const message = form.querySelector('.product-form__message')
+				const originalButtonText = submitButton.value
+				const addingText = form.dataset.addingText
+				const addedText = form.dataset.addedText
+				const errorText = form.dataset.errorText
 
 				setSubmitButtonState(submitButton, {
 					disabled: true,
-					text: addedText,
+					text: addingText,
 				})
+				setFormBusyState(form, true)
 
-				setFormMessage(message, addedText)
+				setFormMessage(message)
 
-				setTimeout(() => {
+				try {
+					const response = await fetch(getShopifyRoute('cart/add.js'), {
+						method: 'POST',
+						body: formData,
+					})
+
+					const result = await response.json()
+
+					if (!response.ok) {
+						throw new Error(result.description || 'Could not add item to cart')
+					}
+
+					const cart = await refreshCart()
+					cart.sections = result.sections
+
+					dispatchCartUpdated(cart, {
+						action: 'add',
+						item: result,
+					})
+
+					setSubmitButtonState(submitButton, {
+						disabled: true,
+						text: addedText,
+					})
+
+					setFormMessage(message, addedText)
+
+					setTimeout(() => {
+						setSubmitButtonState(submitButton, {
+							disabled: false,
+							text: originalButtonText,
+						})
+						setFormBusyState(form, false)
+					}, 1200)
+				} catch (error) {
+					console.error('Add to cart failed:', error)
+
 					setSubmitButtonState(submitButton, {
 						disabled: false,
 						text: originalButtonText,
 					})
 					setFormBusyState(form, false)
-				}, 1200)
-			} catch (error) {
-				console.error('Add to cart failed:', error)
 
-				setSubmitButtonState(submitButton, {
-					disabled: false,
-					text: originalButtonText,
-				})
-				setFormBusyState(form, false)
-
-				setFormMessage(message, error.message || errorText)
-			}
+					setFormMessage(message, error.message || errorText)
+				}
+			})
 		})
-	})
+	}
+
+	initProductForms()
+	document.addEventListener('shopify:section:load', initProductForms)
 })()

@@ -11,6 +11,16 @@
   "type": "header",
   "name": "t:general.header",
   "sections": {
+    "announcement_bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Free shipping on orders over $100",
+        "link": "",
+        "enable_marquee": false,
+        "background_color": "#202223",
+        "text_color": "#ffffff"
+      }
+    },
     "header": {
       "type": "header",
       "settings": {
@@ -20,6 +30,7 @@
     }
   },
   "order": [
+    "announcement_bar",
     "header"
   ]
 }

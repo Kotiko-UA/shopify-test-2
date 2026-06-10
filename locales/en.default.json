@@ -115,7 +115,31 @@
 			"thumbnails": "Product image thumbnails",
 			"view_image": "View image {{ index }} for {{ title }}"
 		},
-		"order_requests": "Order requests"
+		"order_requests": "Order requests",
+		"sold_out": "Sold out"
+	},
+	"sections": {
+		"collection_list": {
+			"product_count": "{{ count }} products"
+		},
+		"countdown": {
+			"days": "Days",
+			"hours": "Hours",
+			"minutes": "Minutes",
+			"seconds": "Seconds"
+		},
+		"featured_blog": {
+			"empty": "Select a blog to show articles."
+		},
+		"featured_collection": {
+			"empty": "Select a collection to show products."
+		},
+		"logo_marquee": {
+			"empty": "Add logo blocks to show a logo marquee."
+		},
+		"product_slider": {
+			"empty": "Add product blocks to show selected products."
+		}
 	},
 	"search": {
 		"title": "Search",

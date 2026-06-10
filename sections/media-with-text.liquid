@@ -1,0 +1,142 @@
+<section
+  class="media-with-text media-with-text--{{ section.settings.image_position }}"
+  style="--media-with-text-background: {{ section.settings.background_color }};"
+>
+  {% if section.settings.image != blank %}
+    {% render 'image',
+      class: 'media-with-text__image',
+      image: section.settings.image,
+      alt: section.settings.heading,
+      width: 1000,
+      height: 750,
+      crop: 'center',
+      widths: '400, 650, 850, 1000',
+      sizes: '(min-width: 990px) 48vw, 100vw'
+    %}
+  {% endif %}
+
+  <div class="media-with-text__content">
+    {% render 'section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      text: section.settings.description,
+      alignment: 'left'
+    %}
+
+    {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+      {% render 'main-button',
+        label: section.settings.button_label,
+        url: section.settings.button_link,
+        variant: section.settings.button_variant
+      %}
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .media-with-text {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: center;
+    padding-block: 3rem;
+    background-color: var(--media-with-text-background);
+  }
+
+  .media-with-text--right .media-with-text__image {
+    order: 2;
+  }
+
+  .media-with-text__image img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .media-with-text__content {
+    display: grid;
+    align-content: center;
+  }
+
+  .media-with-text .section-header {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .media-with-text {
+      grid-template-columns: 1fr;
+    }
+
+    .media-with-text--right .media-with-text__image {
+      order: initial;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.media_with_text",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:labels.image_position",
+      "options": [
+        { "value": "left", "label": "t:options.position.left" },
+        { "value": "right", "label": "t:options.position.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Tell your brand story"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description",
+      "default": "<p>Pair rich content with a strong image to explain product benefits, sourcing, or brand values.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:labels.button_label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:labels.button_link"
+    },
+    {
+      "type": "select",
+      "id": "button_variant",
+      "label": "t:labels.button_variant",
+      "options": [
+        { "value": "primary", "label": "t:general.primary" },
+        { "value": "secondary", "label": "t:general.secondary" },
+        { "value": "accent", "label": "t:general.accent" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:labels.background",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [{ "name": "t:general.media_with_text" }]
+}
+{% endschema %}

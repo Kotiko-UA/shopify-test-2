@@ -1,0 +1,150 @@
+<script src="{{ 'tabs.js' | asset_url }}" defer></script>
+
+<section class="tabs-section">
+  {% render 'section-header',
+    eyebrow: section.settings.eyebrow,
+    heading: section.settings.heading,
+    text: section.settings.description,
+    alignment: section.settings.alignment
+  %}
+
+  <div class="tabs" data-tabs>
+    <div class="tabs__buttons" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+      {% for block in section.blocks %}
+        <button
+          id="TabButton-{{ section.id }}-{{ block.id }}"
+          class="tabs__button{% if forloop.first %} tabs__button--active{% endif %}"
+          type="button"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="TabPanel-{{ section.id }}-{{ block.id }}"
+          data-tab-button
+          {{ block.shopify_attributes }}
+        >
+          {{ block.settings.title | escape }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <div class="tabs__panels">
+      {% for block in section.blocks %}
+        <div
+          id="TabPanel-{{ section.id }}-{{ block.id }}"
+          class="tabs__panel"
+          role="tabpanel"
+          aria-labelledby="TabButton-{{ section.id }}-{{ block.id }}"
+          {% unless forloop.first %}
+            hidden
+          {% endunless %}
+        >
+          {{ block.settings.content }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .tabs-section {
+    padding-block: 3rem;
+  }
+
+  .tabs {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .tabs__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tabs__button {
+    min-height: 40px;
+    padding: 0.6rem 1rem;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 4px;
+    background: white;
+    color: currentcolor;
+    cursor: pointer;
+  }
+
+  .tabs__button--active {
+    border-color: rgb(32, 34, 35);
+    background: rgb(32, 34, 35);
+    color: white;
+  }
+
+  .tabs__panel {
+    padding: 1rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    line-height: 1.6;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "More information"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "t:general.tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:labels.title",
+          "default": "Tab"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:labels.content",
+          "default": "<p>Add tab content for product details, shipping, returns, materials, or sizing.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.tabs",
+      "blocks": [
+        { "type": "tab" },
+        { "type": "tab" },
+        { "type": "tab" }
+      ]
+    }
+  ]
+}
+{% endschema %}

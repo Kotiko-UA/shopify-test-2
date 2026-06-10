@@ -1,0 +1,116 @@
+<section
+  class="announcement-bar{% if section.settings.enable_marquee %} announcement-bar--marquee{% endif %}"
+  style="
+    --announcement-background: {{ section.settings.background_color }};
+    --announcement-foreground: {{ section.settings.text_color }};
+  "
+>
+  <div class="announcement-bar__track">
+    <div class="announcement-bar__content">
+      {% if section.settings.link != blank %}
+        <a href="{{ section.settings.link }}">{{ section.settings.text | escape }}</a>
+      {% else %}
+        <span>{{ section.settings.text | escape }}</span>
+      {% endif %}
+    </div>
+
+    {% if section.settings.enable_marquee %}
+      <div class="announcement-bar__content" aria-hidden="true">
+        {% if section.settings.link != blank %}
+          <a href="{{ section.settings.link }}" tabindex="-1">{{ section.settings.text | escape }}</a>
+        {% else %}
+          <span>{{ section.settings.text | escape }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .announcement-bar {
+    overflow: hidden;
+    padding: 0.6rem 1rem;
+    background-color: var(--announcement-background);
+    color: var(--announcement-foreground);
+    text-align: center;
+  }
+
+  .announcement-bar a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .announcement-bar__track {
+    display: flex;
+    justify-content: center;
+  }
+
+  .announcement-bar__content {
+    flex: 0 0 auto;
+    padding-inline: 2rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .announcement-bar--marquee .announcement-bar__track {
+    width: max-content;
+    animation: announcement-scroll 24s linear infinite;
+  }
+
+  @keyframes announcement-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .announcement-bar--marquee .announcement-bar__track {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.announcement_bar",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:labels.text",
+      "default": "Free shipping on orders over $100"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:labels.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_marquee",
+      "label": "t:labels.enable_marquee",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:labels.background",
+      "default": "#202223"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:labels.text_color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [{ "name": "t:general.announcement_bar" }]
+}
+{% endschema %}
