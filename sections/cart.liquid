@@ -13,67 +13,94 @@
   {% else %}
     <form class="cart-form" action="{{ routes.cart_url }}" method="post">
       <table class="cart-items">
-        {% for item in cart.items %}
+        <caption class="visually-hidden">
+          {{ 'cart.title' | t }}
+        </caption>
+        <thead class="visually-hidden">
           <tr>
-            <td>
-              {% render 'image', image: item.image, url: item.url, link_label: item.product.title, decorative: true %}
-            </td>
-            <td>
-              <p>{{ item.product.title }}</p>
-              {% unless item.variant.title == 'Default Title' %}
-                <p>{{ item.variant.title }}</p>
-              {% endunless %}
-              {% unless item.properties == empty %}
-                <div class="cart-item__properties">
-                  {% for property in item.properties %}
-                    {% assign first_character = property.first | slice: 0 %}
-                    {% if property.last != blank and first_character != '_' %}
-                      <p>
-                        <strong>{{ property.first }}:</strong>
-                        {{ property.last }}
-                      </p>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-              {% endunless %}
-              <a
-                class="cart-item__remove"
-                href="{{ item.url_to_remove }}"
-                data-cart-remove-button
-                data-line-key="{{ item.key }}"
-              >
-                {{ 'cart.remove' | t }}
-              </a>
-              <p>
-                {% if item.original_price > item.final_price %}
-                  <s>{{ item.original_price | money }}</s>
-                {% endif %}
-                {{ item.final_price | money }} x {{ item.quantity }}
-              </p>
-              <p>{{ 'cart.line_total' | t }}: {{ item.final_line_price | money }}</p>
-              {% if item.line_level_discount_allocations.size > 0 %}
-                <ul class="cart-item__discounts">
-                  {% for discount_allocation in item.line_level_discount_allocations %}
-                    <li>
-                      {{ discount_allocation.discount_application.title }}
-                      - {{ discount_allocation.amount | money }}
-                    </li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
-            </td>
-            <td>
-              <input
-                type="number"
-                min="0"
-                name="updates[{{ item.key }}]"
-                value="{{ item.quantity }}"
-                data-cart-line-quantity
-                data-line-key="{{ item.key }}"
-              >
-            </td>
+            <th scope="col">{{ 'cart.product_image' | t }}</th>
+            <th scope="col">{{ 'cart.product_details' | t }}</th>
+            <th scope="col">{{ 'cart.quantity' | t }}</th>
           </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+          {% for item in cart.items %}
+            <tr>
+              <td>
+                {% render 'image',
+                  image: item.image,
+                  url: item.url,
+                  link_label: item.product.title,
+                  decorative: true,
+                  width: 160,
+                  height: 160,
+                  crop: 'center',
+                  widths: '88, 96, 160',
+                  sizes: '(max-width: 749px) 88px, 96px'
+                %}
+              </td>
+              <th scope="row">
+                <p>{{ item.product.title }}</p>
+                {% unless item.variant.title == 'Default Title' %}
+                  <p>{{ item.variant.title }}</p>
+                {% endunless %}
+                {% unless item.properties == empty %}
+                  <div class="cart-item__properties">
+                    {% for property in item.properties %}
+                      {% assign first_character = property.first | slice: 0 %}
+                      {% if property.last != blank and first_character != '_' %}
+                        <p>
+                          <strong>{{ property.first }}:</strong>
+                          {{ property.last }}
+                        </p>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endunless %}
+                <a
+                  class="cart-item__remove"
+                  href="{{ item.url_to_remove }}"
+                  aria-label="{{ 'cart.remove_item' | t: item: item.product.title | escape }}"
+                  data-cart-remove-button
+                  data-line-key="{{ item.key }}"
+                >
+                  {{ 'cart.remove' | t }}
+                </a>
+                <p>
+                  {% if item.original_price > item.final_price %}
+                    <s>{{ item.original_price | money }}</s>
+                  {% endif %}
+                  {{ item.final_price | money }} x {{ item.quantity }}
+                </p>
+                <p>{{ 'cart.line_total' | t }}: {{ item.final_line_price | money }}</p>
+                {% if item.line_level_discount_allocations.size > 0 %}
+                  <ul class="cart-item__discounts">
+                    {% for discount_allocation in item.line_level_discount_allocations %}
+                      <li>
+                        {{ discount_allocation.discount_application.title }}
+                        - {{ discount_allocation.amount | money }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </th>
+              <td>
+                <label class="visually-hidden" for="CartQuantity-{{ section.id }}-{{ forloop.index }}">
+                  {{ 'cart.quantity_for_item' | t: item: item.product.title }}
+                </label>
+                <input
+                  id="CartQuantity-{{ section.id }}-{{ forloop.index }}"
+                  type="number"
+                  min="0"
+                  name="updates[{{ item.key }}]"
+                  value="{{ item.quantity }}"
+                  data-cart-line-quantity
+                  data-line-key="{{ item.key }}"
+                >
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
       </table>
       <div class="cart-note">
         <label for="cart-note">{{ 'cart.order_note' | t }}</label>
@@ -189,8 +216,11 @@
     border-bottom: 1px solid rgb(220, 220, 220);
   }
 
-  .cart-items td {
+  .cart-items td,
+  .cart-items th {
     padding: 1rem 0.75rem;
+    font-weight: inherit;
+    text-align: left;
     vertical-align: top;
   }
 
@@ -216,7 +246,7 @@
     object-fit: cover;
   }
 
-  .cart-items td:nth-child(2) {
+  .cart-items th[scope='row'] {
     display: grid;
     gap: 0.4rem;
   }
@@ -324,7 +354,8 @@
     .cart-items,
     .cart-items tbody,
     .cart-items tr,
-    .cart-items td {
+    .cart-items td,
+    .cart-items th {
       display: block;
       width: 100%;
     }
@@ -336,7 +367,8 @@
       padding-block: 1rem;
     }
 
-    .cart-items td {
+    .cart-items td,
+    .cart-items th {
       padding: 0;
     }
 

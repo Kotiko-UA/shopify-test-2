@@ -34,7 +34,16 @@
 
   {% if section.settings.show_image and article.image %}
     <div class="article-page__media">
-      {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager', alt: article.title }}
+      {{
+        article.image
+        | image_url: width: 1600
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: article.title,
+          widths: '600, 900, 1200, 1600',
+          sizes: '(min-width: 900px) 860px, calc(100vw - 2rem)'
+      }}
     </div>
   {% endif %}
 

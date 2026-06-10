@@ -5,6 +5,7 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
+{{ 'predictive-search.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
 
 <h1>{{ collection.title }}</h1>
@@ -37,6 +38,7 @@
             aria-expanded="false"
             aria-controls="collection-predictive-search"
             aria-haspopup="listbox"
+            aria-autocomplete="list"
             data-predictive-search-input
           >
           <input type="hidden" name="type" value="product">
@@ -48,6 +50,8 @@
         <div
           id="collection-predictive-search"
           class="predictive-search__panel"
+          role="listbox"
+          aria-label="{{ 'search.predictive.suggestions' | t }}"
           tabindex="-1"
           data-predictive-search-results
           hidden

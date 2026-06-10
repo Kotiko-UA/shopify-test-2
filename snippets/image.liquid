@@ -12,6 +12,10 @@
   @param {string} [class] - Optional class to be added to the image wrapper
   @param {string} [alt] - Optional image alt text
   @param {string} [link_label] - Optional accessible label when the image is wrapped in a link
+  @param {string} [loading] - Image loading strategy, usually lazy or eager
+  @param {string} [fetchpriority] - Browser fetch priority, usually high for the main above-the-fold image
+  @param {string} [widths] - Comma-separated responsive image widths for srcset generation
+  @param {string} [sizes] - Browser size hint that describes the rendered image slot
   @param {number} [width] - The highest resolution width of the image to be rendered
   @param {number} [height] - The highest resolution height of the image to be rendered
   @param {string} [crop] - The crop position of the image
@@ -46,6 +50,11 @@
   else
     assign image_alt = alt | default: image.alt | default: ''
   endif
+
+  assign image_loading = loading | default: 'lazy'
+  assign image_fetchpriority = fetchpriority | default: ''
+  assign image_widths = widths | default: ''
+  assign image_sizes = sizes | default: ''
 %}
 
 <{{ wrapper }}
@@ -57,11 +66,36 @@
     {% endif %}
   {% endif %}
 >
-  {{
-    image
-    | image_url: width: width, height: height, crop: crop
-    | image_tag: alt: image_alt
-  }}
+  {% if image_fetchpriority != blank and image_widths != blank and image_sizes != blank %}
+    {{
+      image
+      | image_url: width: width, height: height, crop: crop
+      | image_tag:
+        alt: image_alt,
+        loading: image_loading,
+        fetchpriority: image_fetchpriority,
+        widths: image_widths,
+        sizes: image_sizes
+    }}
+  {% elsif image_fetchpriority != blank %}
+    {{
+      image
+      | image_url: width: width, height: height, crop: crop
+      | image_tag: alt: image_alt, loading: image_loading, fetchpriority: image_fetchpriority
+    }}
+  {% elsif image_widths != blank and image_sizes != blank %}
+    {{
+      image
+      | image_url: width: width, height: height, crop: crop
+      | image_tag: alt: image_alt, loading: image_loading, widths: image_widths, sizes: image_sizes
+    }}
+  {% else %}
+    {{
+      image
+      | image_url: width: width, height: height, crop: crop
+      | image_tag: alt: image_alt, loading: image_loading
+    }}
+  {% endif %}
 </{{ wrapper }}>
 
 {% stylesheet %}

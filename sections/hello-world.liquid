@@ -46,8 +46,9 @@
             | image_tag:
               widths: '300,600,900,1200',
               sizes: '(min-width: 990px) 300px, 80vw',
-              loading: 'lazy',
-              alt: section.settings.heading
+              loading: 'eager',
+              alt: section.settings.heading,
+              fetchpriority: 'high'
           }}
         </div>
       {%- endif -%}

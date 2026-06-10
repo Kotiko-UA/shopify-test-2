@@ -19,12 +19,29 @@
 <div class="product-page">
   <div class="product-images">
     {% if featured_image %}
-      {% render 'image', class: 'product-image product-image--featured', image: featured_image, width: 900, alt: product.title %}
+      {% render 'image',
+        class: 'product-image product-image--featured',
+        image: featured_image,
+        width: 900,
+        alt: product.title,
+        loading: 'eager',
+        fetchpriority: 'high',
+        widths: '400, 600, 800, 900',
+        sizes: '(min-width: 990px) 50vw, 100vw'
+      %}
     {% endif %}
     {% if product.images.size > 1 %}
       <div class="product-thumbnails">
         {% for image in product.images %}
-          {% render 'image', class: 'product-thumbnail', image: image, width: 120, alt: product.title %}
+          {% render 'image',
+            class: 'product-thumbnail',
+            image: image,
+            width: 160,
+            alt: product.title,
+            loading: 'lazy',
+            widths: '80, 120, 160',
+            sizes: '80px'
+          %}
         {% endfor %}
       </div>
     {% endif %}
@@ -385,25 +402,6 @@
     .product-info h1 {
       font-size: 2rem;
     }
-  }
-
-  .cart-toast {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    z-index: 10;
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    padding: 1rem;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 8px;
-    background-color: white;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  }
-
-  .cart-toast[hidden] {
-    display: none;
   }
 {% endstylesheet %}
 

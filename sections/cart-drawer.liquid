@@ -26,7 +26,12 @@
               {{
                 item.image
                 | image_url: width: 144
-                | image_tag: class: 'cart-drawer__item-image', alt: item.title
+                | image_tag:
+                  class: 'cart-drawer__item-image',
+                  alt: item.title,
+                  loading: 'lazy',
+                  widths: '64, 72, 144',
+                  sizes: '(max-width: 749px) 64px, 72px'
               }}
             {% else %}
               <div class="cart-drawer__item-image"></div>
@@ -55,7 +60,7 @@
                 <button
                   class="cart-drawer__quantity-button"
                   type="button"
-                  aria-label="{{ 'accessibility.decrease_quantity' | t: item: item.product.title }}"
+                  aria-label="{{ 'accessibility.decrease_quantity' | t: item: item.product.title | escape }}"
                   data-cart-quantity-button
                   data-line-key="{{ item.key }}"
                   data-quantity="{{ item.quantity | minus: 1 }}"
@@ -68,7 +73,7 @@
                 <button
                   class="cart-drawer__quantity-button"
                   type="button"
-                  aria-label="{{ 'accessibility.increase_quantity' | t: item: item.product.title }}"
+                  aria-label="{{ 'accessibility.increase_quantity' | t: item: item.product.title | escape }}"
                   data-cart-quantity-button
                   data-line-key="{{ item.key }}"
                   data-quantity="{{ item.quantity | plus: 1 }}"
@@ -82,6 +87,7 @@
               <button
                 class="cart-drawer__remove"
                 type="button"
+                aria-label="{{ 'cart.remove_item' | t: item: item.product.title | escape }}"
                 data-cart-remove-button
                 data-line-key="{{ item.key }}"
               >

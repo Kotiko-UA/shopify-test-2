@@ -41,6 +41,10 @@
 		"subtotal": "Subtotal",
 		"item_count": "{{ count }} items",
 		"original_total": "Original total",
+		"product_details": "Product details",
+		"product_image": "Product image",
+		"quantity_for_item": "Quantity for {{ item }}",
+		"remove_item": "Remove {{ item }}",
 		"total_discount": "Total discount",
 		"items_subtotal": "Items subtotal after product discounts",
 		"line_total": "Line total",
@@ -131,7 +135,8 @@
 			"articles": "Articles",
 			"pages": "Pages",
 			"products": "Products",
-			"search_for_html": "Search for {{ terms }}"
+			"search_for_html": "Search for {{ terms }}",
+			"suggestions": "Search suggestions"
 		}
 	},
 	"hello_world": {

@@ -13,9 +13,9 @@
       <div class="predictive-search-results__group">
         <h2 class="predictive-search-results__heading">{{ 'search.predictive.products' | t }}</h2>
 
-        <ul class="predictive-search-results__list" role="listbox">
+        <ul class="predictive-search-results__list">
           {% for product in predictive_search.resources.products %}
-            <li class="predictive-search-results__item" role="option">
+            <li class="predictive-search-results__item">
               <a class="predictive-search-results__link" href="{{ product.url }}">
                 {% if product.featured_image %}
                   {{
@@ -40,9 +40,9 @@
       <div class="predictive-search-results__group">
         <h2 class="predictive-search-results__heading">{{ 'search.predictive.pages' | t }}</h2>
 
-        <ul class="predictive-search-results__list" role="listbox">
+        <ul class="predictive-search-results__list">
           {% for page in predictive_search.resources.pages %}
-            <li class="predictive-search-results__item" role="option">
+            <li class="predictive-search-results__item">
               <a class="predictive-search-results__link" href="{{ page.url }}">
                 <span class="predictive-search-results__title">{{ page.title | escape }}</span>
               </a>
@@ -56,9 +56,9 @@
       <div class="predictive-search-results__group">
         <h2 class="predictive-search-results__heading">{{ 'search.predictive.articles' | t }}</h2>
 
-        <ul class="predictive-search-results__list" role="listbox">
+        <ul class="predictive-search-results__list">
           {% for article in predictive_search.resources.articles %}
-            <li class="predictive-search-results__item" role="option">
+            <li class="predictive-search-results__item">
               <a class="predictive-search-results__link" href="{{ article.url }}">
                 <span class="predictive-search-results__title">{{ article.title | escape }}</span>
               </a>
