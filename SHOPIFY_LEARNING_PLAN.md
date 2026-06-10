@@ -17,6 +17,45 @@ Learning mode:
 - 20% Learner completes feature blocks and explains the logic.
 - 10% Codex reviews code for Shopify best practices, bugs, and maintainability.
 
+## Latest Session Summary - 2026-06-10
+
+Completed today:
+
+- Completed accessibility basics for the starter theme:
+  - skip link
+  - semantic `main`
+  - focus states
+  - accessible cart drawer behavior
+  - form error/status announcements
+  - image alt/decorative image handling
+  - predictive search keyboard support
+- Completed performance basics for the starter theme:
+  - responsive image `widths` and `sizes`
+  - `loading: 'lazy'` for non-critical images
+  - `loading: 'eager'` and `fetchpriority: 'high'` for first-screen images
+  - conditional loading of `product-form.js`
+  - moved predictive search styles out of global `critical.css`
+  - conditional loading of predictive search CSS/JS on collection and blog pages
+  - reviewed Liquid performance basics: `paginate`, `limit`, conditional rendering, and avoiding unnecessary loops/assets
+  - added pagination to the list-collections section
+  - added configurable product thumbnail rendering with a safe thumbnail limit
+  - added responsive/lazy background image handling for custom sections, with an opt-in priority setting for above-the-fold backgrounds
+
+Current starter-template status:
+
+- Product, collection, blog, search, cart, cart drawer, forms, metafields, metaobjects, SEO, accessibility, and performance now have practical starter-template coverage.
+- The theme is no longer only a learning sandbox; it is moving toward a reusable ecommerce starter template.
+
+Progress update:
+
+- Point 35, Accessibility, is completed for starter-template essentials.
+- Point 36, Performance, is completed for starter-template essentials.
+
+Next recommended topic:
+
+- Continue with point 37: Theme Check.
+- The learner also plans to bring a layout/mockup task next.
+
 ## Latest Session Summary - 2026-06-09
 
 Completed today:

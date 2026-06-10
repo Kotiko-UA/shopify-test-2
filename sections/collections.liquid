@@ -7,35 +7,45 @@
 
 <h1>{{ 'collections.title' | t }}</h1>
 
-<div
-  class="collections {{ section.settings.grid_item_width }}"
-  style="--grid-gap: {{ section.settings.grid_gap }}px"
->
-  {% for collection in collections %}
-    <a class="collection-card" href="{{ collection.url }}">
-      {% if collection.featured_image %}
-        {% render 'image',
-          class: 'collection-card__image',
-          image: collection.featured_image,
-          alt: collection.title,
-          width: 700,
-          height: 700,
-          crop: 'center',
-          widths: '200, 300, 400, 500, 700',
-          sizes: '(min-width: 990px) 280px, (min-width: 750px) 33vw, 100vw'
-        %}
-      {% endif %}
+{% assign collections_per_page = section.settings.collections_per_page | default: 24 %}
 
-      <div class="collection-card__content">
-        <p>{{ collection.title }}</p>
-
-        {% if collection.description %}
-          <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
+{% paginate collections by collections_per_page %}
+  <div
+    class="collections {{ section.settings.grid_item_width }}"
+    style="--grid-gap: {{ section.settings.grid_gap }}px"
+  >
+    {% for collection in collections %}
+      <a class="collection-card" href="{{ collection.url }}">
+        {% if collection.featured_image %}
+          {% render 'image',
+            class: 'collection-card__image',
+            image: collection.featured_image,
+            alt: collection.title,
+            width: 700,
+            height: 700,
+            crop: 'center',
+            widths: '200, 300, 400, 500, 700',
+            sizes: '(min-width: 990px) 280px, (min-width: 750px) 33vw, 100vw'
+          %}
         {% endif %}
-      </div>
-    </a>
-  {% endfor %}
-</div>
+
+        <div class="collection-card__content">
+          <p>{{ collection.title }}</p>
+
+          {% if collection.description %}
+            <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div class="collections-pagination">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endif %}
+{% endpaginate %}
 
 {% stylesheet %}
   .collections {
@@ -53,6 +63,17 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+
+  .collections-pagination {
+    margin-top: 2rem;
+  }
+
+  .collections-pagination .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
   }
 {% endstylesheet %}
 
@@ -79,6 +100,15 @@
       "step": 5,
       "unit": "px",
       "default": 10
+    },
+    {
+      "type": "range",
+      "id": "collections_per_page",
+      "label": "t:labels.collections_per_page",
+      "min": 4,
+      "max": 48,
+      "step": 4,
+      "default": 24
     }
   ],
   "presets": [{ "name": "t:general.collections_grid" }]

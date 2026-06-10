@@ -15,6 +15,7 @@
 {% if snowboard_binding_mount != blank or snowboard_length != blank %}
   {% assign has_snowboard_specifications = true %}
 {% endif %}
+{% assign thumbnail_limit = section.settings.thumbnail_limit | default: 8 %}
 
 <div class="product-page">
   <div class="product-images">
@@ -30,9 +31,9 @@
         sizes: '(min-width: 990px) 50vw, 100vw'
       %}
     {% endif %}
-    {% if product.images.size > 1 %}
+    {% if section.settings.show_thumbnails != false and product.images.size > 1 %}
       <div class="product-thumbnails">
-        {% for image in product.images %}
+        {% for image in product.images limit: thumbnail_limit %}
           {% render 'image',
             class: 'product-thumbnail',
             image: image,
@@ -420,6 +421,21 @@
       "id": "show_metafields",
       "label": "t:labels.show_metafields",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumbnails",
+      "label": "t:labels.show_thumbnails",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_limit",
+      "label": "t:labels.thumbnail_limit",
+      "min": 4,
+      "max": 20,
+      "step": 4,
+      "default": 8
     }
   ],
   "disabled_on": {

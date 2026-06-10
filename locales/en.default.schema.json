@@ -38,6 +38,7 @@
 		"alignment": "Alignment",
 		"articles_per_page": "Articles per page",
 		"background": "Background",
+		"collections_per_page": "Collections per page",
 		"comments_per_page": "Comments per page",
 		"foreground": "Foreground",
 		"grid_gap": "Grid spacing",
@@ -52,6 +53,7 @@
 		"padding": "Padding",
 		"page_margin": "Page margin",
 		"page_width": "Page width",
+		"prioritize_background_image": "Prioritize background image",
 		"show_payment_icons": "Show payment icons",
 		"show_phone": "Show phone field",
 		"show_subject": "Show subject field",
@@ -67,9 +69,12 @@
 		"show_excerpt": "Show excerpt",
 		"show_image": "Show image",
 		"show_metafields": "Show metafields",
+		"show_search": "Show search",
 		"show_tag_filter": "Show tag filter",
 		"show_tags": "Show tags",
+		"show_thumbnails": "Show thumbnails",
 		"show_vendor": "Show vendor",
+		"thumbnail_limit": "Thumbnail limit",
 		"products_per_page": "Products per page"
 	},
 	"options": {

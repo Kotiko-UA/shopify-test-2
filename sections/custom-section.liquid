@@ -1,7 +1,28 @@
 <div class="custom-section full-width">
   {% if section.settings.background_image %}
     <div class="custom-section__background" aria-hidden="true">
-      {{ section.settings.background_image | image_url: width: 2000 | image_tag: alt: '' }}
+      {% if section.settings.prioritize_background_image %}
+        {{
+          section.settings.background_image
+          | image_url: width: 2000
+          | image_tag:
+            alt: '',
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '750, 1100, 1500, 2000',
+            sizes: '100vw'
+        }}
+      {% else %}
+        {{
+          section.settings.background_image
+          | image_url: width: 2000
+          | image_tag:
+            alt: '',
+            loading: 'lazy',
+            widths: '750, 1100, 1500, 2000',
+            sizes: '100vw'
+        }}
+      {% endif %}
     </div>
   {% endif %}
 
@@ -49,6 +70,12 @@
       "type": "image_picker",
       "id": "background_image",
       "label": "t:labels.background"
+    },
+    {
+      "type": "checkbox",
+      "id": "prioritize_background_image",
+      "label": "t:labels.prioritize_background_image",
+      "default": false
     }
   ],
   "presets": [

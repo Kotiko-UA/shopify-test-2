@@ -5,8 +5,10 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
-{{ 'predictive-search.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
+{% if section.settings.show_search != false %}
+  {{ 'predictive-search.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
+{% endif %}
 
 <h1>{{ collection.title }}</h1>
 {% if collection.description != blank %}
@@ -20,44 +22,46 @@
   <div class="collection-toolbar">
     <p class="collection-product-count">{{ 'collections.product_count' | t: count: paginate.items }}</p>
 
-    <predictive-search
-      class="collection-predictive-search"
-      data-predictive-search-url="{{ routes.predictive_search_url }}"
-      data-predictive-search-types="product"
-    >
-      <form class="collection-search-form" action="{{ routes.search_url }}" method="get" role="search">
-        <label for="CollectionProductSearch">{{ 'collections.search_products' | t }}</label>
-        <div class="collection-search-form__row">
-          <input
-            id="CollectionProductSearch"
-            type="search"
-            name="q"
-            placeholder="{{ 'collections.search_placeholder' | t }}"
-            autocomplete="off"
-            role="combobox"
-            aria-expanded="false"
-            aria-controls="collection-predictive-search"
-            aria-haspopup="listbox"
-            aria-autocomplete="list"
-            data-predictive-search-input
-          >
-          <input type="hidden" name="type" value="product">
-          <input type="hidden" name="options[prefix]" value="last">
-          <input type="hidden" name="options[unavailable_products]" value="last">
-          <button type="submit">{{ 'search.submit' | t }}</button>
-        </div>
+    {% if section.settings.show_search != false %}
+      <predictive-search
+        class="collection-predictive-search"
+        data-predictive-search-url="{{ routes.predictive_search_url }}"
+        data-predictive-search-types="product"
+      >
+        <form class="collection-search-form" action="{{ routes.search_url }}" method="get" role="search">
+          <label for="CollectionProductSearch">{{ 'collections.search_products' | t }}</label>
+          <div class="collection-search-form__row">
+            <input
+              id="CollectionProductSearch"
+              type="search"
+              name="q"
+              placeholder="{{ 'collections.search_placeholder' | t }}"
+              autocomplete="off"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="collection-predictive-search"
+              aria-haspopup="listbox"
+              aria-autocomplete="list"
+              data-predictive-search-input
+            >
+            <input type="hidden" name="type" value="product">
+            <input type="hidden" name="options[prefix]" value="last">
+            <input type="hidden" name="options[unavailable_products]" value="last">
+            <button type="submit">{{ 'search.submit' | t }}</button>
+          </div>
 
-        <div
-          id="collection-predictive-search"
-          class="predictive-search__panel"
-          role="listbox"
-          aria-label="{{ 'search.predictive.suggestions' | t }}"
-          tabindex="-1"
-          data-predictive-search-results
-          hidden
-        ></div>
-      </form>
-    </predictive-search>
+          <div
+            id="collection-predictive-search"
+            class="predictive-search__panel"
+            role="listbox"
+            aria-label="{{ 'search.predictive.suggestions' | t }}"
+            tabindex="-1"
+            data-predictive-search-results
+            hidden
+          ></div>
+        </form>
+      </predictive-search>
+    {% endif %}
 
     <form class="collection-sort-form" method="get">
       {% for filter in collection.filters %}
@@ -486,6 +490,12 @@
       "max": 24,
       "step": 4,
       "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "t:labels.show_search",
+      "default": true
     },
     {
       "type": "checkbox",
