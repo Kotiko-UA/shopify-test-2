@@ -1,6 +1,7 @@
 {
 	"general": {
 		"404": "Not found",
+		"accent": "Accent",
 		"article": "Article",
 		"block": "Block",
 		"blog": "Blog",
@@ -68,7 +69,6 @@
 		"show_date": "Show date",
 		"show_excerpt": "Show excerpt",
 		"show_image": "Show image",
-		"show_metafields": "Show metafields",
 		"show_search": "Show search",
 		"show_tag_filter": "Show tag filter",
 		"show_tags": "Show tags",

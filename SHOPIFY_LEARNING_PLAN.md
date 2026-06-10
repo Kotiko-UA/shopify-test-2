@@ -21,6 +21,13 @@ Learning mode:
 
 Completed today:
 
+- Started starter-template cleanup:
+  - removed learning-only homepage demo sections
+  - removed the demo badge block
+  - removed the sample SVG logo asset
+  - removed product metafield/metaobject demo rendering from the default product page
+  - kept `snippets/main-button.liquid` and added an `accent` variant
+  - renamed the product line item property field to a generic order requests field
 - Completed accessibility basics for the starter theme:
   - skip link
   - semantic `main`
@@ -43,7 +50,8 @@ Completed today:
 
 Current starter-template status:
 
-- Product, collection, blog, search, cart, cart drawer, forms, metafields, metaobjects, SEO, accessibility, and performance now have practical starter-template coverage.
+- Product, collection, blog, search, cart, cart drawer, forms, SEO, accessibility, and performance now have practical starter-template coverage.
+- Metafields and metaobjects were studied, but their demo product-page rendering was removed from the starter template so the default product page stays generic.
 - The theme is no longer only a learning sandbox; it is moving toward a reusable ecommerce starter template.
 
 Progress update:

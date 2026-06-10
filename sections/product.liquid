@@ -7,43 +7,57 @@
 
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
-{% assign snowboard_binding_mount = product.metafields.test_data.binding_mount %}
-{% assign snowboard_length = product.metafields.test_data.snowboard_length %}
-{% assign product_features_metafield = product.metafields.custom.snowboard_features %}
-{% assign product_features = product_features_metafield.value %}
-{% assign has_snowboard_specifications = false %}
-{% if snowboard_binding_mount != blank or snowboard_length != blank %}
-  {% assign has_snowboard_specifications = true %}
-{% endif %}
 {% assign thumbnail_limit = section.settings.thumbnail_limit | default: 8 %}
 
 <div class="product-page">
   <div class="product-images">
     {% if featured_image %}
-      {% render 'image',
-        class: 'product-image product-image--featured',
-        image: featured_image,
-        width: 900,
-        alt: product.title,
-        loading: 'eager',
-        fetchpriority: 'high',
-        widths: '400, 600, 800, 900',
-        sizes: '(min-width: 990px) 50vw, 100vw'
-      %}
-    {% endif %}
-    {% if section.settings.show_thumbnails != false and product.images.size > 1 %}
-      <div class="product-thumbnails">
-        {% for image in product.images limit: thumbnail_limit %}
-          {% render 'image',
-            class: 'product-thumbnail',
-            image: image,
-            width: 160,
-            alt: product.title,
-            loading: 'lazy',
-            widths: '80, 120, 160',
-            sizes: '80px'
-          %}
-        {% endfor %}
+      <div class="product-gallery" data-product-gallery>
+        <div class="image product-image product-image--featured" data-product-gallery-featured>
+          {{
+            featured_image
+            | image_url: width: 900
+            | image_tag:
+              alt: product.title,
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '400, 600, 800, 900',
+              sizes: '(min-width: 990px) 50vw, 100vw'
+          }}
+        </div>
+
+        {% if section.settings.show_thumbnails != false and product.images.size > 1 %}
+          <div class="product-thumbnails" aria-label="{{ 'products.gallery.thumbnails' | t }}">
+            {% for image in product.images limit: thumbnail_limit %}
+              {% assign image_alt = image.alt | default: product.title %}
+              {% assign gallery_image_height = 900 | times: image.height | divided_by: image.width %}
+              {% assign is_active_thumbnail = false %}
+              {% if image.id == featured_image.id %}
+                {% assign is_active_thumbnail = true %}
+              {% endif %}
+
+              <button
+                class="product-thumbnail{% if is_active_thumbnail %} product-thumbnail--active{% endif %}"
+                type="button"
+                aria-label="{{ 'products.gallery.view_image' | t: index: forloop.index, title: product.title | escape }}"
+                aria-current="{% if is_active_thumbnail %}true{% else %}false{% endif %}"
+                data-product-gallery-thumbnail
+                data-gallery-src="{{ image | image_url: width: 900 }}"
+                data-gallery-srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 900 }} 900w"
+                data-gallery-sizes="(min-width: 990px) 50vw, 100vw"
+                data-gallery-alt="{{ image_alt | escape }}"
+                data-gallery-width="900"
+                data-gallery-height="{{ gallery_image_height }}"
+              >
+                {{
+                  image
+                  | image_url: width: 160, height: 160, crop: 'center'
+                  | image_tag: alt: '', loading: 'lazy', widths: '80, 120, 160', sizes: '80px'
+                }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
     {% endif %}
   </div>
@@ -68,43 +82,6 @@
       {{ product.description }}
     </div>
 
-    {% if section.settings.show_metafields and has_snowboard_specifications %}
-      <div class="product-metafields">
-        <h2>{{ 'products.metafields.specifications' | t }}</h2>
-
-        <dl class="product-metafields__specifications">
-          {% if snowboard_binding_mount != blank %}
-            <div class="product-metafields__specification">
-              <dt>{{ 'products.metafields.snowboard_binding_mount' | t }}</dt>
-              <dd>{{ snowboard_binding_mount.value }}</dd>
-            </div>
-          {% endif %}
-
-          {% if snowboard_length != blank %}
-            <div class="product-metafields__specification">
-              <dt>{{ 'products.metafields.snowboard_length' | t }}</dt>
-              <dd>{{ snowboard_length | metafield_tag }}</dd>
-            </div>
-          {% endif %}
-        </dl>
-      </div>
-    {% endif %}
-
-    {% if section.settings.show_metafields and product_features != blank %}
-      <div class="product-features">
-        <h2>{{ 'products.metaobjects.features' | t }}</h2>
-
-        <div class="product-features__grid">
-          {% if product_features_metafield.list? %}
-            {% for feature in product_features %}
-              {% render 'product-feature-card', feature: feature %}
-            {% endfor %}
-          {% else %}
-            {% render 'product-feature-card', feature: product_features %}
-          {% endif %}
-        </div>
-      </div>
-    {% endif %}
   </div>
 
   <div class="product-form">
@@ -154,19 +131,16 @@
         value="1"
       >
       <div class="product-form__property">
-        <label for="gift-message">Gift message</label>
+        <label for="ProductOrderRequests-{{ section.id }}">
+          {{ 'products.order_requests' | t }}
+        </label>
 
-        <input
-          id="gift-message"
-          type="text"
-          name="properties[Gift message]"
-        >
+        <textarea
+          id="ProductOrderRequests-{{ section.id }}"
+          name="properties[Order requests]"
+          rows="3"
+        ></textarea>
       </div>
-      <input
-        type="hidden"
-        name="properties[_source]"
-        value="product-page"
-      >
 
       <input
         type="submit"
@@ -244,87 +218,6 @@
     line-height: 1.5;
   }
 
-  .product-metafields {
-    display: grid;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgb(220, 220, 220);
-  }
-
-  .product-metafields h2 {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  .product-metafields__specifications {
-    display: grid;
-    gap: 0.5rem;
-    margin: 0;
-  }
-
-  .product-metafields__specification {
-    display: grid;
-    grid-template-columns: minmax(120px, 0.4fr) minmax(0, 1fr);
-    gap: 1rem;
-    align-items: baseline;
-  }
-
-  .product-metafields__specification dt {
-    font-weight: 700;
-  }
-
-  .product-metafields__specification dd {
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  .product-features {
-    display: grid;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgb(220, 220, 220);
-  }
-
-  .product-features h2 {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  .product-features__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0.75rem;
-  }
-
-  .product-feature {
-    display: grid;
-    gap: 0.5rem;
-    padding: 0.75rem;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 6px;
-  }
-
-  .product-feature__icon img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-  }
-
-  .product-feature h3 {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  .product-feature__text {
-    line-height: 1.5;
-  }
-
-  .product-feature__text p {
-    margin: 0;
-  }
-
   .product-image--featured img {
     border-radius: 8px;
   }
@@ -340,11 +233,17 @@
 
   .js-product-form select,
   .js-product-form input[type='text'],
-  .js-product-form input[type='number'] {
+  .js-product-form input[type='number'],
+  .js-product-form textarea {
     min-height: 40px;
     padding: 0.5rem 0.75rem;
     border: 1px solid rgb(180, 180, 180);
     border-radius: 4px;
+  }
+
+  .js-product-form textarea {
+    min-height: 88px;
+    resize: vertical;
   }
 
   .product-form__quantity {
@@ -378,10 +277,25 @@
   }
 
   .product-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    display: flex;
     gap: 0.5rem;
+    overflow-x: auto;
     margin-top: 0.75rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .product-thumbnail {
+    flex: 0 0 80px;
+    width: 80px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .product-thumbnail--active {
+    border-color: rgb(32, 34, 35);
   }
 
   .product-thumbnail img {
@@ -414,12 +328,6 @@
       "type": "checkbox",
       "id": "show_vendor",
       "label": "t:labels.show_vendor",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_metafields",
-      "label": "t:labels.show_metafields",
       "default": true
     },
     {

@@ -111,14 +111,11 @@
 		"enter": "Enter"
 	},
 	"products": {
-		"metafields": {
-			"specifications": "Specifications",
-			"snowboard_binding_mount": "Binding mount",
-			"snowboard_length": "Snowboard length"
+		"gallery": {
+			"thumbnails": "Product image thumbnails",
+			"view_image": "View image {{ index }} for {{ title }}"
 		},
-		"metaobjects": {
-			"features": "Features"
-		}
+		"order_requests": "Order requests"
 	},
 	"search": {
 		"title": "Search",
@@ -138,11 +135,6 @@
 			"search_for_html": "Search for {{ terms }}",
 			"suggestions": "Search suggestions"
 		}
-	},
-	"hello_world": {
-		"featured_collection": "Featured collection:",
-		"featured_product": "Featured product:",
-		"featured_page": "Featured page:"
 	},
 	"navigation": {
 		"menu": "Menu"
