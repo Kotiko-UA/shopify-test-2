@@ -2,6 +2,16 @@
 	const cartToast = document.querySelector('.cart-toast')
 	const cartToastText = document.querySelector('.cart-toast__text')
 	let cartToastTimeout
+	let lastCartDrawerTrigger = null
+
+	const focusableSelector = [
+		'a[href]',
+		'button:not([disabled])',
+		'input:not([disabled])',
+		'select:not([disabled])',
+		'textarea:not([disabled])',
+		'[tabindex]:not([tabindex="-1"])',
+	].join(',')
 
 	function getCartDrawer() {
 		return document.querySelector('[data-cart-drawer]')
@@ -105,10 +115,18 @@
 
 	function updateCartCount(cart) {
 		const cartCount = document.querySelector('.header__cart-count')
+		const cartLink = document.querySelector('[data-cart-drawer-trigger]')
 
 		if (cartCount) {
 			cartCount.textContent = cart.item_count
 			cartCount.hidden = cart.item_count === 0
+		}
+
+		if (cartLink?.dataset.cartLabelTemplate) {
+			cartLink.setAttribute(
+				'aria-label',
+				cartLink.dataset.cartLabelTemplate.replace('COUNT', cart.item_count),
+			)
 		}
 	}
 
@@ -197,24 +215,86 @@
 		)
 	}
 
+	function getFocusableElements(container) {
+		return [...container.querySelectorAll(focusableSelector)].filter(
+			element =>
+				element.offsetParent !== null ||
+				element === document.activeElement,
+		)
+	}
+
+	function getCartDrawerTrigger() {
+		return document.querySelector('[data-cart-drawer-trigger]')
+	}
+
+	function setCartDrawerExpanded(isExpanded) {
+		getCartDrawerTrigger()?.setAttribute('aria-expanded', String(isExpanded))
+	}
+
+	function isCartDrawerOpen() {
+		const cartDrawer = getCartDrawer()
+
+		return Boolean(cartDrawer && !cartDrawer.hidden)
+	}
+
 	function openCartDrawer() {
 		const cartDrawer = getCartDrawer()
 
 		if (!cartDrawer) return
 
+		lastCartDrawerTrigger = getCartDrawerTrigger()
 		cartDrawer.hidden = false
 		cartDrawer.setAttribute('aria-hidden', 'false')
+		setCartDrawerExpanded(true)
 		document.documentElement.classList.add('cart-drawer-open')
+
+		const focusableElements = getFocusableElements(cartDrawer)
+		focusableElements[0]?.focus()
 	}
 
 	function closeCartDrawer() {
 		const cartDrawer = getCartDrawer()
 
-		if (!cartDrawer) return
+		if (!cartDrawer || cartDrawer.hidden) return
 
 		cartDrawer.hidden = true
 		cartDrawer.setAttribute('aria-hidden', 'true')
+		setCartDrawerExpanded(false)
 		document.documentElement.classList.remove('cart-drawer-open')
+
+		if (lastCartDrawerTrigger?.isConnected) {
+			lastCartDrawerTrigger.focus()
+		} else {
+			getCartDrawerTrigger()?.focus()
+		}
+	}
+
+	function keepFocusInCartDrawer(event) {
+		const cartDrawer = getCartDrawer()
+
+		if (!cartDrawer || cartDrawer.hidden || event.key !== 'Tab') return
+
+		const focusableElements = getFocusableElements(cartDrawer)
+
+		if (focusableElements.length === 0) {
+			event.preventDefault()
+			return
+		}
+
+		const firstFocusableElement = focusableElements[0]
+		const lastFocusableElement =
+			focusableElements[focusableElements.length - 1]
+
+		if (event.shiftKey && document.activeElement === firstFocusableElement) {
+			event.preventDefault()
+			lastFocusableElement.focus()
+			return
+		}
+
+		if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+			event.preventDefault()
+			firstFocusableElement.focus()
+		}
 	}
 
 	document.addEventListener('cart:updated', event => {
@@ -282,6 +362,7 @@
 		if (!trigger) return
 
 		event.preventDefault()
+		lastCartDrawerTrigger = trigger
 
 		await refreshCart()
 		await refreshRenderedSections()
@@ -408,9 +489,12 @@
 	})
 
 	document.addEventListener('keydown', event => {
-		if (event.key === 'Escape') {
+		if (event.key === 'Escape' && isCartDrawerOpen()) {
 			closeCartDrawer()
+			return
 		}
+
+		keepFocusInCartDrawer(event)
 	})
 
 	window.themeCart = {

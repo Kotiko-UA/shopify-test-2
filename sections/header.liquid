@@ -79,6 +79,9 @@
       class="header__cart-link"
       href="{{ routes.cart_url }}"
       aria-label="{{ 'accessibility.cart' | t: count: cart.item_count }}"
+      aria-controls="CartDrawer"
+      aria-expanded="false"
+      data-cart-label-template="{{ 'accessibility.cart' | t: count: 'COUNT' | escape }}"
       data-cart-drawer-trigger
     >
       <sup

@@ -19,12 +19,12 @@
 <div class="product-page">
   <div class="product-images">
     {% if featured_image %}
-      {% render 'image', class: 'product-image product-image--featured', image: featured_image, width: 900 %}
+      {% render 'image', class: 'product-image product-image--featured', image: featured_image, width: 900, alt: product.title %}
     {% endif %}
     {% if product.images.size > 1 %}
       <div class="product-thumbnails">
         {% for image in product.images %}
-          {% render 'image', class: 'product-thumbnail', image: image, width: 120 %}
+          {% render 'image', class: 'product-thumbnail', image: image, width: 120, alt: product.title %}
         {% endfor %}
       </div>
     {% endif %}
@@ -101,7 +101,7 @@
       data-error-text: error_text
     %}
       {% if form.errors %}
-        <div class="product-form__errors">
+        <div class="product-form__errors" role="alert">
           {{ form.errors | default_errors }}
         </div>
       {% endif %}
@@ -157,7 +157,7 @@
           disabled
         {% endunless %}
       >
-      <p class="product-form__message" hidden></p>
+      <p class="product-form__message" role="status" aria-live="polite" hidden></p>
       {{ form | payment_button }}
     {% endform %}
   </div>

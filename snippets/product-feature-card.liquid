@@ -8,7 +8,7 @@
 {% if feature != blank %}
   <article class="product-feature">
     {% if feature.icon != blank %}
-      {% render 'image', image: feature.icon.value, class: 'product-feature__icon', width: 120 %}
+      {% render 'image', image: feature.icon.value, class: 'product-feature__icon', width: 120, decorative: true %}
     {% endif %}
 
     {% if feature.title != blank %}

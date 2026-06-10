@@ -37,7 +37,7 @@
     {% sections 'footer-group' %}
     {% section 'cart-drawer' %}
 
-    <div class="cart-toast" hidden data-added-text="{{ 'cart.added' | t }}">
+    <div class="cart-toast" hidden role="status" aria-live="polite" data-added-text="{{ 'cart.added' | t }}">
       <span class="cart-toast__text"></span>
       <a href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
     </div>

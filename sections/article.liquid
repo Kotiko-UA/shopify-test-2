@@ -34,7 +34,7 @@
 
   {% if section.settings.show_image and article.image %}
     <div class="article-page__media">
-      {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager' }}
+      {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager', alt: article.title }}
     </div>
   {% endif %}
 
@@ -77,10 +77,14 @@
       <h2>{{ 'blog.comment_form_title' | t }}</h2>
 
       {% if form.posted_successfully? %}
-        <p class="article-comment-form__success">{{ 'blog.comment_form_success' | t }}</p>
+        <p class="article-comment-form__success" role="status">{{ 'blog.comment_form_success' | t }}</p>
       {% endif %}
 
-      {{ form.errors | default_errors }}
+      {% if form.errors %}
+        <div class="article-comment-form__errors" role="alert">
+          {{ form.errors | default_errors }}
+        </div>
+      {% endif %}
 
       <div class="article-comment-form__field">
         <label for="CommentAuthor-{{ section.id }}">{{ 'blog.comment_form_name' | t }}</label>

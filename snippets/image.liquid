@@ -10,9 +10,12 @@
   @param {image} image - The image to be rendered
   @param {string} [url] - An optional destination URL for the image
   @param {string} [class] - Optional class to be added to the image wrapper
+  @param {string} [alt] - Optional image alt text
+  @param {string} [link_label] - Optional accessible label when the image is wrapped in a link
   @param {number} [width] - The highest resolution width of the image to be rendered
   @param {number} [height] - The highest resolution height of the image to be rendered
   @param {string} [crop] - The crop position of the image
+  @param {boolean} [decorative] - Whether the image is decorative and should have empty alt text
 
   @example
   {% render 'image', image: product.featured_image %}
@@ -37,15 +40,28 @@
   else
     assign wrapper = 'div'
   endif
+
+  if decorative
+    assign image_alt = ''
+  else
+    assign image_alt = alt | default: image.alt | default: ''
+  endif
 %}
 
 <{{ wrapper }}
   class="image {{ class }}"
   {% if url %}
     href="{{ url }}"
+    {% if link_label != blank %}
+      aria-label="{{ link_label | escape }}"
+    {% endif %}
   {% endif %}
 >
-  {{ image | image_url: width: width, height: height, crop: crop | image_tag }}
+  {{
+    image
+    | image_url: width: width, height: height, crop: crop
+    | image_tag: alt: image_alt
+  }}
 </{{ wrapper }}>
 
 {% stylesheet %}

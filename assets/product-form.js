@@ -26,6 +26,10 @@
 		button.value = text
 	}
 
+	function setFormBusyState(form, isBusy) {
+		form.setAttribute('aria-busy', String(isBusy))
+	}
+
 	productForms.forEach(form => {
 		form.addEventListener('submit', async event => {
 			event.preventDefault()
@@ -44,6 +48,7 @@
 				disabled: true,
 				text: addingText,
 			})
+			setFormBusyState(form, true)
 
 			setFormMessage(message)
 
@@ -79,6 +84,7 @@
 						disabled: false,
 						text: originalButtonText,
 					})
+					setFormBusyState(form, false)
 				}, 1200)
 			} catch (error) {
 				console.error('Add to cart failed:', error)
@@ -87,6 +93,7 @@
 					disabled: false,
 					text: originalButtonText,
 				})
+				setFormBusyState(form, false)
 
 				setFormMessage(message, error.message || errorText)
 			}

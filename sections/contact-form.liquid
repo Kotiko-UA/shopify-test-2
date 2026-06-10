@@ -34,13 +34,13 @@
 
   {% form 'contact', id: contact_form_id, class: 'contact-form' %}
     {% if form.posted_successfully? %}
-      <p class="contact-form__success" tabindex="-1" autofocus>
+      <p class="contact-form__success" role="status" tabindex="-1" autofocus>
         {{ 'contact.success' | t }}
       </p>
     {% endif %}
 
     {% if form.errors %}
-      <div class="contact-form__errors" tabindex="-1" autofocus>
+      <div class="contact-form__errors" role="alert" tabindex="-1" autofocus>
         {{ form.errors | default_errors }}
       </div>
     {% endif %}
