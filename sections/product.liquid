@@ -124,7 +124,17 @@
         {% endfor %}
       </select>
 
-      <input class="product-form__quantity" type="number" name="quantity" min="1" value="1">
+      <label class="visually-hidden" for="ProductQuantity-{{ section.id }}">
+        {{ 'cart.quantity' | t }}
+      </label>
+      <input
+        id="ProductQuantity-{{ section.id }}"
+        class="product-form__quantity"
+        type="number"
+        name="quantity"
+        min="1"
+        value="1"
+      >
       <div class="product-form__property">
         <label for="gift-message">Gift message</label>
 

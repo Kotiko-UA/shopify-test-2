@@ -4,6 +4,13 @@
 		"not_found": "Page not found.",
 		"back_to_shopping": "Back to shopping"
 	},
+	"accessibility": {
+		"account": "Customer account",
+		"cart": "Cart, {{ count }} items",
+		"decrease_quantity": "Decrease quantity for {{ item }}",
+		"increase_quantity": "Increase quantity for {{ item }}",
+		"skip_to_content": "Skip to content"
+	},
 	"blog": {
 		"all_articles": "All articles",
 		"article_comments": "Comments",

@@ -1,7 +1,7 @@
 <header class="header--menu-{{ section.settings.menu_position }}">
-  <h2 class="header__title">
+  <div class="header__title">
     {{ shop.name | link_to: routes.root_url }}
-  </h2>
+  </div>
 
   <div class="header__menu">
     {% for link in section.settings.menu.links %}
@@ -70,12 +70,17 @@
 
   <div class="header__icons">
     {% if shop.customer_accounts_enabled %}
-      <shopify-account menu="{{ section.settings.customer_account_menu }}">
+      <shopify-account menu="{{ section.settings.customer_account_menu }}" aria-label="{{ 'accessibility.account' | t }}">
         {{ 'icon-account.svg' | inline_asset_content }}
       </shopify-account>
     {% endif %}
 
-    <a class="header__cart-link" href="{{ routes.cart_url }}" data-cart-drawer-trigger>
+    <a
+      class="header__cart-link"
+      href="{{ routes.cart_url }}"
+      aria-label="{{ 'accessibility.cart' | t: count: cart.item_count }}"
+      data-cart-drawer-trigger
+    >
       <sup
         class="header__cart-count"
         {% if cart.item_count == 0 %}
@@ -115,7 +120,8 @@
     z-index: 2;
   }
 
-  header .header__menu-item:hover .header__submenu {
+  header .header__menu-item:hover .header__submenu,
+  header .header__menu-item:focus-within .header__submenu {
     display: flex;
   }
 

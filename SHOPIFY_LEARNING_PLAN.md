@@ -17,6 +17,46 @@ Learning mode:
 - 20% Learner completes feature blocks and explains the logic.
 - 10% Codex reviews code for Shopify best practices, bugs, and maintainability.
 
+## Latest Session Summary - 2026-06-09
+
+Completed today:
+
+- Reinforced when to use metafields, metaobjects, product descriptions, section settings, and blocks.
+- Upgraded product feature rendering from a single metaobject reference toward a list-ready implementation.
+- Created `snippets/product-feature-card.liquid` for reusable feature card markup.
+- Switched product feature references to the real product metafield key `custom.snowboard_features`.
+- Verified list metaobject references render multiple selected entries on the product page.
+- Reviewed modern customer accounts through the `<shopify-account>` component.
+- Confirmed account sign-in/profile/orders UI opens through Shopify-managed customer accounts.
+- Reviewed SEO basics:
+  - `title`
+  - meta description
+  - canonical URL
+  - Open Graph tags
+  - Twitter card tags
+  - JSON-LD structured data
+- Added `snippets/structured-data-breadcrumbs.liquid`.
+- Added breadcrumb JSON-LD for product, collection, page, blog, and article pages.
+- Added article structured data through Shopify's `structured_data` filter.
+
+Current starter-template status:
+
+- Product page supports product specifications through metafields.
+- Product page supports list-based feature cards through metaobject references.
+- Header uses Shopify's modern customer account component.
+- SEO snippet now includes title, description, canonical, social meta tags, product/article structured data, and breadcrumb structured data.
+
+Progress update:
+
+- Point 32, Metaobjects, is now completed for practical product-page basics.
+- Point 33, Customer accounts, is completed for modern account entry basics.
+- Point 34, SEO basics, is completed for starter-template essentials.
+
+Next recommended topic:
+
+- Continue with point 35: accessibility basics for a Shopify theme.
+- Practical focus: semantic structure, skip link, icon button labels, focus states, dialogs/drawers, labels, and image alt text.
+
 ## Latest Session Summary - 2026-06-08
 
 Completed today:

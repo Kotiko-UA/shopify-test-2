@@ -54,6 +54,7 @@
                 <button
                   class="cart-drawer__quantity-button"
                   type="button"
+                  aria-label="{{ 'accessibility.decrease_quantity' | t: item: item.product.title }}"
                   data-cart-quantity-button
                   data-line-key="{{ item.key }}"
                   data-quantity="{{ item.quantity | minus: 1 }}"
@@ -66,6 +67,7 @@
                 <button
                   class="cart-drawer__quantity-button"
                   type="button"
+                  aria-label="{{ 'accessibility.increase_quantity' | t: item: item.product.title }}"
                   data-cart-quantity-button
                   data-line-key="{{ item.key }}"
                   data-quantity="{{ item.quantity | plus: 1 }}"
