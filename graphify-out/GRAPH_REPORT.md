@@ -1,16 +1,16 @@
-# Graph Report - shopify-test-2  (2026-06-10)
+# Graph Report - shopify-test-2  (2026-06-17)
 
 ## Corpus Check
-- 34 files · ~7,708 words
+- 36 files · ~10,391 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 428 nodes · 434 edges · 42 communities (39 shown, 3 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 526 nodes · 714 edges · 51 communities (48 shown, 3 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c77dcc91`
+- Built from commit: `358ccefd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,38 +32,47 @@
 - [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 19|Community 19]]
+- [[_COMMUNITY_Community 42|Community 42]]
+- [[_COMMUNITY_Community 43|Community 43]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
+- [[_COMMUNITY_Community 46|Community 46]]
+- [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Community 48|Community 48]]
+- [[_COMMUNITY_Community 49|Community 49]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `labels` - 80 edges
-2. `general` - 61 edges
-3. `cart` - 30 edges
-4. `blog` - 19 edges
-5. `PredictiveSearch` - 18 edges
-6. `contact` - 11 edges
-7. `collections` - 9 edges
-8. `search` - 8 edges
-9. `options` - 8 edges
-10. `Contributor Covenant Code of Conduct` - 8 edges
+1. `labels` - 87 edges
+2. `$()` - 64 edges
+3. `general` - 62 edges
+4. `cart` - 30 edges
+5. `ne` - 25 edges
+6. `blog` - 19 edges
+7. `PredictiveSearch` - 18 edges
+8. `o()` - 18 edges
+9. `a()` - 17 edges
+10. `d()` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
-- None detected - all connections are within the same source files.
+- `r()` --calls--> `emit()`  [EXTRACTED]
+  assets/swiper-bundle.min.js → assets/swiper-bundle.min.js  _Bridges community 42 → community 43_
 
 ## Import Cycles
 - None detected.
 
-## Communities (42 total, 3 thin omitted)
+## Communities (51 total, 3 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.03
-Nodes (80): labels, alignment, animation_speed, answer, article_limit, articles_per_page, author, background (+72 more)
+Cohesion: 0.02
+Nodes (87): labels, alignment, animation_speed, answer, article_limit, articles_per_page, author, background (+79 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.03
-Nodes (61): general, 404, accent, announcement_bar, article, badge, block, blog (+53 more)
+Nodes (62): general, 404, accent, announcement_bar, article, badge, block, blog (+54 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.05
-Nodes (41): 404, back_to_shopping, not_found, title, accessibility, account, cart, decrease_quantity (+33 more)
+Cohesion: 0.29
+Nodes (6): 404, back_to_shopping, not_found, title, navigation, menu
 
 ### Community 3 - "Community 3"
 Cohesion: 0.07
@@ -98,8 +107,8 @@ Cohesion: 0.15
 Nodes (12): 1. Correction, 2. Warning, 3. Temporary Ban, 4. Permanent Ban, Attribution, Contributor Covenant Code of Conduct, Enforcement, Enforcement Guidelines (+4 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.12
-Nodes (16): product_count, days, hours, minutes, seconds, empty, empty, empty (+8 more)
+Cohesion: 0.11
+Nodes (19): product_count, days, hours, minutes, seconds, empty, empty, empty (+11 more)
 
 ### Community 13 - "Community 13"
 Cohesion: 0.22
@@ -109,8 +118,40 @@ Nodes (9): collections, apply_filters, clear_all, empty, product_count, search_p
 Cohesion: 0.40
 Nodes (4): Contributing to Skeleton Theme, How to contribute, Standards, Steps to contribute
 
+### Community 42 - "Community 42"
+Cohesion: 0.11
+Nodes (45): $(), a(), addEventListener(), ae(), b(), blur(), c(), cancelAnimationFrame() (+37 more)
+
+### Community 43 - "Community 43"
+Cohesion: 0.13
+Nodes (6): ce(), emit(), me(), ne, pe(), ue()
+
+### Community 44 - "Community 44"
+Cohesion: 0.29
+Nodes (7): newsletter, description_html, email, heading, placeholder, submit, success
+
+### Community 45 - "Community 45"
+Cohesion: 0.33
+Nodes (6): accessibility, account, cart, decrease_quantity, increase_quantity, skip_to_content
+
+### Community 46 - "Community 46"
+Cohesion: 0.33
+Nodes (6): customers, login, email, password, submit, title
+
+### Community 47 - "Community 47"
+Cohesion: 0.33
+Nodes (6): thumbnails, view_image, products, gallery, order_requests, sold_out
+
+### Community 48 - "Community 48"
+Cohesion: 0.33
+Nodes (6): gift_card, add_to_apple_wallet, card, expired, expires_on, use_at_checkout
+
+### Community 49 - "Community 49"
+Cohesion: 0.50
+Nodes (4): password, enter, password, title
+
 ## Knowledge Gaps
-- **305 isolated node(s):** `PreToolUse`, `title`, `not_found`, `back_to_shopping`, `account` (+300 more)
+- **316 isolated node(s):** `PreToolUse`, `title`, `not_found`, `back_to_shopping`, `account` (+311 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -118,16 +159,16 @@ Nodes (4): Contributing to Skeleton Theme, How to contribute, Standards, Steps t
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `labels` connect `Community 0` to `Community 7`?**
-  _High betweenness centrality (0.110) - this node is a cross-community bridge._
+  _High betweenness centrality (0.082) - this node is a cross-community bridge._
 - **Why does `general` connect `Community 1` to `Community 7`?**
-  _High betweenness centrality (0.090) - this node is a cross-community bridge._
-- **Why does `cart` connect `Community 3` to `Community 2`?**
-  _High betweenness centrality (0.042) - this node is a cross-community bridge._
+  _High betweenness centrality (0.064) - this node is a cross-community bridge._
 - **What connects `PreToolUse`, `title`, `not_found` to the rest of the system?**
-  _305 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _316 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.025 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.022988505747126436 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.03278688524590164 - nodes in this community are weakly interconnected._
-- **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.03225806451612903 - nodes in this community are weakly interconnected._
+- **Should `Community 3` be split into smaller, more focused modules?**
+  _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
+- **Should `Community 6` be split into smaller, more focused modules?**
+  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._

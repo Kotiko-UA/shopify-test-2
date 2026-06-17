@@ -138,7 +138,10 @@
 			"empty": "Add logo blocks to show a logo marquee."
 		},
 		"product_slider": {
-			"empty": "Add product blocks to show selected products."
+			"empty": "Add product blocks to show selected products.",
+			"label": "Product slider",
+			"previous": "Previous products",
+			"next": "Next products"
 		}
 	},
 	"search": {

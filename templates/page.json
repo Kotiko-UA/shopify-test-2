@@ -12,9 +12,67 @@
     "main": {
       "type": "page",
       "settings": {}
+    },
+    "product_slider_fntxax": {
+      "type": "product-slider",
+      "blocks": {
+        "product_Kj9dRG": {
+          "type": "product",
+          "settings": {
+            "product": "the-multi-managed-snowboard"
+          }
+        },
+        "product_hhmHrV": {
+          "type": "product",
+          "settings": {
+            "product": "the-videographer-snowboard"
+          }
+        },
+        "product_gcEP7h": {
+          "type": "product",
+          "settings": {
+            "product": "the-collection-snowboard-oxygen"
+          }
+        },
+        "product_d73XP4": {
+          "type": "product",
+          "settings": {
+            "product": "gift-card"
+          }
+        },
+        "product_9KKt3B": {
+          "type": "product",
+          "settings": {
+            "product": "the-complete-snowboard"
+          }
+        },
+        "product_tPnpDw": {
+          "type": "product",
+          "settings": {
+            "product": "the-3p-fulfilled-snowboard"
+          }
+        }
+      },
+      "block_order": [
+        "product_Kj9dRG",
+        "product_hhmHrV",
+        "product_gcEP7h",
+        "product_d73XP4",
+        "product_9KKt3B",
+        "product_tPnpDw"
+      ],
+      "name": "t:general.product_slider",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Selected products",
+        "description": "",
+        "show_vendor": false,
+        "alignment": "left"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "product_slider_fntxax"
   ]
 }
