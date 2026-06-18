@@ -82,7 +82,9 @@
       "blocks": {
         "tab_7NEyP6": {
           "type": "_tab",
-          "settings": { "title": "Tab" },
+          "settings": {
+            "title": "Tab"
+          },
           "blocks": {
             "tab_7NEyP6_text": {
               "type": "text",
@@ -90,14 +92,19 @@
                 "text": "Add tab content for product details, shipping, returns, materials, or sizing.",
                 "text_style": "text--normal",
                 "alignment": "left"
-              }
+              },
+              "blocks": {}
             }
           },
-          "block_order": ["tab_7NEyP6_text"]
+          "block_order": [
+            "tab_7NEyP6_text"
+          ]
         },
         "tab_UW9bJU": {
           "type": "_tab",
-          "settings": { "title": "Tab" },
+          "settings": {
+            "title": "Tab"
+          },
           "blocks": {
             "tab_UW9bJU_text": {
               "type": "text",
@@ -105,14 +112,19 @@
                 "text": "Add tab content for product details, shipping, returns, materials, or sizing. 2",
                 "text_style": "text--normal",
                 "alignment": "left"
-              }
+              },
+              "blocks": {}
             }
           },
-          "block_order": ["tab_UW9bJU_text"]
+          "block_order": [
+            "tab_UW9bJU_text"
+          ]
         },
         "tab_kF9Aii": {
           "type": "_tab",
-          "settings": { "title": "Tab" },
+          "settings": {
+            "title": "Tab"
+          },
           "blocks": {
             "tab_kF9Aii_text": {
               "type": "text",
@@ -120,17 +132,143 @@
                 "text": "Add tab content for product details, shipping, returns, materials, or sizing. 3",
                 "text_style": "text--normal",
                 "alignment": "left"
-              }
+              },
+              "blocks": {}
             }
           },
-          "block_order": ["tab_kF9Aii_text"]
+          "block_order": [
+            "tab_kF9Aii_text"
+          ]
         }
       },
-      "block_order": ["tab_7NEyP6", "tab_UW9bJU", "tab_kF9Aii"],
+      "block_order": [
+        "tab_7NEyP6",
+        "tab_UW9bJU",
+        "tab_kF9Aii"
+      ],
       "name": "t:general.tabs",
       "settings": {
         "eyebrow": "",
         "heading": "More information",
+        "description": "",
+        "alignment": "left"
+      }
+    },
+    "testimonials_CRMgJw": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_KXhke6": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
+            "author": "Customer name",
+            "detail": "Verified buyer"
+          }
+        },
+        "testimonial_nTiAmz": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
+            "author": "Customer name",
+            "detail": "Verified buyer"
+          }
+        },
+        "testimonial_UqrXpf": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
+            "author": "Customer name",
+            "detail": "Verified buyer"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_KXhke6",
+        "testimonial_nTiAmz",
+        "testimonial_UqrXpf"
+      ],
+      "name": "t:general.testimonials",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Customer stories",
+        "description": "",
+        "alignment": "center"
+      }
+    },
+    "trust_badges_pPDYpa": {
+      "type": "trust-badges",
+      "blocks": {
+        "badge_Wk63Pc": {
+          "type": "badge",
+          "settings": {
+            "heading": "Free shipping",
+            "text": "<p>Add a short trust-building benefit.</p>"
+          }
+        },
+        "badge_DLRPUd": {
+          "type": "badge",
+          "settings": {
+            "heading": "Free shipping",
+            "text": "<p>Add a short trust-building benefit.</p>"
+          }
+        },
+        "badge_hktYej": {
+          "type": "badge",
+          "settings": {
+            "heading": "Free shipping",
+            "text": "<p>Add a short trust-building benefit.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "badge_Wk63Pc",
+        "badge_DLRPUd",
+        "badge_hktYej"
+      ],
+      "name": "t:general.trust_badges",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "alignment": "center"
+      }
+    },
+    "faq_6JA9mq": {
+      "type": "faq",
+      "blocks": {
+        "question_3iB8Gx": {
+          "type": "question",
+          "settings": {
+            "question": "What should customers know?",
+            "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>"
+          }
+        },
+        "question_yH6JJp": {
+          "type": "question",
+          "settings": {
+            "question": "What should customers know?",
+            "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>"
+          }
+        },
+        "question_UJA4H6": {
+          "type": "question",
+          "settings": {
+            "question": "What should customers know?",
+            "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_3iB8Gx",
+        "question_yH6JJp",
+        "question_UJA4H6"
+      ],
+      "name": "t:general.faq",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Questions and answers",
         "description": "",
         "alignment": "left"
       }
@@ -139,6 +277,9 @@
   "order": [
     "main",
     "product_slider_fntxax",
-    "tabs_ieFpTc"
+    "tabs_ieFpTc",
+    "testimonials_CRMgJw",
+    "trust_badges_pPDYpa",
+    "faq_6JA9mq"
   ]
 }

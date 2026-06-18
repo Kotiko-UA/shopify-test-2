@@ -1,16 +1,16 @@
-# Graph Report - shopify-test-2  (2026-06-17)
+# Graph Report - shopify-test-2  (2026-06-18)
 
 ## Corpus Check
-- 36 files · ~10,391 words
+- 37 files · ~11,522 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 526 nodes · 714 edges · 51 communities (48 shown, 3 thin omitted)
+- 536 nodes · 726 edges · 52 communities (48 shown, 4 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `358ccefd`
+- Built from commit: `ac1e27c4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -40,6 +40,7 @@
 - [[_COMMUNITY_Community 47|Community 47]]
 - [[_COMMUNITY_Community 48|Community 48]]
 - [[_COMMUNITY_Community 49|Community 49]]
+- [[_COMMUNITY_Community 51|Community 51]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `labels` - 87 edges
@@ -60,7 +61,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (51 total, 3 thin omitted)
+## Communities (52 total, 4 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.02
@@ -119,12 +120,12 @@ Cohesion: 0.40
 Nodes (4): Contributing to Skeleton Theme, How to contribute, Standards, Steps to contribute
 
 ### Community 42 - "Community 42"
-Cohesion: 0.11
-Nodes (45): $(), a(), addEventListener(), ae(), b(), blur(), c(), cancelAnimationFrame() (+37 more)
+Cohesion: 0.12
+Nodes (44): $(), a(), addEventListener(), ae(), b(), blur(), c(), cancelAnimationFrame() (+36 more)
 
 ### Community 43 - "Community 43"
-Cohesion: 0.13
-Nodes (6): ce(), emit(), me(), ne, pe(), ue()
+Cohesion: 0.11
+Nodes (7): ce(), emit(), me(), ne, onAny(), pe(), ue()
 
 ### Community 44 - "Community 44"
 Cohesion: 0.29
@@ -153,15 +154,15 @@ Nodes (4): password, enter, password, title
 ## Knowledge Gaps
 - **316 isolated node(s):** `PreToolUse`, `title`, `not_found`, `back_to_shopping`, `account` (+311 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `labels` connect `Community 0` to `Community 7`?**
-  _High betweenness centrality (0.082) - this node is a cross-community bridge._
+  _High betweenness centrality (0.079) - this node is a cross-community bridge._
 - **Why does `general` connect `Community 1` to `Community 7`?**
-  _High betweenness centrality (0.064) - this node is a cross-community bridge._
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **What connects `PreToolUse`, `title`, `not_found` to the rest of the system?**
   _316 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**

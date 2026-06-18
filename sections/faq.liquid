@@ -1,4 +1,10 @@
-<section class="faq-section">
+<script src="{{ 'faq.js' | asset_url }}" defer></script>
+
+<section
+  class="faq-section"
+  data-faq-section
+  data-animation-duration="{{ section.settings.animation_duration }}"
+>
   {% render 'section-header',
     eyebrow: section.settings.eyebrow,
     heading: section.settings.heading,
@@ -8,10 +14,15 @@
 
   <div class="faq-section__items">
     {% for block in section.blocks %}
-      <details class="faq-section__item" {{ block.shopify_attributes }}>
-        <summary>{{ block.settings.question | escape }}</summary>
-        <div class="faq-section__answer">
-          {{ block.settings.answer }}
+      <details class="faq-section__item" data-faq-item {{ block.shopify_attributes }}>
+        <summary data-faq-summary>
+          <span>{{ block.settings.question | escape }}</span>
+          <span class="faq-section__chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-section__content" data-faq-content>
+          <div class="faq-section__answer">
+            {{ block.settings.answer }}
+          </div>
         </div>
       </details>
     {% endfor %}
@@ -29,21 +40,65 @@
   }
 
   .faq-section__item {
-    border: 1px solid rgb(220, 220, 220);
+    border: 1px solid color-mix(in srgb, var(--color-foreground), transparent 78%);
     border-radius: 6px;
-    background-color: white;
+    background-color: var(--color-background);
   }
 
   .faq-section__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
     cursor: pointer;
     padding: 1rem;
     font-weight: 700;
+    list-style: none;
+  }
+
+  .faq-section__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-section__item summary::marker {
+    content: '';
+  }
+
+  .faq-section__item summary:focus-visible {
+    border-radius: 5px;
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .faq-section__chevron {
+    flex: 0 0 auto;
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-right: 0.2rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 350ms ease;
+  }
+
+  .faq-section__item[open]:not([data-faq-closing='true']) .faq-section__chevron {
+    transform: rotate(225deg);
+  }
+
+  .faq-section__content {
+    overflow: hidden;
   }
 
   .faq-section__answer {
     padding: 0 1rem 1rem;
-    color: rgb(92, 95, 98);
+    color: color-mix(in srgb, var(--color-foreground), transparent 25%);
     line-height: 1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-section__chevron {
+      transition: none;
+    }
   }
 {% endstylesheet %}
 
@@ -77,6 +132,16 @@
         { "value": "right", "label": "t:options.alignment.right" }
       ],
       "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "t:labels.animation_speed",
+      "min": 200,
+      "max": 800,
+      "step": 50,
+      "unit": "ms",
+      "default": 450
     }
   ],
   "blocks": [
