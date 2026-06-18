@@ -1,16 +1,16 @@
 # Graph Report - shopify-test-2  (2026-06-18)
 
 ## Corpus Check
-- 37 files · ~11,522 words
+- 37 files · ~11,581 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 536 nodes · 726 edges · 52 communities (48 shown, 4 thin omitted)
+- 558 nodes · 748 edges · 52 communities (48 shown, 4 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ac1e27c4`
+- Built from commit: `a6eb3f9e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -43,9 +43,9 @@
 - [[_COMMUNITY_Community 51|Community 51]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `labels` - 87 edges
-2. `$()` - 64 edges
-3. `general` - 62 edges
+1. `labels` - 95 edges
+2. `general` - 66 edges
+3. `$()` - 64 edges
 4. `cart` - 30 edges
 5. `ne` - 25 edges
 6. `blog` - 19 edges
@@ -55,7 +55,7 @@
 10. `d()` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `r()` --calls--> `emit()`  [EXTRACTED]
+- `Q()` --calls--> `x()`  [INFERRED]
   assets/swiper-bundle.min.js → assets/swiper-bundle.min.js  _Bridges community 42 → community 43_
 
 ## Import Cycles
@@ -65,15 +65,15 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.02
-Nodes (87): labels, alignment, animation_speed, answer, article_limit, articles_per_page, author, background (+79 more)
+Nodes (95): labels, alignment, animation_speed, answer, article_limit, articles_per_page, author, background (+87 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.03
-Nodes (62): general, 404, accent, announcement_bar, article, badge, block, blog (+54 more)
+Nodes (66): general, 404, accent, announcement_bar, article, badge, block, blog (+58 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.29
-Nodes (6): 404, back_to_shopping, not_found, title, navigation, menu
+Cohesion: 0.50
+Nodes (4): 404, back_to_shopping, not_found, title
 
 ### Community 3 - "Community 3"
 Cohesion: 0.07
@@ -88,8 +88,8 @@ Cohesion: 0.11
 Nodes (19): blog, all_articles, article_comments, article_metadata_html, back_to_blog, comment_form_body, comment_form_email, comment_form_name (+11 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.07
-Nodes (26): center, left, right, horizontal, left, right, vertical, grid (+18 more)
+Cohesion: 0.05
+Nodes (36): center, left, right, horizontal, left, right, vertical, full (+28 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.12
@@ -121,11 +121,11 @@ Nodes (4): Contributing to Skeleton Theme, How to contribute, Standards, Steps t
 
 ### Community 42 - "Community 42"
 Cohesion: 0.12
-Nodes (44): $(), a(), addEventListener(), ae(), b(), blur(), c(), cancelAnimationFrame() (+36 more)
+Nodes (42): $(), a(), addEventListener(), ae(), b(), blur(), c(), cancelAnimationFrame() (+34 more)
 
 ### Community 43 - "Community 43"
 Cohesion: 0.11
-Nodes (7): ce(), emit(), me(), ne, onAny(), pe(), ue()
+Nodes (9): ce(), emit(), j(), me(), ne, onAny(), pe(), Q() (+1 more)
 
 ### Community 44 - "Community 44"
 Cohesion: 0.29
@@ -148,11 +148,11 @@ Cohesion: 0.33
 Nodes (6): gift_card, add_to_apple_wallet, card, expired, expires_on, use_at_checkout
 
 ### Community 49 - "Community 49"
-Cohesion: 0.50
-Nodes (4): password, enter, password, title
+Cohesion: 0.29
+Nodes (6): navigation, menu, password, enter, password, title
 
 ## Knowledge Gaps
-- **316 isolated node(s):** `PreToolUse`, `title`, `not_found`, `back_to_shopping`, `account` (+311 more)
+- **336 isolated node(s):** `PreToolUse`, `title`, `not_found`, `back_to_shopping`, `account` (+331 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -160,15 +160,15 @@ Nodes (4): password, enter, password, title
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `labels` connect `Community 0` to `Community 7`?**
-  _High betweenness centrality (0.079) - this node is a cross-community bridge._
+  _High betweenness centrality (0.091) - this node is a cross-community bridge._
 - **Why does `general` connect `Community 1` to `Community 7`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
+  _High betweenness centrality (0.069) - this node is a cross-community bridge._
 - **What connects `PreToolUse`, `title`, `not_found` to the rest of the system?**
-  _316 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _336 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.022988505747126436 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.021052631578947368 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.03225806451612903 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.030303030303030304 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
 - **Should `Community 6` be split into smaller, more focused modules?**

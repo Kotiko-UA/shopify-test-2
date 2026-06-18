@@ -45,77 +45,109 @@
       </div>
     {% endif %}
 
-    <div class="contact-form__grid">
-      <div class="contact-form__field">
-        <label for="{{ contact_form_id }}-name">{{ 'contact.name' | t }}</label>
-        <input
-          id="{{ contact_form_id }}-name"
-          type="text"
-          name="contact[name]"
-          value="{% if form.name %}{{ form.name | escape }}{% elsif customer %}{{ customer.name | escape }}{% endif %}"
-          autocomplete="name"
-        >
-      </div>
+    <div class="contact-form__fields">
+      {% for block in section.blocks %}
+        {% assign field_id = contact_form_id | append: '-' | append: block.id %}
+        {% assign field_width = block.settings.width | default: 'full' %}
 
-      <div class="contact-form__field">
-        <label for="{{ contact_form_id }}-email">{{ 'contact.email' | t }}</label>
-        <input
-          id="{{ contact_form_id }}-email"
-          type="email"
-          name="contact[email]"
-          value="{% if form.email %}{{ form.email | escape }}{% elsif customer %}{{ customer.email | escape }}{% endif %}"
-          autocomplete="email"
-          spellcheck="false"
-          autocapitalize="off"
-          required
-        >
-      </div>
-    </div>
+        {% case block.type %}
+        {% when 'input' %}
+          {% assign field_label = block.settings.label | default: 'Field' %}
+          {% assign field_name = field_label %}
+          {% if block.settings.input_type == 'email' %}
+            {% assign field_name = 'email' %}
+          {% endif %}
+          <div class="contact-form__field contact-form__field--{{ field_width }}" {{ block.shopify_attributes }}>
+            <label for="{{ field_id }}">{{ field_label | escape }}</label>
+            <input
+              id="{{ field_id }}"
+              type="{{ block.settings.input_type }}"
+              name="contact[{{ field_name | escape }}]"
+              placeholder="{{ block.settings.placeholder | escape }}"
+              {% if block.settings.input_type == 'email' %}
+                autocomplete="email"
+                spellcheck="false"
+                autocapitalize="off"
+              {% endif %}
+              {% if block.settings.required or block.settings.input_type == 'email' %}
+                required
+              {% endif %}
+            >
+          </div>
 
-    {% if section.settings.show_phone %}
-      <div class="contact-form__field">
-        <label for="{{ contact_form_id }}-phone">{{ 'contact.phone' | t }}</label>
-        <input
-          id="{{ contact_form_id }}-phone"
-          type="tel"
-          name="contact[phone]"
-          value="{{ form.phone | escape }}"
-          autocomplete="tel"
-        >
-      </div>
-    {% endif %}
+        {% when 'select' %}
+          {% assign field_label = block.settings.label | default: 'Field' %}
+          {% assign select_options = block.settings.options | newline_to_br | split: '<br />' %}
+          <div class="contact-form__field contact-form__field--{{ field_width }}" {{ block.shopify_attributes }}>
+            <label for="{{ field_id }}">{{ field_label | escape }}</label>
+            <select
+              id="{{ field_id }}"
+              name="contact[{{ field_label | escape }}]"
+              {% if block.settings.required %}
+                required
+              {% endif %}
+            >
+              {% if block.settings.placeholder != blank %}
+                <option value="" selected disabled>{{ block.settings.placeholder | escape }}</option>
+              {% endif %}
+              {% for option in select_options %}
+                {% assign option_value = option | strip %}
+                {% if option_value != blank %}
+                  <option value="{{ option_value | escape }}">{{ option_value | escape }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
 
-    {% if section.settings.show_subject %}
-      <div class="contact-form__field">
-        <label for="{{ contact_form_id }}-subject">{{ 'contact.subject' | t }}</label>
-        <select id="{{ contact_form_id }}-subject" name="contact[subject]">
-          <option value="{{ 'contact.subject_options.general' | t }}">
-            {{ 'contact.subject_options.general' | t }}
-          </option>
-          <option value="{{ 'contact.subject_options.order' | t }}">
-            {{ 'contact.subject_options.order' | t }}
-          </option>
-          <option value="{{ 'contact.subject_options.shipping' | t }}">
-            {{ 'contact.subject_options.shipping' | t }}
-          </option>
-          <option value="{{ 'contact.subject_options.returns' | t }}">
-            {{ 'contact.subject_options.returns' | t }}
-          </option>
-          <option value="{{ 'contact.subject_options.other' | t }}">
-            {{ 'contact.subject_options.other' | t }}
-          </option>
-        </select>
-      </div>
-    {% endif %}
+        {% when 'radio' %}
+          {% assign field_label = block.settings.label | default: 'Field' %}
+          {% assign radio_options = block.settings.options | newline_to_br | split: '<br />' %}
+          <fieldset
+            class="contact-form__field contact-form__field--{{ field_width }} contact-form__fieldset"
+            {{ block.shopify_attributes }}
+          >
+            <legend>{{ field_label | escape }}</legend>
+            <div class="contact-form__choices">
+              {% for option in radio_options %}
+                {% assign option_value = option | strip %}
+                {% if option_value != blank %}
+                  {% assign option_id = field_id | append: '-' | append: forloop.index %}
+                  <label class="contact-form__choice" for="{{ option_id }}">
+                    <input
+                      id="{{ option_id }}"
+                      type="radio"
+                      name="contact[{{ field_label | escape }}]"
+                      value="{{ option_value | escape }}"
+                      {% if block.settings.required %}
+                        required
+                      {% endif %}
+                    >
+                    <span>{{ option_value | escape }}</span>
+                  </label>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </fieldset>
 
-    <div class="contact-form__field">
-      <label for="{{ contact_form_id }}-body">{{ 'contact.message' | t }}</label>
-      <textarea
-        id="{{ contact_form_id }}-body"
-        name="contact[body]"
-        rows="6"
-        required
-      >{{ form.body | escape }}</textarea>
+        {% when 'required_checkbox' %}
+          {% assign field_name = block.settings.field_name | default: 'Consent' %}
+          <div
+            class="contact-form__consent contact-form__field--{{ field_width }}"
+            {{ block.shopify_attributes }}
+          >
+            <input
+              id="{{ field_id }}"
+              type="checkbox"
+              name="contact[{{ field_name | escape }}]"
+              value="Accepted"
+              required
+            >
+            <label class="contact-form__consent-label" for="{{ field_id }}">
+              {{ block.settings.text }}
+            </label>
+          </div>
+        {% endcase %}
+      {% endfor %}
     </div>
 
     <button class="contact-form__submit" type="submit">{{ 'contact.submit' | t }}</button>
@@ -145,10 +177,18 @@
     gap: 1rem;
   }
 
-  .contact-form__grid {
+  .contact-form__fields {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
+  }
+
+  .contact-form__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .contact-form__field--half {
+    grid-column: span 1;
   }
 
   .contact-form__field {
@@ -156,11 +196,18 @@
     gap: 0.35rem;
   }
 
-  .contact-form__field label {
+  .contact-form__field > label,
+  .contact-form__fieldset legend {
     font-weight: 700;
   }
 
-  .contact-form input,
+  .contact-form__fieldset {
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .contact-form input:not([type='checkbox']):not([type='radio']),
   .contact-form select,
   .contact-form textarea {
     width: 100%;
@@ -171,6 +218,39 @@
 
   .contact-form textarea {
     resize: vertical;
+  }
+
+  .contact-form__choices {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .contact-form__choice,
+  .contact-form__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+
+  .contact-form__choice {
+    width: fit-content;
+    cursor: pointer;
+  }
+
+  .contact-form__choice input,
+  .contact-form__consent input {
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.2rem;
+  }
+
+  .contact-form__consent-label {
+    cursor: pointer;
+  }
+
+  .contact-form__consent-label p {
+    margin: 0;
   }
 
   .contact-form__success {
@@ -199,8 +279,12 @@
   }
 
   @media screen and (max-width: 749px) {
-    .contact-form__grid {
-      grid-template-columns: 1fr;
+    .contact-form__fields {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .contact-form__field--half {
+      grid-column: 1 / -1;
     }
 
     .contact-form__submit {
@@ -222,20 +306,160 @@
       "type": "richtext",
       "id": "description",
       "label": "t:labels.description"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_phone",
-      "label": "t:labels.show_phone",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_subject",
-      "label": "t:labels.show_subject",
-      "default": true
     }
   ],
+  "blocks": [
+    {
+      "type": "input",
+      "name": "t:general.input_field",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:labels.field_label",
+          "default": "Your answer"
+        },
+        {
+          "type": "select",
+          "id": "input_type",
+          "label": "t:labels.input_type",
+          "options": [
+            { "value": "text", "label": "t:options.input_type.text" },
+            { "value": "email", "label": "t:options.input_type.email" },
+            { "value": "tel", "label": "t:options.input_type.tel" },
+            { "value": "number", "label": "t:options.input_type.number" },
+            { "value": "date", "label": "t:options.input_type.date" },
+            { "value": "url", "label": "t:options.input_type.url" }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "t:labels.placeholder"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "t:labels.field_width",
+          "options": [
+            { "value": "full", "label": "t:options.field_width.full" },
+            { "value": "half", "label": "t:options.field_width.half" }
+          ],
+          "default": "full"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "t:labels.required_field",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "name": "t:general.select_field",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:labels.field_label",
+          "default": "Choose an option"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "t:labels.placeholder",
+          "default": "Select an option"
+        },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "t:labels.options_one_per_line",
+          "default": "Option one\nOption two"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "t:labels.field_width",
+          "options": [
+            { "value": "full", "label": "t:options.field_width.full" },
+            { "value": "half", "label": "t:options.field_width.half" }
+          ],
+          "default": "full"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "t:labels.required_field",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "radio",
+      "name": "t:general.radio_group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:labels.field_label",
+          "default": "Choose an option"
+        },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "t:labels.options_one_per_line",
+          "default": "Option one\nOption two"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "t:labels.field_width",
+          "options": [
+            { "value": "full", "label": "t:options.field_width.full" },
+            { "value": "half", "label": "t:options.field_width.half" }
+          ],
+          "default": "full"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "t:labels.required_field",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "required_checkbox",
+      "name": "t:general.consent_checkbox",
+      "settings": [
+        {
+          "type": "text",
+          "id": "field_name",
+          "label": "t:labels.submission_field_name",
+          "default": "Consent"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:labels.checkbox_text",
+          "default": "<p>I agree to the terms and conditions.</p>"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "t:labels.field_width",
+          "options": [
+            { "value": "full", "label": "t:options.field_width.full" },
+            { "value": "half", "label": "t:options.field_width.half" }
+          ],
+          "default": "full"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
   "presets": [
     {
       "name": "t:general.contact_form"

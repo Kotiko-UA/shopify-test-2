@@ -15,6 +15,7 @@
 		"collections_grid": "Collections grid",
 		"comparison_table": "Comparison table",
 		"contact_form": "Contact form",
+		"consent_checkbox": "Required consent checkbox",
 		"countdown_promo": "Countdown promo",
 		"colors": "Colors",
 		"column": "Column",
@@ -28,6 +29,7 @@
 		"group": "Group",
 		"header": "Header",
 		"hero": "Hero",
+		"input_field": "Input field",
 		"layout": "Layout",
 		"logo": "Logo",
 		"logo_marquee": "Logo marquee",
@@ -44,10 +46,12 @@
 		"promo": "Promo",
 		"promo_grid": "Promo grid",
 		"question": "Question",
+		"radio_group": "Radio buttons",
 		"recently_viewed_products": "Recently viewed products",
 		"row": "Row",
 		"search": "Search",
 		"secondary": "Secondary",
+		"select_field": "Select field",
 		"section": "Section",
 		"settings": "Settings",
 		"sidebar": "Sidebar",
@@ -86,6 +90,7 @@
 		"eyebrow": "Eyebrow",
 		"feature": "Feature",
 		"feature_column": "Feature column",
+		"field_width": "Field width",
 		"first_column": "First column",
 		"first_value": "First value",
 		"foreground": "Foreground",
@@ -148,7 +153,14 @@
 		"text_color": "Text color",
 		"thumbnail_limit": "Thumbnail limit",
 		"title": "Title",
-		"products_per_page": "Products per page"
+		"checkbox_text": "Checkbox text",
+		"field_label": "Field label",
+		"input_type": "Input type",
+		"options_one_per_line": "Options (one per line)",
+		"placeholder": "Placeholder",
+		"products_per_page": "Products per page",
+		"required_field": "Required field",
+		"submission_field_name": "Submission field name"
 	},
 	"options": {
 		"alignment": {
@@ -165,6 +177,18 @@
 		"layout": {
 			"grid": "Grid",
 			"slider": "Slider"
+		},
+		"input_type": {
+			"text": "Text",
+			"email": "Email",
+			"tel": "Phone",
+			"number": "Number",
+			"date": "Date",
+			"url": "URL"
+		},
+		"field_width": {
+			"full": "Full width",
+			"half": "Half width"
 		},
 		"page_width": {
 			"narrow": "Narrow",

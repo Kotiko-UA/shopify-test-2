@@ -40,8 +40,8 @@
     "semantic_hash": ""
   },
   "locales/en.default.schema.json": {
-    "mtime": 1781710287.7697453,
-    "ast_hash": "ca84752fe5515eec357a6decbc93f239",
+    "mtime": 1781786893.1739182,
+    "ast_hash": "dfc78e8905b95f31f644de48d7416756",
     "semantic_hash": ""
   },
   "sections/footer-group.json": {
@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "templates/page.contact.json": {
-    "mtime": 1780913123.836488,
-    "ast_hash": "e0460cdc433bf29d2e10fe1c32734966",
+    "mtime": 1781786893.0147078,
+    "ast_hash": "00a777fbc4790589b043a787fa860358",
     "semantic_hash": ""
   },
   "templates/page.json": {

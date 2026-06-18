@@ -17,9 +17,7 @@
       "type": "contact-form",
       "settings": {
         "heading": "",
-        "description": "",
-        "show_phone": true,
-        "show_subject": true
+        "description": ""
       }
     }
   },
