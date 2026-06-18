@@ -15,7 +15,6 @@
         "eyebrow": "New collection",
         "heading": "Build your next storefront",
         "description": "<p>A clean starter layout for ecommerce stores, campaigns, and product launches.</p>",
-        "image": "",
         "image_position": "right",
         "prioritize_image": true,
         "primary_label": "Shop now",
@@ -33,7 +32,6 @@
         "free_shipping": {
           "type": "badge",
           "settings": {
-            "icon": "",
             "heading": "Free shipping",
             "text": "<p>Add your shipping threshold or delivery promise.</p>"
           }
@@ -41,7 +39,6 @@
         "returns": {
           "type": "badge",
           "settings": {
-            "icon": "",
             "heading": "Easy returns",
             "text": "<p>Reassure customers before they buy.</p>"
           }
@@ -49,7 +46,6 @@
         "secure_checkout": {
           "type": "badge",
           "settings": {
-            "icon": "",
             "heading": "Secure checkout",
             "text": "<p>Highlight payment safety and trust.</p>"
           }
@@ -72,7 +68,6 @@
         "new_arrivals": {
           "type": "promo",
           "settings": {
-            "image": "",
             "heading": "New arrivals",
             "text": "<p>Feature a category, collection, or campaign.</p>",
             "button_label": "Shop now",
@@ -82,7 +77,6 @@
         "best_sellers": {
           "type": "promo",
           "settings": {
-            "image": "",
             "heading": "Best sellers",
             "text": "<p>Guide customers toward popular products.</p>",
             "button_label": "Explore",
@@ -92,7 +86,6 @@
         "sale": {
           "type": "promo",
           "settings": {
-            "image": "",
             "heading": "Limited offers",
             "text": "<p>Use this card for seasonal promotions.</p>",
             "button_label": "View deals",
@@ -146,12 +139,58 @@
         "eyebrow": "",
         "heading": "Questions and answers",
         "description": "",
-        "alignment": "left"
+        "alignment": "left",
+        "animation_duration": 450
       }
     },
     "newsletter": {
       "type": "newsletter",
-      "settings": {}
+      "settings": {
+        "heading": "",
+        "description": ""
+      }
+    },
+    "contact_form_NVYUHz": {
+      "type": "contact-form",
+      "blocks": {
+        "input_D8rFCT": {
+          "type": "input",
+          "settings": {
+            "label": "Your answer",
+            "input_type": "email",
+            "placeholder": "",
+            "width": "full",
+            "required": true
+          }
+        },
+        "radio_xkQ76T": {
+          "type": "radio",
+          "settings": {
+            "label": "Choose an option",
+            "options": "Option one\nOption two",
+            "width": "full",
+            "required": true
+          }
+        },
+        "required_checkbox_nVbUHB": {
+          "type": "required_checkbox",
+          "settings": {
+            "field_name": "Consent",
+            "text": "<p>I agree to the terms and conditions.</p>",
+            "width": "full"
+          }
+        }
+      },
+      "block_order": [
+        "input_D8rFCT",
+        "radio_xkQ76T",
+        "required_checkbox_nVbUHB"
+      ],
+      "name": "t:general.contact_form",
+      "settings": {
+        "heading": "",
+        "description": ""
+      }
     }
   },
   "order": [
@@ -159,6 +198,7 @@
     "trust_badges",
     "promo_grid",
     "faq",
-    "newsletter"
+    "newsletter",
+    "contact_form_NVYUHz"
   ]
 }
