@@ -65,7 +65,6 @@
     },
     "product_slider_demo": {
       "type": "product-slider",
-      "name": "Demo: Product slider",
       "blocks": {
         "product_1": {
           "type": "product",
@@ -86,7 +85,12 @@
           }
         }
       },
-      "block_order": ["product_1", "product_2", "product_3"],
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3"
+      ],
+      "name": "Demo: Product slider",
       "settings": {
         "eyebrow": "Demo section",
         "heading": "Product slider",
@@ -97,7 +101,6 @@
     },
     "trust_demo": {
       "type": "trust-badges",
-      "name": "Demo: Trust badges",
       "blocks": {
         "shipping": {
           "type": "badge",
@@ -124,7 +127,12 @@
           }
         }
       },
-      "block_order": ["shipping", "returns", "support"],
+      "block_order": [
+        "shipping",
+        "returns",
+        "support"
+      ],
+      "name": "Demo: Trust badges",
       "settings": {
         "heading": "Trust badges",
         "description": "",
@@ -133,7 +141,6 @@
     },
     "collection_list_demo": {
       "type": "collection-list",
-      "name": "Demo: Collection list",
       "blocks": {
         "collection_1": {
           "type": "collection",
@@ -154,7 +161,12 @@
           }
         }
       },
-      "block_order": ["collection_1", "collection_2", "collection_3"],
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3"
+      ],
+      "name": "Demo: Collection list",
       "settings": {
         "eyebrow": "Demo section",
         "heading": "Collection list",
@@ -164,7 +176,6 @@
     },
     "logo_demo": {
       "type": "logo-marquee",
-      "name": "Demo: Logo marquee",
       "blocks": {
         "logo_1": {
           "type": "logo",
@@ -191,7 +202,12 @@
           }
         }
       },
-      "block_order": ["logo_1", "logo_2", "logo_3"],
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3"
+      ],
+      "name": "Demo: Logo marquee",
       "settings": {
         "heading": "Logo marquee",
         "description": "<p>Works with uploaded logos or fallback text labels.</p>",
@@ -218,7 +234,6 @@
     },
     "promo_demo": {
       "type": "promo-grid",
-      "name": "Demo: Promo grid",
       "blocks": {
         "promo_1": {
           "type": "promo",
@@ -251,7 +266,12 @@
           }
         }
       },
-      "block_order": ["promo_1", "promo_2", "promo_3"],
+      "block_order": [
+        "promo_1",
+        "promo_2",
+        "promo_3"
+      ],
+      "name": "Demo: Promo grid",
       "settings": {
         "eyebrow": "Demo section",
         "heading": "Promo grid",
@@ -261,7 +281,6 @@
     },
     "faq_demo": {
       "type": "faq",
-      "name": "Demo: FAQ",
       "blocks": {
         "faq_1": {
           "type": "question",
@@ -278,7 +297,11 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2"],
+      "block_order": [
+        "faq_1",
+        "faq_2"
+      ],
+      "name": "Demo: FAQ",
       "settings": {
         "eyebrow": "Demo section",
         "heading": "FAQ",
@@ -307,7 +330,6 @@
     },
     "testimonials_demo": {
       "type": "testimonials",
-      "name": "Demo: Testimonials",
       "blocks": {
         "testimonial_1": {
           "type": "testimonial",
@@ -330,7 +352,11 @@
           }
         }
       },
-      "block_order": ["testimonial_1", "testimonial_2"],
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2"
+      ],
+      "name": "Demo: Testimonials",
       "settings": {
         "eyebrow": "Demo section",
         "heading": "Testimonials",
@@ -340,7 +366,6 @@
     },
     "comparison_demo": {
       "type": "comparison-table",
-      "name": "Demo: Comparison table",
       "blocks": {
         "row_1": {
           "type": "row",
@@ -359,7 +384,11 @@
           }
         }
       },
-      "block_order": ["row_1", "row_2"],
+      "block_order": [
+        "row_1",
+        "row_2"
+      ],
+      "name": "Demo: Comparison table",
       "settings": {
         "eyebrow": "Demo section",
         "heading": "Comparison table",
@@ -372,31 +401,55 @@
     },
     "tabs_demo": {
       "type": "tabs",
-      "name": "Demo: Tabs",
       "blocks": {
         "tab_1": {
-          "type": "tab",
-          "settings": {
-            "title": "Details",
-            "content": "<p>Add product or page details here.</p>"
-          }
+          "type": "_tab",
+          "settings": { "title": "Details" },
+          "blocks": {
+            "tab_1_text": {
+              "type": "text",
+              "settings": {
+                "text": "Add product or page details here.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          },
+          "block_order": ["tab_1_text"]
         },
         "tab_2": {
-          "type": "tab",
-          "settings": {
-            "title": "Shipping",
-            "content": "<p>Add shipping and delivery information here.</p>"
-          }
+          "type": "_tab",
+          "settings": { "title": "Shipping" },
+          "blocks": {
+            "tab_2_text": {
+              "type": "text",
+              "settings": {
+                "text": "Add shipping and delivery information here.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          },
+          "block_order": ["tab_2_text"]
         },
         "tab_3": {
-          "type": "tab",
-          "settings": {
-            "title": "Returns",
-            "content": "<p>Add return policy information here.</p>"
-          }
+          "type": "_tab",
+          "settings": { "title": "Returns" },
+          "blocks": {
+            "tab_3_text": {
+              "type": "text",
+              "settings": {
+                "text": "Add return policy information here.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          },
+          "block_order": ["tab_3_text"]
         }
       },
       "block_order": ["tab_1", "tab_2", "tab_3"],
+      "name": "Demo: Tabs",
       "settings": {
         "eyebrow": "Demo section",
         "heading": "Tabs",

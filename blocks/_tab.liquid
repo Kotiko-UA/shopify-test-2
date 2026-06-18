@@ -1,0 +1,71 @@
+{% doc %}
+  Renders one tab trigger and a panel that accepts nested theme and app blocks.
+
+  The tabs section moves the trigger into its tab list during initialization.
+
+  @example
+  {% content_for 'block', type: '_tab', id: 'tab' %}
+{% enddoc %}
+
+<div
+  class="tabs__item"
+  data-tab-item
+  data-tab-id="{{ block.id }}"
+  {{ block.shopify_attributes }}
+>
+  <button
+    id="TabButton-{{ section.id }}-{{ block.id }}"
+    class="tabs__button"
+    type="button"
+    role="tab"
+    aria-selected="false"
+    aria-controls="TabPanel-{{ section.id }}-{{ block.id }}"
+    tabindex="-1"
+    data-tab-button
+    data-tab-id="{{ block.id }}"
+  >
+    {{ block.settings.title | default: 'Tab' | escape }}
+  </button>
+
+  <div
+    id="TabPanel-{{ section.id }}-{{ block.id }}"
+    class="tabs__panel"
+    role="tabpanel"
+    aria-labelledby="TabButton-{{ section.id }}-{{ block.id }}"
+    data-tab-panel
+  >
+    <div class="tabs__panel-content">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:general.tab",
+  "blocks": [{ "type": "@theme" }, { "type": "@app" }],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:labels.title",
+      "default": "Tab"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.tab",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text": "Add tab content.",
+            "text_style": "text--normal",
+            "alignment": "left"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

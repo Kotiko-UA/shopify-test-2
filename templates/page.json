@@ -67,12 +67,78 @@
         "heading": "Selected products",
         "description": "",
         "show_vendor": false,
+        "alignment": "left",
+        "show_navigation": true,
+        "show_pagination": true,
+        "enable_loop": false,
+        "slides_mobile": "1",
+        "slides_tablet": 2,
+        "slides_desktop": 4,
+        "space_between": 16
+      }
+    },
+    "tabs_ieFpTc": {
+      "type": "tabs",
+      "blocks": {
+        "tab_7NEyP6": {
+          "type": "_tab",
+          "settings": { "title": "Tab" },
+          "blocks": {
+            "tab_7NEyP6_text": {
+              "type": "text",
+              "settings": {
+                "text": "Add tab content for product details, shipping, returns, materials, or sizing.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          },
+          "block_order": ["tab_7NEyP6_text"]
+        },
+        "tab_UW9bJU": {
+          "type": "_tab",
+          "settings": { "title": "Tab" },
+          "blocks": {
+            "tab_UW9bJU_text": {
+              "type": "text",
+              "settings": {
+                "text": "Add tab content for product details, shipping, returns, materials, or sizing. 2",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          },
+          "block_order": ["tab_UW9bJU_text"]
+        },
+        "tab_kF9Aii": {
+          "type": "_tab",
+          "settings": { "title": "Tab" },
+          "blocks": {
+            "tab_kF9Aii_text": {
+              "type": "text",
+              "settings": {
+                "text": "Add tab content for product details, shipping, returns, materials, or sizing. 3",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          },
+          "block_order": ["tab_kF9Aii_text"]
+        }
+      },
+      "block_order": ["tab_7NEyP6", "tab_UW9bJU", "tab_kF9Aii"],
+      "name": "t:general.tabs",
+      "settings": {
+        "eyebrow": "",
+        "heading": "More information",
+        "description": "",
         "alignment": "left"
       }
     }
   },
   "order": [
     "main",
-    "product_slider_fntxax"
+    "product_slider_fntxax",
+    "tabs_ieFpTc"
   ]
 }
