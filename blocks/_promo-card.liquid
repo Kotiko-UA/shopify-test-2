@@ -1,0 +1,40 @@
+<article
+  class="promo-card promo-card--span-{{ block.settings.column_span }} promo-card--ratio-{{ block.settings.aspect_ratio }}{% if block.settings.overlay_content %} promo-card--overlay{% endif %} promo-card--hover-{{ block.settings.hover_effect }}"
+  style="--promo-card-background: {{ block.settings.background_color }}; --promo-card-foreground: {{ block.settings.text_color }};"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.whole_card_link and block.settings.link != blank %}
+    <a class="promo-card__stretched-link" href="{{ block.settings.link }}" aria-label="{{ block.settings.heading | escape }}"></a>
+  {% endif %}
+  {% if block.settings.image != blank %}
+    {% render 'image', class: 'promo-card__image', image: block.settings.image, alt: block.settings.heading, width: 900, height: 620, crop: 'center', widths: '300, 500, 700, 900', sizes: '(min-width: 990px) 33vw, 100vw' %}
+  {% endif %}
+  <div class="promo-card__content">
+    {% if block.settings.heading != blank %}<h3>{{ block.settings.heading | escape }}</h3>{% endif %}
+    {% if block.settings.text != blank %}<div class="promo-card__text">{{ block.settings.text }}</div>{% endif %}
+    {% if block.settings.button_label != blank and block.settings.link != blank %}
+      {% if block.settings.whole_card_link %}<span class="promo-card__button-label">{{ block.settings.button_label | escape }}</span>{% else %}<a href="{{ block.settings.link }}">{{ block.settings.button_label | escape }}</a>{% endif %}
+    {% endif %}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "t:general.promo",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "t:labels.image" },
+    { "type": "text", "id": "heading", "label": "t:labels.heading", "default": "Promo title" },
+    { "type": "richtext", "id": "text", "label": "t:labels.text", "default": "<p>Add a short promo message.</p>" },
+    { "type": "text", "id": "button_label", "label": "t:labels.button_label", "default": "Shop now" },
+    { "type": "url", "id": "link", "label": "t:labels.link" },
+    { "type": "checkbox", "id": "whole_card_link", "label": "t:labels.whole_card_link", "default": true },
+    { "type": "select", "id": "column_span", "label": "t:labels.column_span", "options": [{ "value": "third", "label": "t:options.card_span.third" }, { "value": "half", "label": "t:options.card_span.half" }, { "value": "full", "label": "t:options.card_span.full" }], "default": "third" },
+    { "type": "select", "id": "aspect_ratio", "label": "t:labels.aspect_ratio", "options": [{ "value": "landscape", "label": "t:options.aspect_ratio.landscape" }, { "value": "square", "label": "t:options.aspect_ratio.square" }, { "value": "portrait", "label": "t:options.aspect_ratio.portrait" }], "default": "landscape" },
+    { "type": "checkbox", "id": "overlay_content", "label": "t:labels.overlay_content", "default": false },
+    { "type": "select", "id": "hover_effect", "label": "t:labels.hover_effect", "options": [{ "value": "none", "label": "t:options.hover_effect.none" }, { "value": "lift", "label": "t:options.hover_effect.lift" }, { "value": "zoom", "label": "t:options.hover_effect.zoom" }], "default": "lift" },
+    { "type": "color", "id": "background_color", "label": "t:labels.background", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "t:labels.text_color", "default": "#202223" }
+  ],
+  "presets": [{ "name": "t:general.promo" }]
+}
+{% endschema %}

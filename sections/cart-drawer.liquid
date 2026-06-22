@@ -99,7 +99,41 @@
       {% endif %}
     </div>
 
+    {% if section.settings.cross_sell_products != blank %}
+      <div class="cart-drawer__cross-sells">
+        <h3>{{ 'cart.you_may_also_like' | t }}</h3>
+        {% for cross_sell_product in section.settings.cross_sell_products %}
+          <a href="{{ cross_sell_product.url }}">
+            {% if cross_sell_product.featured_image %}{{ cross_sell_product.featured_image | image_url: width: 96 | image_tag: alt: '', loading: 'lazy' }}{% endif %}
+            <span>{{ cross_sell_product.title | escape }}<small>{{ cross_sell_product.price | money }}</small></span>
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <div class="cart-drawer__footer">
+      {% render 'cart-shipping-progress', threshold: section.settings.free_shipping_threshold, class: 'cart-drawer__shipping-progress' %}
+
+      {% if section.settings.show_order_note %}
+        <label for="CartDrawerNote">{{ 'cart.order_note' | t }}</label>
+        <textarea id="CartDrawerNote" data-cart-note>{{ cart.note }}</textarea>
+      {% endif %}
+
+      {% if section.settings.show_gift_wrap %}
+        <label for="CartDrawerGiftWrap">{{ 'cart.gift_wrap' | t }}</label>
+        <select id="CartDrawerGiftWrap" name="attributes[Gift wrap]" data-cart-attribute>
+          <option value="No" {% if cart.attributes['Gift wrap'] == 'No' %}selected{% endif %}>{{ 'cart.no' | t }}</option>
+          <option value="Yes" {% if cart.attributes['Gift wrap'] == 'Yes' %}selected{% endif %}>{{ 'cart.yes' | t }}</option>
+        </select>
+      {% endif %}
+
+      {% if section.settings.show_discount_code %}
+        <div class="cart-drawer__discount">
+          <label for="CartDrawerDiscount">{{ 'cart.discount_code' | t }}</label>
+          <div><input id="CartDrawerDiscount" type="text" data-cart-discount-code><button type="button" data-cart-discount-apply>{{ 'cart.apply_discount' | t }}</button></div>
+        </div>
+      {% endif %}
+
       <div class="cart-drawer__subtotal">
         <span>{{ 'cart.subtotal' | t }}</span>
         <strong data-cart-drawer-total>{{ cart.total_price | money }}</strong>
@@ -107,18 +141,28 @@
 
       <a class="cart-drawer__view-cart" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
 
+      {% if section.settings.trust_text != blank %}<div class="cart-drawer__trust">{{ section.settings.trust_text }}</div>{% endif %}
+
       <form action="{{ routes.cart_url }}" method="post">
         <button class="cart-drawer__checkout" type="submit" name="checkout">
           {{ 'cart.checkout' | t }}
         </button>
       </form>
     </div>
+
   </aside>
 </div>
 
 {% schema %}
 {
   "name": "Cart drawer",
-  "settings": []
+  "settings": [
+    { "type": "range", "id": "free_shipping_threshold", "label": "t:labels.free_shipping_threshold", "min": 0, "max": 500, "step": 5, "unit": "$", "default": 100 },
+    { "type": "checkbox", "id": "show_order_note", "label": "t:labels.show_order_note", "default": true },
+    { "type": "checkbox", "id": "show_gift_wrap", "label": "t:labels.show_gift_wrap", "default": true },
+    { "type": "checkbox", "id": "show_discount_code", "label": "t:labels.show_discount_code", "default": true },
+    { "type": "richtext", "id": "trust_text", "label": "t:labels.trust_text", "default": "<p>Secure checkout and easy returns.</p>" },
+    { "type": "product_list", "id": "cross_sell_products", "label": "t:labels.cross_sell_products", "limit": 3 }
+  ]
 }
 {% endschema %}

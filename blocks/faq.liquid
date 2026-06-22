@@ -1,0 +1,108 @@
+<script src="{{ 'faq.js' | asset_url }}" defer></script>
+
+<div
+  class="faq-section"
+  data-faq-section
+  data-animation-duration="{{ block.settings.animation_duration }}"
+  data-single-open="{{ block.settings.single_open }}"
+  {{ block.shopify_attributes }}
+>
+  {% render 'section-header',
+    eyebrow: block.settings.eyebrow,
+    heading: block.settings.heading,
+    text: block.settings.description,
+    alignment: block.settings.alignment
+  %}
+
+  {% if block.settings.show_search or block.settings.show_categories %}
+    <div class="faq-section__controls">
+      {% if block.settings.show_search %}
+        <label><span>{{ 'faq.search' | t }}</span><input type="search" data-faq-search placeholder="{{ 'faq.search_placeholder' | t | escape }}"></label>
+      {% endif %}
+      {% if block.settings.show_categories %}
+        <label>
+          <span>{{ 'faq.category' | t }}</span>
+          <select data-faq-category>
+            <option value="">{{ 'faq.all_categories' | t }}</option>
+          </select>
+        </label>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="faq-section__items">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq-section { width: 100%; }
+
+  .faq-section__items {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .faq-section__controls { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+  .faq-section__controls label { display: grid; flex: 1 1 240px; gap: 0.35rem; font-weight: 700; }
+  .faq-section__controls input, .faq-section__controls select { min-height: 42px; padding: 0.55rem 0.7rem; border: 1px solid rgb(180, 180, 180); border-radius: 4px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Questions and answers"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "t:labels.animation_speed",
+      "min": 200,
+      "max": 800,
+      "step": 50,
+      "unit": "ms",
+      "default": 450
+    },
+    { "type": "checkbox", "id": "show_search", "label": "t:labels.show_search", "default": true },
+    { "type": "checkbox", "id": "show_categories", "label": "t:labels.show_categories", "default": true },
+    { "type": "checkbox", "id": "single_open", "label": "t:labels.single_open", "default": false }
+  ],
+  "blocks": [{ "type": "_faq-item" }],
+  "presets": [
+    {
+      "name": "t:general.faq",
+      "blocks": [
+        { "type": "_faq-item" },
+        { "type": "_faq-item" },
+        { "type": "_faq-item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

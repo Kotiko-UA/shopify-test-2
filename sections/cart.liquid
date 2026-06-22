@@ -11,6 +11,7 @@
   {% if cart.empty? %}
     <p>{{ 'cart.empty' | t }}</p>
   {% else %}
+    {% render 'cart-shipping-progress', threshold: section.settings.free_shipping_threshold %}
     <form class="cart-form" action="{{ routes.cart_url }}" method="post">
       <table class="cart-items">
         <caption class="visually-hidden">
@@ -102,26 +103,22 @@
           {% endfor %}
         </tbody>
       </table>
-      <div class="cart-note">
-        <label for="cart-note">{{ 'cart.order_note' | t }}</label>
-
-        <textarea id="cart-note" name="note" data-cart-note>{{ cart.note }}</textarea>
-      </div>
-      <div class="cart-attribute">
-        <label for="delivery-instructions">{{ 'cart.delivery_instructions' | t }}</label>
-
-        <input
-          id="delivery-instructions"
-          type="text"
-          name="attributes[Delivery instructions]"
-          value="{{ cart.attributes['Delivery instructions'] }}"
-          data-cart-attribute
-        >
-      </div>
-      <div class="cart-attribute">
-        <label for="gift-wrap">{{ 'cart.gift_wrap' | t }}</label>
-
-        <select id="gift-wrap" name="attributes[Gift wrap]" data-cart-attribute>
+      {% if section.settings.show_order_note %}
+        <div class="cart-note">
+          <label for="cart-note">{{ 'cart.order_note' | t }}</label>
+          <textarea id="cart-note" name="note" data-cart-note>{{ cart.note }}</textarea>
+        </div>
+      {% endif %}
+      {% if section.settings.show_delivery_instructions %}
+        <div class="cart-attribute">
+          <label for="delivery-instructions">{{ 'cart.delivery_instructions' | t }}</label>
+          <input id="delivery-instructions" type="text" name="attributes[Delivery instructions]" value="{{ cart.attributes['Delivery instructions'] }}" data-cart-attribute>
+        </div>
+      {% endif %}
+      {% if section.settings.show_gift_wrap %}
+        <div class="cart-attribute">
+          <label for="gift-wrap">{{ 'cart.gift_wrap' | t }}</label>
+          <select id="gift-wrap" name="attributes[Gift wrap]" data-cart-attribute>
           <option
             value="No"
             {% if cart.attributes['Gift wrap'] == 'No' %}
@@ -139,8 +136,9 @@
           >
             {{ 'cart.yes' | t }}
           </option>
-        </select>
-      </div>
+          </select>
+        </div>
+      {% endif %}
       <input class="cart-update-button" type="submit" name="update" value="{{ 'cart.update' | t }}">
       {% if cart.original_total_price > cart.total_price %}
         <div class="cart-original-total">
@@ -176,16 +174,29 @@
         <span>{{ 'cart.subtotal' | t }}</span>
         <strong>{{ cart.total_price | money }}</strong>
       </div>
-      <div class="cart-discount-code">
-        <label for="cart-discount-code">{{ 'cart.discount_code' | t }}</label>
-
-        <div class="cart-discount-code__row">
-          <input id="cart-discount-code" type="text" data-cart-discount-code>
-          <button type="button" data-cart-discount-apply>{{ 'cart.apply_discount' | t }}</button>
+      {% if section.settings.show_discount_code %}
+        <div class="cart-discount-code">
+          <label for="cart-discount-code">{{ 'cart.discount_code' | t }}</label>
+          <div class="cart-discount-code__row">
+            <input id="cart-discount-code" type="text" data-cart-discount-code>
+            <button type="button" data-cart-discount-apply>{{ 'cart.apply_discount' | t }}</button>
+          </div>
         </div>
-      </div>
+      {% endif %}
+      {% if section.settings.trust_text != blank %}<div class="cart-trust">{{ section.settings.trust_text }}</div>{% endif %}
       <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
     </form>
+
+    {% if section.settings.cross_sell_products != blank %}
+      <section class="cart-cross-sells">
+        <h2>{{ 'cart.you_may_also_like' | t }}</h2>
+        <div class="cart-cross-sells__grid">
+          {% for cross_sell_product in section.settings.cross_sell_products %}
+            {% render 'product-card', product: cross_sell_product, show_badges: true, show_secondary_image: true, enable_quick_add: true %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
   {% endif %}
 </div>
 
@@ -205,6 +216,10 @@
     max-width: 960px;
     margin-top: 1.5rem;
   }
+
+  .cart-cross-sells { margin-top: 3rem; }
+  .cart-cross-sells__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .cart-trust { padding: 0.75rem; border-radius: 4px; background: rgb(246, 246, 247); }
 
   .cart-items {
     width: 100%;
@@ -410,6 +425,14 @@
 {% schema %}
 {
   "name": "t:general.cart",
-  "settings": []
+  "settings": [
+    { "type": "range", "id": "free_shipping_threshold", "label": "t:labels.free_shipping_threshold", "min": 0, "max": 500, "step": 5, "unit": "$", "default": 100 },
+    { "type": "checkbox", "id": "show_order_note", "label": "t:labels.show_order_note", "default": true },
+    { "type": "checkbox", "id": "show_delivery_instructions", "label": "t:labels.show_delivery_instructions", "default": true },
+    { "type": "checkbox", "id": "show_gift_wrap", "label": "t:labels.show_gift_wrap", "default": true },
+    { "type": "checkbox", "id": "show_discount_code", "label": "t:labels.show_discount_code", "default": true },
+    { "type": "richtext", "id": "trust_text", "label": "t:labels.trust_text", "default": "<p>Secure checkout and easy returns.</p>" },
+    { "type": "product_list", "id": "cross_sell_products", "label": "t:labels.cross_sell_products", "limit": 4 }
+  ]
 }
 {% endschema %}

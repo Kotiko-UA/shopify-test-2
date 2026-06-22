@@ -1,0 +1,27 @@
+{% assign field_id = 'ContactField-' | append: section.id | append: '-' | append: block.id %}
+{% assign field_label = block.settings.label | default: 'Field' %}
+{% assign field_name = block.settings.field_name | default: field_label %}
+{% assign help_id = field_id | append: '-help' %}
+{% assign options = block.settings.options | newline_to_br | split: '<br />' %}
+<fieldset class="contact-form__field contact-form__field--{{ block.settings.width }} contact-form__fieldset"{% if block.settings.help_text != blank %} aria-describedby="{{ help_id }}"{% endif %} {{ block.shopify_attributes }}>
+  <legend>{{ field_label | escape }}</legend>
+  <div class="contact-form__choices">
+    {% for option in options %}{% assign value = option | strip %}{% if value != blank %}{% assign option_id = field_id | append: '-' | append: forloop.index %}<label class="contact-form__choice" for="{{ option_id }}"><input id="{{ option_id }}" type="radio" name="contact[{{ field_name | escape }}]" value="{{ value | escape }}"{% if block.settings.required %} required{% endif %}><span>{{ value | escape }}</span></label>{% endif %}{% endfor %}
+  </div>
+  {% if block.settings.help_text != blank %}<small id="{{ help_id }}">{{ block.settings.help_text | escape }}</small>{% endif %}
+</fieldset>
+{% stylesheet %}.contact-form__field { display: grid; gap: 0.35rem; }.contact-form__fieldset { min-width: 0; padding: 0; border: 0; }.contact-form__choices { display: grid; gap: 0.5rem; }.contact-form__choice { display: flex; align-items: flex-start; gap: 0.55rem; width: fit-content; cursor: pointer; }{% endstylesheet %}
+{% schema %}
+{
+  "name": "t:general.radio_group",
+  "settings": [
+    { "type": "text", "id": "label", "label": "t:labels.field_label", "default": "Choose an option" },
+    { "type": "text", "id": "field_name", "label": "t:labels.submission_field_name" },
+    { "type": "textarea", "id": "options", "label": "t:labels.options_one_per_line", "default": "Option one\nOption two" },
+    { "type": "text", "id": "help_text", "label": "t:labels.help_text" },
+    { "type": "select", "id": "width", "label": "t:labels.field_width", "options": [{ "value": "full", "label": "t:options.field_width.full" }, { "value": "half", "label": "t:options.field_width.half" }, { "value": "third", "label": "t:options.field_width.third" }, { "value": "two-thirds", "label": "t:options.field_width.two_thirds" }], "default": "full" },
+    { "type": "checkbox", "id": "required", "label": "t:labels.required_field", "default": false }
+  ],
+  "presets": [{ "name": "t:general.radio_group" }]
+}
+{% endschema %}

@@ -345,7 +345,8 @@
 		)
 
 		if (discountApplyButton) {
-			const discountField = document.querySelector('[data-cart-discount-code]')
+			const discountScope = discountApplyButton.closest('[data-cart-drawer], [data-cart-page]') || document
+			const discountField = discountScope.querySelector('[data-cart-discount-code]')
 			const discountCode = discountField?.value.trim()
 
 			if (!discountCode) return

@@ -1,0 +1,166 @@
+<div
+  id="ComparisonTable-{{ block.id }}"
+  class="comparison-table comparison-table--highlight-{{ block.settings.highlighted_column }}"
+  {{ block.shopify_attributes }}
+>
+  {% render 'section-header',
+    eyebrow: block.settings.eyebrow,
+    heading: block.settings.heading,
+    text: block.settings.description,
+    alignment: block.settings.alignment
+  %}
+
+  <div class="comparison-table__table" role="table">
+    <div class="comparison-table__row comparison-table__row--header" role="row">
+      <div role="columnheader">{{ block.settings.feature_column | escape }}</div>
+      <div role="columnheader">{{ block.settings.first_column | escape }}</div>
+      <div role="columnheader">{{ block.settings.second_column | escape }}</div>
+    </div>
+
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% style %}
+  #ComparisonTable-{{ block.id }} .comparison-table__row > [data-column='first']::before {
+    --comparison-column-label: {{ block.settings.first_column | json }};
+  }
+  #ComparisonTable-{{ block.id }} .comparison-table__row > [data-column='second']::before {
+    --comparison-column-label: {{ block.settings.second_column | json }};
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .comparison-table { width: 100%; }
+
+  .comparison-table__table {
+    overflow: hidden;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+  }
+
+  .comparison-table__row {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) repeat(2, minmax(140px, 1fr));
+  }
+
+  .comparison-table__row > * {
+    padding: 1rem;
+    border-top: 1px solid rgb(220, 220, 220);
+  }
+
+  .comparison-table__row > * + * {
+    border-left: 1px solid rgb(220, 220, 220);
+  }
+
+  .comparison-table__row--header {
+    background-color: rgb(246, 246, 247);
+    font-weight: 700;
+  }
+
+  .comparison-table__row--header > * {
+    border-top: 0;
+  }
+
+  .comparison-table--highlight-first .comparison-table__row > :nth-child(2),
+  .comparison-table--highlight-second .comparison-table__row > :nth-child(3) { background: rgb(240, 248, 245); }
+  .comparison-table__feature { position: sticky; z-index: 1; left: 0; background: var(--color-background); font-weight: 700; }
+  .comparison-table__status { display: inline-grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; font-weight: 700; }
+  .comparison-table__status--yes { background: rgb(220, 245, 235); color: rgb(0, 100, 70); }
+  .comparison-table__status--no { background: rgb(250, 228, 228); color: rgb(150, 25, 25); }
+
+  @media screen and (max-width: 749px) {
+    .comparison-table__table {
+      overflow: visible;
+      border: 0;
+    }
+
+    .comparison-table__row--header { display: none; }
+    .comparison-table__row {
+      grid-template-columns: 1fr;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border: 1px solid rgb(220, 220, 220);
+      border-radius: 8px;
+    }
+
+    .comparison-table__row > * { display: grid; grid-template-columns: minmax(100px, 0.8fr) minmax(0, 1fr); gap: 1rem; border-top: 1px solid rgb(220, 220, 220); border-left: 0; }
+    .comparison-table__row > [data-column]::before { font-weight: 700; content: var(--comparison-column-label); }
+    .comparison-table__feature { position: static; display: block; border-top: 0; background: rgb(246, 246, 247); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.comparison_table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Compare options"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "text",
+      "id": "feature_column",
+      "label": "t:labels.feature_column",
+      "default": "Feature"
+    },
+    {
+      "type": "text",
+      "id": "first_column",
+      "label": "t:labels.first_column",
+      "default": "Option A"
+    },
+    {
+      "type": "text",
+      "id": "second_column",
+      "label": "t:labels.second_column",
+      "default": "Option B"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "highlighted_column",
+      "label": "t:labels.highlighted_column",
+      "options": [
+        { "value": "none", "label": "t:options.highlighted_column.none" },
+        { "value": "first", "label": "t:options.highlighted_column.first" },
+        { "value": "second", "label": "t:options.highlighted_column.second" }
+      ],
+      "default": "none"
+    }
+  ],
+  "blocks": [{ "type": "_comparison-row" }],
+  "presets": [
+    {
+      "name": "t:general.comparison_table",
+      "blocks": [
+        { "type": "_comparison-row" },
+        { "type": "_comparison-row" },
+        { "type": "_comparison-row" }
+      ]
+    }
+  ]
+}
+{% endschema %}

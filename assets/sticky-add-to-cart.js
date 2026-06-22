@@ -7,33 +7,28 @@
 
 			const mainForm = document.querySelector('.product-form .js-product-form');
 			const mainSubmit = mainForm?.querySelector('[type="submit"]');
-			const variantSelect = mainForm?.querySelector('select[name="id"]');
+			const mainVariantId = mainForm?.querySelector('[data-product-variant-id]');
 			const stickyVariantId = sticky.querySelector(
 				'[data-sticky-add-to-cart-variant-id]',
 			);
 			const stickyPrice = sticky.querySelector('[data-sticky-add-to-cart-price]');
 			const stickySubmit = sticky.querySelector('[data-sticky-add-to-cart-submit]');
 
-			if (!mainForm || !mainSubmit || !variantSelect || !stickyVariantId) {
+			if (!mainForm || !mainSubmit || !mainVariantId || !stickyVariantId) {
 				return;
 			}
 
 			sticky.dataset.stickyAddToCartInitialized = 'true';
 
-			const syncVariant = () => {
-				const selectedOption = variantSelect.selectedOptions[0];
+			const syncVariant = (variant) => {
+				stickyVariantId.value = variant?.id || mainVariantId.value;
+				stickySubmit.disabled = variant ? !variant.available : mainSubmit.disabled;
 
-				if (!selectedOption) {
-					return;
-				}
-
-				const isAvailable = selectedOption.dataset.variantAvailable === 'true';
-
-				stickyVariantId.value = selectedOption.value;
-				stickySubmit.disabled = !isAvailable;
-
-				if (stickyPrice && selectedOption.dataset.variantPrice) {
-					stickyPrice.textContent = selectedOption.dataset.variantPrice;
+				if (stickyPrice && variant && window.themeCart?.formatMoney) {
+					stickyPrice.textContent = window.themeCart.formatMoney(
+						variant.price,
+						mainForm.dataset.currency,
+					);
 				}
 			};
 
@@ -43,11 +38,13 @@
 				sticky.hidden = formBounds.bottom > 0;
 			};
 
-			variantSelect.addEventListener('change', syncVariant);
+			mainForm.addEventListener('product:variant-change', (event) => {
+				syncVariant(event.detail?.variant);
+			});
 			window.addEventListener('scroll', syncVisibility, { passive: true });
 			window.addEventListener('resize', syncVisibility);
 
-			syncVariant();
+			syncVariant(null);
 			syncVisibility();
 		});
 	};

@@ -14,263 +14,534 @@
       "settings": {}
     },
     "product_slider_fntxax": {
-      "type": "product-slider",
+      "type": "base-section-container",
       "blocks": {
-        "product_Kj9dRG": {
-          "type": "product",
+        "content": {
+          "type": "product-slider",
           "settings": {
-            "product": "the-multi-managed-snowboard"
-          }
-        },
-        "product_hhmHrV": {
-          "type": "product",
-          "settings": {
-            "product": "the-videographer-snowboard"
-          }
-        },
-        "product_gcEP7h": {
-          "type": "product",
-          "settings": {
-            "product": "the-collection-snowboard-oxygen"
-          }
-        },
-        "product_d73XP4": {
-          "type": "product",
-          "settings": {
-            "product": "gift-card"
-          }
-        },
-        "product_9KKt3B": {
-          "type": "product",
-          "settings": {
-            "product": "the-complete-snowboard"
-          }
-        },
-        "product_tPnpDw": {
-          "type": "product",
-          "settings": {
-            "product": "the-3p-fulfilled-snowboard"
-          }
+            "eyebrow": "",
+            "heading": "Selected products",
+            "description": "",
+            "products": [
+              "the-multi-managed-snowboard",
+              "the-videographer-snowboard",
+              "the-collection-snowboard-oxygen",
+              "gift-card",
+              "the-complete-snowboard",
+              "the-3p-fulfilled-snowboard"
+            ],
+            "show_vendor": false,
+            "show_badges": true,
+            "show_secondary_image": true,
+            "enable_quick_add": true,
+            "alignment": "left",
+            "show_navigation": true,
+            "show_pagination": true,
+            "enable_loop": false,
+            "slides_mobile": "1",
+            "slides_tablet": 2,
+            "slides_desktop": 4,
+            "space_between": 16
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "product_Kj9dRG",
-        "product_hhmHrV",
-        "product_gcEP7h",
-        "product_d73XP4",
-        "product_9KKt3B",
-        "product_tPnpDw"
+        "content"
       ],
-      "name": "t:general.product_slider",
       "settings": {
-        "eyebrow": "",
-        "heading": "Selected products",
-        "description": "",
-        "show_vendor": false,
-        "alignment": "left",
-        "show_navigation": true,
-        "show_pagination": true,
-        "enable_loop": false,
-        "slides_mobile": "1",
-        "slides_tablet": 2,
-        "slides_desktop": 4,
-        "space_between": 16
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_laptop": 80,
+        "padding_bottom_laptop": 80,
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 120,
+        "container_padding_mobile": 16,
+        "container_padding_tablet": 16,
+        "container_padding_desktop": 16,
+        "container_width_mobile": 480,
+        "container_width_tablet": 768,
+        "container_width_laptop": 1280,
+        "container_width_desktop": 1440,
+        "background_type": "none",
+        "background_color": "#ffffff",
+        "background": "",
+        "background_image_fit": "cover",
+        "background_image_position": "center center",
+        "prioritize_background_image": false
       }
     },
     "tabs_ieFpTc": {
-      "type": "tabs",
+      "type": "base-section-container",
       "blocks": {
-        "tab_7NEyP6": {
-          "type": "_tab",
+        "content": {
+          "type": "tabs",
           "settings": {
-            "title": "Tab"
+            "eyebrow": "",
+            "heading": "More information",
+            "description": "",
+            "alignment": "left"
           },
           "blocks": {
-            "tab_7NEyP6_text": {
-              "type": "text",
+            "tab_7NEyP6": {
+              "type": "_tab",
               "settings": {
-                "text": "Add tab content for product details, shipping, returns, materials, or sizing.",
-                "text_style": "text--normal",
-                "alignment": "left"
+                "title": "Tab"
               },
-              "blocks": {}
+              "blocks": {
+                "tab_7NEyP6_text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "Add tab content for product details, shipping, returns, materials, or sizing.",
+                    "text_style": "text--normal",
+                    "alignment": "left"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "tab_7NEyP6_text"
+              ]
+            },
+            "tab_UW9bJU": {
+              "type": "_tab",
+              "settings": {
+                "title": "Tab"
+              },
+              "blocks": {
+                "tab_UW9bJU_text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "Add tab content for product details, shipping, returns, materials, or sizing. 2",
+                    "text_style": "text--normal",
+                    "alignment": "left"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "tab_UW9bJU_text"
+              ]
+            },
+            "tab_kF9Aii": {
+              "type": "_tab",
+              "settings": {
+                "title": "Tab"
+              },
+              "blocks": {
+                "tab_kF9Aii_text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "Add tab content for product details, shipping, returns, materials, or sizing. 3",
+                    "text_style": "text--normal",
+                    "alignment": "left"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "tab_kF9Aii_text"
+              ]
             }
           },
           "block_order": [
-            "tab_7NEyP6_text"
-          ]
-        },
-        "tab_UW9bJU": {
-          "type": "_tab",
-          "settings": {
-            "title": "Tab"
-          },
-          "blocks": {
-            "tab_UW9bJU_text": {
-              "type": "text",
-              "settings": {
-                "text": "Add tab content for product details, shipping, returns, materials, or sizing. 2",
-                "text_style": "text--normal",
-                "alignment": "left"
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "tab_UW9bJU_text"
-          ]
-        },
-        "tab_kF9Aii": {
-          "type": "_tab",
-          "settings": {
-            "title": "Tab"
-          },
-          "blocks": {
-            "tab_kF9Aii_text": {
-              "type": "text",
-              "settings": {
-                "text": "Add tab content for product details, shipping, returns, materials, or sizing. 3",
-                "text_style": "text--normal",
-                "alignment": "left"
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "tab_kF9Aii_text"
+            "tab_7NEyP6",
+            "tab_UW9bJU",
+            "tab_kF9Aii"
           ]
         }
       },
       "block_order": [
-        "tab_7NEyP6",
-        "tab_UW9bJU",
-        "tab_kF9Aii"
+        "content"
       ],
-      "name": "t:general.tabs",
       "settings": {
-        "eyebrow": "",
-        "heading": "More information",
-        "description": "",
-        "alignment": "left"
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_laptop": 80,
+        "padding_bottom_laptop": 80,
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 120,
+        "container_padding_mobile": 16,
+        "container_padding_tablet": 16,
+        "container_padding_desktop": 16,
+        "container_width_mobile": 480,
+        "container_width_tablet": 768,
+        "container_width_laptop": 1280,
+        "container_width_desktop": 1440,
+        "background_type": "none",
+        "background_color": "#ffffff",
+        "background": "",
+        "background_image_fit": "cover",
+        "background_image_position": "center center",
+        "prioritize_background_image": false
       }
     },
     "testimonials_CRMgJw": {
-      "type": "testimonials",
+      "type": "base-section-container",
       "blocks": {
-        "testimonial_KXhke6": {
-          "type": "testimonial",
+        "content": {
+          "type": "testimonials",
           "settings": {
-            "rating": 5,
-            "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
-            "author": "Customer name",
-            "detail": "Verified buyer"
-          }
-        },
-        "testimonial_nTiAmz": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
-            "author": "Customer name",
-            "detail": "Verified buyer"
-          }
-        },
-        "testimonial_UqrXpf": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
-            "author": "Customer name",
-            "detail": "Verified buyer"
-          }
+            "eyebrow": "",
+            "heading": "Customer stories",
+            "description": "",
+            "alignment": "center",
+            "layout": "grid",
+            "show_navigation": true
+          },
+          "blocks": {
+            "testimonial_KXhke6": {
+              "type": "_testimonial",
+              "settings": {
+                "rating": 5,
+                "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
+                "author": "Customer name",
+                "detail": "Verified buyer",
+                "verified": false,
+                "source": "",
+                "source_url": "",
+                "product": ""
+              },
+              "blocks": {}
+            },
+            "testimonial_nTiAmz": {
+              "type": "_testimonial",
+              "settings": {
+                "rating": 5,
+                "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
+                "author": "Customer name",
+                "detail": "Verified buyer",
+                "verified": false,
+                "source": "",
+                "source_url": "",
+                "product": ""
+              },
+              "blocks": {}
+            },
+            "testimonial_UqrXpf": {
+              "type": "_testimonial",
+              "settings": {
+                "rating": 5,
+                "quote": "<p>Add a short customer quote that explains why people trust this store.</p>",
+                "author": "Customer name",
+                "detail": "Verified buyer",
+                "verified": false,
+                "source": "",
+                "source_url": "",
+                "product": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "testimonial_KXhke6",
+            "testimonial_nTiAmz",
+            "testimonial_UqrXpf"
+          ]
         }
       },
       "block_order": [
-        "testimonial_KXhke6",
-        "testimonial_nTiAmz",
-        "testimonial_UqrXpf"
+        "content"
       ],
-      "name": "t:general.testimonials",
       "settings": {
-        "eyebrow": "",
-        "heading": "Customer stories",
-        "description": "",
-        "alignment": "center"
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_laptop": 80,
+        "padding_bottom_laptop": 80,
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 120,
+        "container_padding_mobile": 16,
+        "container_padding_tablet": 16,
+        "container_padding_desktop": 16,
+        "container_width_mobile": 480,
+        "container_width_tablet": 768,
+        "container_width_laptop": 1280,
+        "container_width_desktop": 1440,
+        "background_type": "none",
+        "background_color": "#ffffff",
+        "background": "",
+        "background_image_fit": "cover",
+        "background_image_position": "center center",
+        "prioritize_background_image": false
       }
     },
     "trust_badges_pPDYpa": {
-      "type": "trust-badges",
+      "type": "base-section-container",
       "blocks": {
-        "badge_Wk63Pc": {
-          "type": "badge",
+        "content": {
+          "type": "trust-badges",
           "settings": {
-            "heading": "Free shipping",
-            "text": "<p>Add a short trust-building benefit.</p>"
-          }
-        },
-        "badge_DLRPUd": {
-          "type": "badge",
-          "settings": {
-            "heading": "Free shipping",
-            "text": "<p>Add a short trust-building benefit.</p>"
-          }
-        },
-        "badge_hktYej": {
-          "type": "badge",
-          "settings": {
-            "heading": "Free shipping",
-            "text": "<p>Add a short trust-building benefit.</p>"
-          }
+            "heading": "",
+            "description": "",
+            "alignment": "center"
+          },
+          "blocks": {
+            "badge_Wk63Pc": {
+              "type": "_trust-badge",
+              "settings": {
+                "heading": "Free shipping",
+                "text": "<p>Add a short trust-building benefit.</p>"
+              },
+              "blocks": {}
+            },
+            "badge_DLRPUd": {
+              "type": "_trust-badge",
+              "settings": {
+                "heading": "Free shipping",
+                "text": "<p>Add a short trust-building benefit.</p>"
+              },
+              "blocks": {}
+            },
+            "badge_hktYej": {
+              "type": "_trust-badge",
+              "settings": {
+                "heading": "Free shipping",
+                "text": "<p>Add a short trust-building benefit.</p>"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "badge_Wk63Pc",
+            "badge_DLRPUd",
+            "badge_hktYej"
+          ]
         }
       },
       "block_order": [
-        "badge_Wk63Pc",
-        "badge_DLRPUd",
-        "badge_hktYej"
+        "content"
       ],
-      "name": "t:general.trust_badges",
       "settings": {
-        "heading": "",
-        "description": "",
-        "alignment": "center"
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_laptop": 80,
+        "padding_bottom_laptop": 80,
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 120,
+        "container_padding_mobile": 16,
+        "container_padding_tablet": 16,
+        "container_padding_desktop": 16,
+        "container_width_mobile": 480,
+        "container_width_tablet": 768,
+        "container_width_laptop": 1280,
+        "container_width_desktop": 1440,
+        "background_type": "none",
+        "background_color": "#ffffff",
+        "background": "",
+        "background_image_fit": "cover",
+        "background_image_position": "center center",
+        "prioritize_background_image": false
       }
     },
     "faq_6JA9mq": {
-      "type": "faq",
+      "type": "base-section-container",
       "blocks": {
-        "question_3iB8Gx": {
-          "type": "question",
+        "content": {
+          "type": "faq",
           "settings": {
-            "question": "What should customers know?",
-            "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>"
-          }
-        },
-        "question_yH6JJp": {
-          "type": "question",
-          "settings": {
-            "question": "What should customers know?",
-            "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>"
-          }
-        },
-        "question_UJA4H6": {
-          "type": "question",
-          "settings": {
-            "question": "What should customers know?",
-            "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>"
-          }
+            "eyebrow": "",
+            "heading": "Questions and answers",
+            "description": "",
+            "alignment": "left",
+            "animation_duration": 450,
+            "show_search": true,
+            "show_categories": true,
+            "single_open": false
+          },
+          "blocks": {
+            "question_3iB8Gx": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "What should customers know?",
+                "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>",
+                "category": "",
+                "default_open": false
+              },
+              "blocks": {}
+            },
+            "question_yH6JJp": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "What should customers know?",
+                "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>",
+                "category": "",
+                "default_open": false
+              },
+              "blocks": {}
+            },
+            "question_UJA4H6": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "What should customers know?",
+                "answer": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>",
+                "category": "",
+                "default_open": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "question_3iB8Gx",
+            "question_yH6JJp",
+            "question_UJA4H6"
+          ]
         }
       },
       "block_order": [
-        "question_3iB8Gx",
-        "question_yH6JJp",
-        "question_UJA4H6"
+        "content"
       ],
-      "name": "t:general.faq",
       "settings": {
-        "eyebrow": "",
-        "heading": "Questions and answers",
-        "description": "",
-        "alignment": "left"
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_laptop": 80,
+        "padding_bottom_laptop": 80,
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 120,
+        "container_padding_mobile": 16,
+        "container_padding_tablet": 16,
+        "container_padding_desktop": 16,
+        "container_width_mobile": 480,
+        "container_width_tablet": 768,
+        "container_width_laptop": 1280,
+        "container_width_desktop": 1440,
+        "background_type": "none",
+        "background_color": "#ffffff",
+        "background": "",
+        "background_image_fit": "cover",
+        "background_image_position": "center center",
+        "prioritize_background_image": false
+      }
+    },
+    "base_section_container_THW6cc": {
+      "type": "base-section-container",
+      "blocks": {
+        "contact_form_tUrNnn": {
+          "type": "contact-form",
+          "name": "t:general.contact_form",
+          "settings": {
+            "heading": "",
+            "description": "",
+            "success_redirect": "",
+            "redirect_delay": 2
+          },
+          "blocks": {
+            "contact_input_yENaFm": {
+              "type": "_contact-input",
+              "name": "t:general.input_field",
+              "settings": {
+                "label": "Your answer",
+                "field_name": "",
+                "input_type": "text",
+                "placeholder": "",
+                "help_text": "",
+                "pattern": "",
+                "min": "",
+                "max": "",
+                "width": "half",
+                "required": false
+              },
+              "blocks": {}
+            },
+            "contact_input_dwfBaf": {
+              "type": "_contact-input",
+              "name": "t:general.input_field",
+              "settings": {
+                "label": "Your answer",
+                "field_name": "",
+                "input_type": "text",
+                "placeholder": "",
+                "help_text": "",
+                "pattern": "",
+                "min": "",
+                "max": "",
+                "width": "half",
+                "required": false
+              },
+              "blocks": {}
+            },
+            "contact_radio_4a9ykA": {
+              "type": "_contact-radio",
+              "name": "t:general.radio_group",
+              "settings": {
+                "label": "Choose an option",
+                "field_name": "",
+                "options": "Option one\nOption two",
+                "help_text": "",
+                "width": "full",
+                "required": false
+              },
+              "blocks": {}
+            },
+            "contact_textarea_WampeU": {
+              "type": "_contact-textarea",
+              "name": "t:general.textarea_field",
+              "settings": {
+                "label": "Message",
+                "field_name": "",
+                "placeholder": "",
+                "help_text": "",
+                "rows": 6,
+                "width": "full",
+                "required": false
+              },
+              "blocks": {}
+            },
+            "contact_consent_ejXecQ": {
+              "type": "_contact-consent",
+              "name": "t:general.consent_checkbox",
+              "settings": {
+                "field_name": "Consent",
+                "text": "<p>I agree to the terms and conditions.</p>",
+                "width": "full"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "contact_input_yENaFm",
+            "contact_input_dwfBaf",
+            "contact_radio_4a9ykA",
+            "contact_textarea_WampeU",
+            "contact_consent_ejXecQ"
+          ]
+        }
+      },
+      "block_order": [
+        "contact_form_tUrNnn"
+      ],
+      "name": "t:general.base_section_container",
+      "settings": {
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_laptop": 80,
+        "padding_bottom_laptop": 80,
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 120,
+        "container_padding_mobile": 16,
+        "container_padding_tablet": 16,
+        "container_padding_desktop": 16,
+        "container_width_mobile": 480,
+        "container_width_tablet": 768,
+        "container_width_laptop": 1280,
+        "container_width_desktop": 1440,
+        "background_type": "none",
+        "background_color": "#ffffff",
+        "background": "",
+        "background_image_fit": "cover",
+        "background_image_position": "center center",
+        "prioritize_background_image": false
       }
     }
   },
@@ -280,6 +551,7 @@
     "tabs_ieFpTc",
     "testimonials_CRMgJw",
     "trust_badges_pPDYpa",
-    "faq_6JA9mq"
+    "faq_6JA9mq",
+    "base_section_container_THW6cc"
   ]
 }

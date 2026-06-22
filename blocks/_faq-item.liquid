@@ -1,0 +1,44 @@
+<details
+  id="Faq-{{ section.id }}-{{ block.id }}"
+  class="faq-section__item"
+  data-faq-item
+  data-category="{{ block.settings.category | handleize }}"
+  data-category-label="{{ block.settings.category | escape }}"
+  data-search-text="{{ block.settings.question | append: ' ' | append: block.settings.answer | strip_html | downcase | escape }}"
+  {% if block.settings.default_open %}open{% endif %}
+  {{ block.shopify_attributes }}
+>
+  <summary data-faq-summary><span>{{ block.settings.question | escape }}</span><span class="faq-section__chevron" aria-hidden="true"></span></summary>
+  <div class="faq-section__content" data-faq-content><div class="faq-section__answer">{{ block.settings.answer }}</div></div>
+</details>
+
+<script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":{{ block.settings.question | json }},"acceptedAnswer":{"@type":"Answer","text":{{ block.settings.answer | strip_html | json }}}}]}
+</script>
+
+{% stylesheet %}
+  .faq-section__item[hidden] { display: none; }
+  .faq-section__item { border: 1px solid color-mix(in srgb, var(--color-foreground), transparent 78%); border-radius: 6px; background-color: var(--color-background); }
+  .faq-section__item summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; padding: 1rem; font-weight: 700; list-style: none; }
+  .faq-section__item summary::-webkit-details-marker { display: none; }
+  .faq-section__item summary::marker { content: ''; }
+  .faq-section__item summary:focus-visible { border-radius: 5px; outline: 2px solid currentColor; outline-offset: 2px; }
+  .faq-section__chevron { flex: 0 0 auto; width: 0.65rem; height: 0.65rem; margin-right: 0.2rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 350ms ease; }
+  .faq-section__item[open]:not([data-faq-closing='true']) .faq-section__chevron { transform: rotate(225deg); }
+  .faq-section__content { overflow: hidden; }
+  .faq-section__answer { padding: 0 1rem 1rem; color: color-mix(in srgb, var(--color-foreground), transparent 25%); line-height: 1.6; }
+  @media (prefers-reduced-motion: reduce) { .faq-section__chevron { transition: none; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.question",
+  "settings": [
+    { "type": "text", "id": "question", "label": "t:labels.question", "default": "What should customers know?" },
+    { "type": "richtext", "id": "answer", "label": "t:labels.answer", "default": "<p>Add a clear answer for shipping, returns, product care, sizing, or promotions.</p>" },
+    { "type": "text", "id": "category", "label": "t:labels.category" },
+    { "type": "checkbox", "id": "default_open", "label": "t:labels.default_open", "default": false }
+  ],
+  "presets": [{ "name": "t:general.question" }]
+}
+{% endschema %}

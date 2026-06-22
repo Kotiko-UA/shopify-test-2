@@ -14,469 +14,593 @@
       "settings": {}
     },
     "hero_demo": {
-      "type": "hero",
-      "name": "Demo: Hero",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Hero section",
-        "description": "<p>Use the hero for campaign pages, homepage introductions, and featured collection launches.</p>",
-        "image": "",
-        "image_position": "right",
-        "prioritize_image": false,
-        "primary_label": "Primary action",
-        "primary_link": "",
-        "primary_variant": "primary",
-        "secondary_label": "",
-        "secondary_link": "",
-        "background_color": "#f6f6f7",
-        "padding": 64
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "hero",
+          "settings": {
+            "eyebrow": "Demo section",
+            "heading": "Hero section",
+            "description": "<p>Use the hero for campaign pages, homepage introductions, and featured collection launches.</p>",
+            "image": "",
+            "image_position": "right",
+            "prioritize_image": false,
+            "primary_label": "Primary action",
+            "primary_link": "",
+            "primary_variant": "primary",
+            "secondary_label": "",
+            "secondary_link": "",
+            "background_color": "#f6f6f7",
+            "padding": 64
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "media_text_demo": {
-      "type": "media-with-text",
-      "name": "Demo: Media with text",
-      "settings": {
-        "image": "",
-        "image_position": "left",
-        "eyebrow": "Demo section",
-        "heading": "Media with text",
-        "description": "<p>Use this section for brand stories, product benefits, collection intros, and editorial content.</p>",
-        "button_label": "Learn more",
-        "button_link": "",
-        "button_variant": "secondary",
-        "background_color": "#ffffff"
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "media-with-text",
+          "settings": {
+            "image": "",
+            "image_position": "left",
+            "eyebrow": "Demo section",
+            "heading": "Media with text",
+            "description": "<p>Use this section for brand stories, product benefits, collection intros, and editorial content.</p>",
+            "button_label": "Learn more",
+            "button_link": "",
+            "button_variant": "secondary",
+            "background_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "featured_collection_demo": {
-      "type": "featured-collection",
-      "name": "Demo: Featured collection",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Featured collection",
-        "description": "<p>Connect this section to a collection to show products as a grid or horizontal slider.</p>",
-        "collection": "all",
-        "product_limit": 4,
-        "layout": "grid",
-        "show_vendor": false,
-        "alignment": "left",
-        "button_label": "View all",
-        "button_variant": "secondary"
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "featured-collection",
+          "settings": {
+            "eyebrow": "Demo section",
+            "heading": "Featured collection",
+            "description": "<p>Connect this section to a collection to show products as a grid or horizontal slider.</p>",
+            "collection": "all",
+            "product_limit": 4,
+            "layout": "grid",
+            "show_vendor": false,
+            "alignment": "left",
+            "button_label": "View all",
+            "button_variant": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "product_slider_demo": {
-      "type": "product-slider",
+      "type": "base-section-container",
       "blocks": {
-        "product_1": {
-          "type": "product",
+        "content": {
+          "type": "product-slider",
           "settings": {
-            "product": "gift-card"
-          }
-        },
-        "product_2": {
-          "type": "product",
-          "settings": {
-            "product": "selling-plans-ski-wax"
-          }
-        },
-        "product_3": {
-          "type": "product",
-          "settings": {
-            "product": "the-3p-fulfilled-snowboard"
+            "eyebrow": "Demo section",
+            "heading": "Product slider",
+            "description": "<p>Use manual product blocks when a merchant wants full control over featured items.</p>",
+            "show_vendor": false,
+            "alignment": "left",
+            "products": [
+              "gift-card",
+              "selling-plans-ski-wax",
+              "the-3p-fulfilled-snowboard"
+            ]
           }
         }
       },
       "block_order": [
-        "product_1",
-        "product_2",
-        "product_3"
+        "content"
       ],
-      "name": "Demo: Product slider",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Product slider",
-        "description": "<p>Use manual product blocks when a merchant wants full control over featured items.</p>",
-        "show_vendor": false,
-        "alignment": "left"
-      }
+      "settings": {}
     },
     "trust_demo": {
-      "type": "trust-badges",
+      "type": "base-section-container",
       "blocks": {
-        "shipping": {
-          "type": "badge",
+        "content": {
+          "type": "trust-badges",
+          "blocks": {
+            "shipping": {
+              "type": "_trust-badge",
+              "settings": {
+                "icon": "",
+                "heading": "Fast shipping",
+                "text": "<p>Use this card for delivery promises.</p>"
+              }
+            },
+            "returns": {
+              "type": "_trust-badge",
+              "settings": {
+                "icon": "",
+                "heading": "Easy returns",
+                "text": "<p>Use this card for return policy highlights.</p>"
+              }
+            },
+            "support": {
+              "type": "_trust-badge",
+              "settings": {
+                "icon": "",
+                "heading": "Helpful support",
+                "text": "<p>Use this card for customer care messaging.</p>"
+              }
+            }
+          },
+          "block_order": [
+            "shipping",
+            "returns",
+            "support"
+          ],
           "settings": {
-            "icon": "",
-            "heading": "Fast shipping",
-            "text": "<p>Use this card for delivery promises.</p>"
-          }
-        },
-        "returns": {
-          "type": "badge",
-          "settings": {
-            "icon": "",
-            "heading": "Easy returns",
-            "text": "<p>Use this card for return policy highlights.</p>"
-          }
-        },
-        "support": {
-          "type": "badge",
-          "settings": {
-            "icon": "",
-            "heading": "Helpful support",
-            "text": "<p>Use this card for customer care messaging.</p>"
+            "heading": "Trust badges",
+            "description": "",
+            "alignment": "center"
           }
         }
       },
       "block_order": [
-        "shipping",
-        "returns",
-        "support"
+        "content"
       ],
-      "name": "Demo: Trust badges",
-      "settings": {
-        "heading": "Trust badges",
-        "description": "",
-        "alignment": "center"
-      }
+      "settings": {}
     },
     "collection_list_demo": {
-      "type": "collection-list",
+      "type": "base-section-container",
       "blocks": {
-        "collection_1": {
-          "type": "collection",
+        "content": {
+          "type": "collection-list",
+          "blocks": {
+            "collection_1": {
+              "type": "_collection-card",
+              "settings": {
+                "collection": "all"
+              }
+            },
+            "collection_2": {
+              "type": "_collection-card",
+              "settings": {
+                "collection": "hydrogen"
+              }
+            },
+            "collection_3": {
+              "type": "_collection-card",
+              "settings": {
+                "collection": ""
+              }
+            }
+          },
+          "block_order": [
+            "collection_1",
+            "collection_2",
+            "collection_3"
+          ],
           "settings": {
-            "collection": "all"
-          }
-        },
-        "collection_2": {
-          "type": "collection",
-          "settings": {
-            "collection": "hydrogen"
-          }
-        },
-        "collection_3": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
+            "eyebrow": "Demo section",
+            "heading": "Collection list",
+            "description": "<p>Use collection cards to send shoppers into key catalog areas.</p>",
+            "alignment": "left"
           }
         }
       },
       "block_order": [
-        "collection_1",
-        "collection_2",
-        "collection_3"
+        "content"
       ],
-      "name": "Demo: Collection list",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Collection list",
-        "description": "<p>Use collection cards to send shoppers into key catalog areas.</p>",
-        "alignment": "left"
-      }
+      "settings": {}
     },
     "logo_demo": {
-      "type": "logo-marquee",
+      "type": "base-section-container",
       "blocks": {
-        "logo_1": {
-          "type": "logo",
+        "content": {
+          "type": "logo-marquee",
+          "blocks": {
+            "logo_1": {
+              "type": "_logo-item",
+              "settings": {
+                "logo": "",
+                "title": "Brand one",
+                "link": ""
+              }
+            },
+            "logo_2": {
+              "type": "_logo-item",
+              "settings": {
+                "logo": "",
+                "title": "Brand two",
+                "link": ""
+              }
+            },
+            "logo_3": {
+              "type": "_logo-item",
+              "settings": {
+                "logo": "",
+                "title": "Brand three",
+                "link": ""
+              }
+            }
+          },
+          "block_order": [
+            "logo_1",
+            "logo_2",
+            "logo_3"
+          ],
           "settings": {
-            "logo": "",
-            "title": "Brand one",
-            "link": ""
-          }
-        },
-        "logo_2": {
-          "type": "logo",
-          "settings": {
-            "logo": "",
-            "title": "Brand two",
-            "link": ""
-          }
-        },
-        "logo_3": {
-          "type": "logo",
-          "settings": {
-            "logo": "",
-            "title": "Brand three",
-            "link": ""
+            "heading": "Logo marquee",
+            "description": "<p>Works with uploaded logos or fallback text labels.</p>",
+            "alignment": "center",
+            "speed": 30,
+            "direction": "left"
           }
         }
       },
       "block_order": [
-        "logo_1",
-        "logo_2",
-        "logo_3"
+        "content"
       ],
-      "name": "Demo: Logo marquee",
-      "settings": {
-        "heading": "Logo marquee",
-        "description": "<p>Works with uploaded logos or fallback text labels.</p>",
-        "alignment": "center",
-        "speed": 30,
-        "direction": "left"
-      }
+      "settings": {}
     },
     "countdown_demo": {
-      "type": "countdown-promo",
-      "name": "Demo: Countdown promo",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Countdown promo",
-        "description": "<p>Use this section for sale deadlines and launch campaigns.</p>",
-        "end_datetime": "2026-12-31T23:59:59",
-        "alignment": "center",
-        "button_label": "",
-        "button_link": "",
-        "button_variant": "accent",
-        "background_color": "#202223",
-        "text_color": "#ffffff"
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "countdown-promo",
+          "settings": {
+            "eyebrow": "Demo section",
+            "heading": "Countdown promo",
+            "description": "<p>Use this section for sale deadlines and launch campaigns.</p>",
+            "end_datetime": "2026-12-31T23:59:59",
+            "alignment": "center",
+            "button_label": "",
+            "button_link": "",
+            "button_variant": "accent",
+            "background_color": "#202223",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "promo_demo": {
-      "type": "promo-grid",
+      "type": "base-section-container",
       "blocks": {
-        "promo_1": {
-          "type": "promo",
+        "content": {
+          "type": "promo-grid",
+          "blocks": {
+            "promo_1": {
+              "type": "_promo-card",
+              "settings": {
+                "image": "",
+                "heading": "New arrivals",
+                "text": "<p>Promote a category, collection, or campaign.</p>",
+                "button_label": "Shop now",
+                "link": ""
+              }
+            },
+            "promo_2": {
+              "type": "_promo-card",
+              "settings": {
+                "image": "",
+                "heading": "Best sellers",
+                "text": "<p>Guide shoppers to popular products.</p>",
+                "button_label": "Explore",
+                "link": ""
+              }
+            },
+            "promo_3": {
+              "type": "_promo-card",
+              "settings": {
+                "image": "",
+                "heading": "Limited offers",
+                "text": "<p>Highlight seasonal or time-sensitive offers.</p>",
+                "button_label": "View deals",
+                "link": ""
+              }
+            }
+          },
+          "block_order": [
+            "promo_1",
+            "promo_2",
+            "promo_3"
+          ],
           "settings": {
-            "image": "",
-            "heading": "New arrivals",
-            "text": "<p>Promote a category, collection, or campaign.</p>",
-            "button_label": "Shop now",
-            "link": ""
-          }
-        },
-        "promo_2": {
-          "type": "promo",
-          "settings": {
-            "image": "",
-            "heading": "Best sellers",
-            "text": "<p>Guide shoppers to popular products.</p>",
-            "button_label": "Explore",
-            "link": ""
-          }
-        },
-        "promo_3": {
-          "type": "promo",
-          "settings": {
-            "image": "",
-            "heading": "Limited offers",
-            "text": "<p>Highlight seasonal or time-sensitive offers.</p>",
-            "button_label": "View deals",
-            "link": ""
+            "eyebrow": "Demo section",
+            "heading": "Promo grid",
+            "description": "",
+            "alignment": "left"
           }
         }
       },
       "block_order": [
-        "promo_1",
-        "promo_2",
-        "promo_3"
+        "content"
       ],
-      "name": "Demo: Promo grid",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Promo grid",
-        "description": "",
-        "alignment": "left"
-      }
+      "settings": {}
     },
     "faq_demo": {
-      "type": "faq",
+      "type": "base-section-container",
       "blocks": {
-        "faq_1": {
-          "type": "question",
+        "content": {
+          "type": "faq",
+          "blocks": {
+            "faq_1": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "Where should this section be used?",
+                "answer": "<p>Use it for shipping, returns, sizing, materials, and product care questions.</p>"
+              }
+            },
+            "faq_2": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "Can blocks be reordered?",
+                "answer": "<p>Yes. Each question is a Shopify section block.</p>"
+              }
+            }
+          },
+          "block_order": [
+            "faq_1",
+            "faq_2"
+          ],
           "settings": {
-            "question": "Where should this section be used?",
-            "answer": "<p>Use it for shipping, returns, sizing, materials, and product care questions.</p>"
-          }
-        },
-        "faq_2": {
-          "type": "question",
-          "settings": {
-            "question": "Can blocks be reordered?",
-            "answer": "<p>Yes. Each question is a Shopify section block.</p>"
+            "eyebrow": "Demo section",
+            "heading": "FAQ",
+            "description": "",
+            "alignment": "left"
           }
         }
       },
       "block_order": [
-        "faq_1",
-        "faq_2"
+        "content"
       ],
-      "name": "Demo: FAQ",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "FAQ",
-        "description": "",
-        "alignment": "left"
-      }
+      "settings": {}
     },
     "featured_blog_demo": {
-      "type": "featured-blog",
-      "name": "Demo: Featured blog",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Featured blog",
-        "description": "<p>Connect a blog to show recent articles on landing pages and the homepage.</p>",
-        "blog": "news",
-        "article_limit": 3,
-        "show_image": true,
-        "show_excerpt": true,
-        "show_author": false,
-        "show_date": true,
-        "show_tags": false,
-        "alignment": "left",
-        "button_label": "View all articles",
-        "button_variant": "secondary"
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "featured-blog",
+          "settings": {
+            "eyebrow": "Demo section",
+            "heading": "Featured blog",
+            "description": "<p>Connect a blog to show recent articles on landing pages and the homepage.</p>",
+            "blog": "news",
+            "article_limit": 3,
+            "show_image": true,
+            "show_excerpt": true,
+            "show_author": false,
+            "show_date": true,
+            "show_tags": false,
+            "alignment": "left",
+            "button_label": "View all articles",
+            "button_variant": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "testimonials_demo": {
-      "type": "testimonials",
+      "type": "base-section-container",
       "blocks": {
-        "testimonial_1": {
-          "type": "testimonial",
+        "content": {
+          "type": "testimonials",
+          "blocks": {
+            "testimonial_1": {
+              "type": "_testimonial",
+              "settings": {
+                "rating": 5,
+                "quote": "<p>This starter theme gives us a clean base to build from.</p>",
+                "author": "Store owner",
+                "detail": "Demo testimonial",
+                "image": ""
+              }
+            },
+            "testimonial_2": {
+              "type": "_testimonial",
+              "settings": {
+                "rating": 5,
+                "quote": "<p>The reusable sections make homepage assembly faster.</p>",
+                "author": "Theme developer",
+                "detail": "Demo testimonial",
+                "image": ""
+              }
+            }
+          },
+          "block_order": [
+            "testimonial_1",
+            "testimonial_2"
+          ],
           "settings": {
-            "rating": 5,
-            "quote": "<p>This starter theme gives us a clean base to build from.</p>",
-            "author": "Store owner",
-            "detail": "Demo testimonial",
-            "image": ""
-          }
-        },
-        "testimonial_2": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "<p>The reusable sections make homepage assembly faster.</p>",
-            "author": "Theme developer",
-            "detail": "Demo testimonial",
-            "image": ""
+            "eyebrow": "Demo section",
+            "heading": "Testimonials",
+            "description": "",
+            "alignment": "center"
           }
         }
       },
       "block_order": [
-        "testimonial_1",
-        "testimonial_2"
+        "content"
       ],
-      "name": "Demo: Testimonials",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Testimonials",
-        "description": "",
-        "alignment": "center"
-      }
+      "settings": {}
     },
     "comparison_demo": {
-      "type": "comparison-table",
+      "type": "base-section-container",
       "blocks": {
-        "row_1": {
-          "type": "row",
+        "content": {
+          "type": "comparison-table",
+          "blocks": {
+            "row_1": {
+              "type": "_comparison-row",
+              "settings": {
+                "feature": "Layout",
+                "first_value": "<p>Grid</p>",
+                "second_value": "<p>Slider</p>"
+              }
+            },
+            "row_2": {
+              "type": "_comparison-row",
+              "settings": {
+                "feature": "Best for",
+                "first_value": "<p>Scanning many items</p>",
+                "second_value": "<p>Compact product highlights</p>"
+              }
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2"
+          ],
           "settings": {
-            "feature": "Layout",
-            "first_value": "<p>Grid</p>",
-            "second_value": "<p>Slider</p>"
-          }
-        },
-        "row_2": {
-          "type": "row",
-          "settings": {
-            "feature": "Best for",
-            "first_value": "<p>Scanning many items</p>",
-            "second_value": "<p>Compact product highlights</p>"
+            "eyebrow": "Demo section",
+            "heading": "Comparison table",
+            "description": "",
+            "feature_column": "Feature",
+            "first_column": "Option A",
+            "second_column": "Option B",
+            "alignment": "left"
           }
         }
       },
       "block_order": [
-        "row_1",
-        "row_2"
+        "content"
       ],
-      "name": "Demo: Comparison table",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Comparison table",
-        "description": "",
-        "feature_column": "Feature",
-        "first_column": "Option A",
-        "second_column": "Option B",
-        "alignment": "left"
-      }
+      "settings": {}
     },
     "tabs_demo": {
-      "type": "tabs",
+      "type": "base-section-container",
       "blocks": {
-        "tab_1": {
-          "type": "_tab",
-          "settings": { "title": "Details" },
+        "content": {
+          "type": "tabs",
           "blocks": {
-            "tab_1_text": {
-              "type": "text",
+            "tab_1": {
+              "type": "_tab",
               "settings": {
-                "text": "Add product or page details here.",
-                "text_style": "text--normal",
-                "alignment": "left"
-              }
+                "title": "Details"
+              },
+              "blocks": {
+                "tab_1_text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "Add product or page details here.",
+                    "text_style": "text--normal",
+                    "alignment": "left"
+                  }
+                }
+              },
+              "block_order": [
+                "tab_1_text"
+              ]
+            },
+            "tab_2": {
+              "type": "_tab",
+              "settings": {
+                "title": "Shipping"
+              },
+              "blocks": {
+                "tab_2_text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "Add shipping and delivery information here.",
+                    "text_style": "text--normal",
+                    "alignment": "left"
+                  }
+                }
+              },
+              "block_order": [
+                "tab_2_text"
+              ]
+            },
+            "tab_3": {
+              "type": "_tab",
+              "settings": {
+                "title": "Returns"
+              },
+              "blocks": {
+                "tab_3_text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "Add return policy information here.",
+                    "text_style": "text--normal",
+                    "alignment": "left"
+                  }
+                }
+              },
+              "block_order": [
+                "tab_3_text"
+              ]
             }
           },
-          "block_order": ["tab_1_text"]
-        },
-        "tab_2": {
-          "type": "_tab",
-          "settings": { "title": "Shipping" },
-          "blocks": {
-            "tab_2_text": {
-              "type": "text",
-              "settings": {
-                "text": "Add shipping and delivery information here.",
-                "text_style": "text--normal",
-                "alignment": "left"
-              }
-            }
-          },
-          "block_order": ["tab_2_text"]
-        },
-        "tab_3": {
-          "type": "_tab",
-          "settings": { "title": "Returns" },
-          "blocks": {
-            "tab_3_text": {
-              "type": "text",
-              "settings": {
-                "text": "Add return policy information here.",
-                "text_style": "text--normal",
-                "alignment": "left"
-              }
-            }
-          },
-          "block_order": ["tab_3_text"]
+          "block_order": [
+            "tab_1",
+            "tab_2",
+            "tab_3"
+          ],
+          "settings": {
+            "eyebrow": "Demo section",
+            "heading": "Tabs",
+            "description": "",
+            "alignment": "left"
+          }
         }
       },
-      "block_order": ["tab_1", "tab_2", "tab_3"],
-      "name": "Demo: Tabs",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Tabs",
-        "description": "",
-        "alignment": "left"
-      }
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "newsletter_promo_demo": {
-      "type": "newsletter-promo",
-      "name": "Demo: Newsletter promo",
-      "settings": {
-        "eyebrow": "Demo section",
-        "heading": "Newsletter promo",
-        "description": "<p>Use this for stronger email capture blocks on homepages, landing pages, and campaigns.</p>",
-        "image": "",
-        "image_position": "right",
-        "button_label": "Subscribe",
-        "background_color": "#f6f6f7"
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "newsletter-promo",
+          "settings": {
+            "eyebrow": "Demo section",
+            "heading": "Newsletter promo",
+            "description": "<p>Use this for stronger email capture blocks on homepages, landing pages, and campaigns.</p>",
+            "image": "",
+            "image_position": "right",
+            "button_label": "Subscribe",
+            "background_color": "#f6f6f7"
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "newsletter_demo": {
-      "type": "newsletter",
-      "name": "Demo: Newsletter",
-      "settings": {
-        "heading": "Compact newsletter",
-        "description": "<p>Use this lighter newsletter section when the page needs a simple email signup row.</p>"
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Compact newsletter",
+            "description": "<p>Use this lighter newsletter section when the page needs a simple email signup row.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     }
   },
   "order": [

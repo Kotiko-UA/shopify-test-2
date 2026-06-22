@@ -43,9 +43,10 @@
     </div>
     <script src="{{ 'cart.js' | asset_url }}" defer></script>
     <script src="{{ 'product-slider.js' | asset_url }}" defer></script>
+    <script src="{{ 'product-form.js' | asset_url }}" defer></script>
     {% if request.page_type == 'product' %}
-      <script src="{{ 'product-gallery.js' | asset_url }}" defer></script>
-      <script src="{{ 'product-form.js' | asset_url }}" defer></script>
+    <script src="{{ 'product-gallery.js' | asset_url }}" defer></script>
+    <script src="{{ 'product-variant-selector.js' | asset_url }}" defer></script>
     {% endif %}
   </body>
 </html>

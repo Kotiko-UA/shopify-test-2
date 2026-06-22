@@ -1,0 +1,23 @@
+<div class="comparison-table__row" role="row" {{ block.shopify_attributes }}>
+  <div class="comparison-table__feature" role="rowheader">{{ block.settings.feature | escape }}</div>
+  <div role="cell" data-column="first">
+    {% if block.settings.first_status == 'yes' %}<span class="comparison-table__status comparison-table__status--yes" aria-label="{{ 'general.yes' | t }}">&#10003;</span>{% elsif block.settings.first_status == 'no' %}<span class="comparison-table__status comparison-table__status--no" aria-label="{{ 'general.no' | t }}">&times;</span>{% else %}{{ block.settings.first_value }}{% endif %}
+  </div>
+  <div role="cell" data-column="second">
+    {% if block.settings.second_status == 'yes' %}<span class="comparison-table__status comparison-table__status--yes" aria-label="{{ 'general.yes' | t }}">&#10003;</span>{% elsif block.settings.second_status == 'no' %}<span class="comparison-table__status comparison-table__status--no" aria-label="{{ 'general.no' | t }}">&times;</span>{% else %}{{ block.settings.second_value }}{% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:general.row",
+  "settings": [
+    { "type": "text", "id": "feature", "label": "t:labels.feature", "default": "Feature name" },
+    { "type": "richtext", "id": "first_value", "label": "t:labels.first_value", "default": "<p>Add details.</p>" },
+    { "type": "select", "id": "first_status", "label": "t:labels.first_status", "options": [{ "value": "text", "label": "t:general.text" }, { "value": "yes", "label": "t:general.yes" }, { "value": "no", "label": "t:general.no" }], "default": "text" },
+    { "type": "richtext", "id": "second_value", "label": "t:labels.second_value", "default": "<p>Add details.</p>" },
+    { "type": "select", "id": "second_status", "label": "t:labels.second_status", "options": [{ "value": "text", "label": "t:general.text" }, { "value": "yes", "label": "t:general.yes" }, { "value": "no", "label": "t:general.no" }], "default": "text" }
+  ],
+  "presets": [{ "name": "t:general.row" }]
+}
+{% endschema %}

@@ -15,7 +15,13 @@
     <div class="product-recommendations__grid" data-product-recommendations-list>
       {% if recommendations.performed and recommendations.products_count > 0 %}
         {% for recommended_product in recommendations.products %}
-          {% render 'product-card', product: recommended_product, show_vendor: section.settings.show_vendor %}
+          {% render 'product-card',
+            product: recommended_product,
+            show_vendor: section.settings.show_vendor,
+            show_badges: section.settings.show_badges,
+            show_secondary_image: section.settings.show_secondary_image,
+            enable_quick_add: section.settings.enable_quick_add
+          %}
         {% endfor %}
       {% endif %}
     </div>
@@ -70,6 +76,24 @@
       "id": "show_vendor",
       "label": "t:labels.show_vendor",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "t:labels.show_badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "t:labels.show_secondary_image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:labels.enable_quick_add",
+      "default": true
     },
     {
       "type": "select",

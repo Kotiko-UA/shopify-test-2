@@ -1,0 +1,33 @@
+{% assign collection = block.settings.collection %}
+
+{% if collection != blank %}
+  {% assign collection_image = collection.image | default: collection.products.first.featured_image %}
+  <article class="collection-list-card" {{ block.shopify_attributes }}>
+    {% if collection_image != blank %}
+      {% render 'image',
+        class: 'collection-list-card__image',
+        image: collection_image,
+        url: collection.url,
+        link_label: collection.title,
+        decorative: true,
+        width: 800,
+        height: 620,
+        crop: 'center',
+        widths: '300, 500, 650, 800',
+        sizes: '(min-width: 990px) 25vw, 50vw'
+      %}
+    {% endif %}
+    <div class="collection-list-card__content">
+      <h3><a href="{{ collection.url }}">{{ collection.title | escape }}</a></h3>
+      <p>{{ 'sections.collection_list.product_count' | t: count: collection.products_count }}</p>
+    </div>
+  </article>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:general.collection",
+  "settings": [{ "type": "collection", "id": "collection", "label": "t:labels.collection" }],
+  "presets": [{ "name": "t:general.collection" }]
+}
+{% endschema %}

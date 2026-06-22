@@ -5,6 +5,8 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
+<script src="{{ 'collection.js' | asset_url }}" defer></script>
+
 {% if section.settings.show_search != false %}
   {{ 'predictive-search.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
@@ -16,11 +18,32 @@
     {{ collection.description }}
   </div>
 {% endif %}
+<div
+  data-collection-content
+  data-section-id="{{ section.id }}"
+  style="--collection-columns-desktop: {{ section.settings.columns_desktop }}; --collection-columns-mobile: {{ section.settings.columns_mobile }};"
+>
 {% paginate collection.products by section.settings.products_per_page %}
   {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+  {% assign active_filter_count = 0 %}
+  {% for filter in collection.filters %}
+    {% if filter.type == 'price_range' %}
+      {% if filter.min_value.value != blank or filter.max_value.value != blank %}
+        {% assign active_filter_count = active_filter_count | plus: 1 %}
+      {% endif %}
+    {% else %}
+      {% assign active_filter_count = active_filter_count | plus: filter.active_values.size %}
+    {% endif %}
+  {% endfor %}
 
-  <div class="collection-toolbar">
+  <div class="collection-toolbar{% if section.settings.sticky_toolbar %} collection-toolbar--sticky{% endif %}">
     <p class="collection-product-count">{{ 'collections.product_count' | t: count: paginate.items }}</p>
+
+    {% if collection.filters.size > 0 %}
+      <button class="collection-filter-toggle" type="button" data-collection-filter-toggle>
+        {{ 'collections.filters' | t }}{% if active_filter_count > 0 %} ({{ active_filter_count }}){% endif %}
+      </button>
+    {% endif %}
 
     {% if section.settings.show_search != false %}
       <predictive-search
@@ -93,7 +116,7 @@
       {% endfor %}
       <label for="collection-sort">{{ 'collections.sort_by' | t }}</label>
 
-      <select id="collection-sort" name="sort_by" onchange="this.form.submit()">
+      <select id="collection-sort" name="sort_by" onchange="this.form.requestSubmit()">
         {% for option in collection.sort_options %}
           <option
             value="{{ option.value }}"
@@ -108,16 +131,6 @@
     </form>
   </div>
   {% if collection.filters.size > 0 %}
-    {% assign active_filter_count = 0 %}
-    {% for filter in collection.filters %}
-      {% if filter.type == 'price_range' %}
-        {% if filter.min_value.value != blank or filter.max_value.value != blank %}
-          {% assign active_filter_count = active_filter_count | plus: 1 %}
-        {% endif %}
-      {% else %}
-        {% assign active_filter_count = active_filter_count | plus: filter.active_values.size %}
-      {% endif %}
-    {% endfor %}
     {% if active_filter_count > 0 %}
       <div class="collection-active-filters">
         {% for filter in collection.filters %}
@@ -156,7 +169,12 @@
       </div>
     {% endif %}
 
-    <form class="collection-filters" method="get">
+    <button class="collection-filters__overlay" type="button" data-collection-filter-close aria-label="{{ 'accessibility.close' | t }}"></button>
+    <form class="collection-filters" method="get" data-collection-filters>
+      <div class="collection-filters__header">
+        <strong>{{ 'collections.filters' | t }}</strong>
+        <button type="button" data-collection-filter-close aria-label="{{ 'accessibility.close' | t }}">&times;</button>
+      </div>
       {% if current_sort != blank %}
         <input type="hidden" name="sort_by" value="{{ current_sort }}">
       {% endif %}
@@ -213,7 +231,7 @@
                     type="checkbox"
                     name="{{ value.param_name }}"
                     value="{{ value.value }}"
-                    onchange="this.form.submit()"
+                    onchange="this.form.requestSubmit()"
                     {% if value.active %}
                       checked
                     {% endif %}
@@ -243,7 +261,13 @@
   {% if paginate.items > 0 %}
     <div class="collection-products">
       {% for product in collection.products %}
-        {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
+        {% render 'product-card',
+          product: product,
+          show_vendor: section.settings.show_vendor,
+          show_badges: section.settings.show_badges,
+          show_secondary_image: section.settings.show_secondary_image,
+          enable_quick_add: section.settings.enable_quick_add
+        %}
       {% endfor %}
     </div>
 
@@ -254,6 +278,7 @@
     <p class="collection-empty">{{ 'collections.empty' | t }}</p>
   {% endif %}
 {% endpaginate %}
+</div>
 
 {% stylesheet %}
   .collection-toolbar {
@@ -262,6 +287,20 @@
     align-items: center;
     justify-content: space-between;
     margin-block: 1.5rem;
+  }
+
+  .collection-toolbar--sticky {
+    position: sticky;
+    z-index: 8;
+    top: 0;
+    padding-block: 0.75rem;
+    background: var(--color-background);
+  }
+
+  .collection-filter-toggle,
+  .collection-filters__header,
+  .collection-filters__overlay {
+    display: none;
   }
 
   .collection-product-count {
@@ -395,7 +434,7 @@
 
   .collection-products {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(var(--collection-columns-desktop), minmax(0, 1fr));
     gap: 1rem;
   }
 
@@ -502,7 +541,91 @@
       "id": "show_vendor",
       "label": "t:labels.show_vendor",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "t:labels.show_badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "t:labels.show_secondary_image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:labels.enable_quick_add",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:labels.columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:labels.columns_mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_toolbar",
+      "label": "t:labels.sticky_toolbar",
+      "default": true
     }
   ]
 }
 {% endschema %}
+    .collection-filter-toggle {
+      display: block;
+      min-height: 42px;
+    }
+
+    .collection-products {
+      grid-template-columns: repeat(var(--collection-columns-mobile), minmax(0, 1fr));
+    }
+
+    .collection-filters {
+      position: fixed;
+      z-index: 31;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      width: min(90vw, 420px);
+      overflow-y: auto;
+      margin: 0;
+      padding: 1rem;
+      background: var(--color-background);
+    }
+
+    .collection-filters.is-open,
+    .collection-filters__overlay.is-open {
+      display: grid;
+    }
+
+    .collection-filters__overlay {
+      position: fixed;
+      z-index: 30;
+      inset: 0;
+      border: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .collection-filters__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }

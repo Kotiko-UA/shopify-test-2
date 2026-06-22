@@ -13,6 +13,14 @@ body {
   min-height: 100svh;
 }
 
+body.header-drawer-open {
+  overflow: hidden;
+}
+
+body.collection-filters-open {
+  overflow: hidden;
+}
+
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }
@@ -211,6 +219,59 @@ body {
   gap: 0.75rem;
   border-top: 1px solid rgb(220, 220, 220);
   border-bottom: 0;
+}
+
+.cart-drawer__footer textarea,
+.cart-drawer__footer select,
+.cart-drawer__footer input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0.5rem;
+  border: 1px solid rgb(180, 180, 180);
+  border-radius: 4px;
+}
+
+.cart-drawer__discount,
+.cart-drawer__discount > div,
+.cart-drawer__cross-sells {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cart-drawer__discount > div {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.cart-drawer__trust {
+  padding: 0.65rem;
+  border-radius: 4px;
+  background: rgb(246, 246, 247);
+}
+
+.cart-drawer__cross-sells {
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 1rem;
+  border-top: 1px solid rgb(220, 220, 220);
+}
+
+.cart-drawer__cross-sells a {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cart-drawer__cross-sells img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.cart-drawer__cross-sells small {
+  display: block;
 }
 
 .cart-drawer__header {

@@ -10,187 +10,240 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
-      "settings": {
-        "eyebrow": "New collection",
-        "heading": "Build your next storefront",
-        "description": "<p>A clean starter layout for ecommerce stores, campaigns, and product launches.</p>",
-        "image_position": "right",
-        "prioritize_image": true,
-        "primary_label": "Shop now",
-        "primary_link": "",
-        "primary_variant": "primary",
-        "secondary_label": "",
-        "secondary_link": "",
-        "background_color": "#f6f6f7",
-        "padding": 72
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "hero",
+          "settings": {
+            "eyebrow": "New collection",
+            "heading": "Build your next storefront",
+            "description": "<p>A clean starter layout for ecommerce stores, campaigns, and product launches.</p>",
+            "image_position": "right",
+            "prioritize_image": true,
+            "primary_label": "Shop now",
+            "primary_link": "",
+            "primary_variant": "primary",
+            "secondary_label": "",
+            "secondary_link": "",
+            "background_color": "#f6f6f7",
+            "padding": 72
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     },
     "trust_badges": {
-      "type": "trust-badges",
+      "type": "base-section-container",
       "blocks": {
-        "free_shipping": {
-          "type": "badge",
+        "content": {
+          "type": "trust-badges",
+          "blocks": {
+            "free_shipping": {
+              "type": "_trust-badge",
+              "settings": {
+                "heading": "Free shipping",
+                "text": "<p>Add your shipping threshold or delivery promise.</p>"
+              }
+            },
+            "returns": {
+              "type": "_trust-badge",
+              "settings": {
+                "heading": "Easy returns",
+                "text": "<p>Reassure customers before they buy.</p>"
+              }
+            },
+            "secure_checkout": {
+              "type": "_trust-badge",
+              "settings": {
+                "heading": "Secure checkout",
+                "text": "<p>Highlight payment safety and trust.</p>"
+              }
+            }
+          },
+          "block_order": [
+            "free_shipping",
+            "returns",
+            "secure_checkout"
+          ],
           "settings": {
-            "heading": "Free shipping",
-            "text": "<p>Add your shipping threshold or delivery promise.</p>"
-          }
-        },
-        "returns": {
-          "type": "badge",
-          "settings": {
-            "heading": "Easy returns",
-            "text": "<p>Reassure customers before they buy.</p>"
-          }
-        },
-        "secure_checkout": {
-          "type": "badge",
-          "settings": {
-            "heading": "Secure checkout",
-            "text": "<p>Highlight payment safety and trust.</p>"
+            "heading": "",
+            "description": "",
+            "alignment": "center"
           }
         }
       },
       "block_order": [
-        "free_shipping",
-        "returns",
-        "secure_checkout"
+        "content"
       ],
-      "settings": {
-        "heading": "",
-        "description": "",
-        "alignment": "center"
-      }
+      "settings": {}
     },
     "promo_grid": {
-      "type": "promo-grid",
+      "type": "base-section-container",
       "blocks": {
-        "new_arrivals": {
-          "type": "promo",
+        "content": {
+          "type": "promo-grid",
+          "blocks": {
+            "new_arrivals": {
+              "type": "_promo-card",
+              "settings": {
+                "heading": "New arrivals",
+                "text": "<p>Feature a category, collection, or campaign.</p>",
+                "button_label": "Shop now",
+                "link": ""
+              }
+            },
+            "best_sellers": {
+              "type": "_promo-card",
+              "settings": {
+                "heading": "Best sellers",
+                "text": "<p>Guide customers toward popular products.</p>",
+                "button_label": "Explore",
+                "link": ""
+              }
+            },
+            "sale": {
+              "type": "_promo-card",
+              "settings": {
+                "heading": "Limited offers",
+                "text": "<p>Use this card for seasonal promotions.</p>",
+                "button_label": "View deals",
+                "link": ""
+              }
+            }
+          },
+          "block_order": [
+            "new_arrivals",
+            "best_sellers",
+            "sale"
+          ],
           "settings": {
-            "heading": "New arrivals",
-            "text": "<p>Feature a category, collection, or campaign.</p>",
-            "button_label": "Shop now",
-            "link": ""
-          }
-        },
-        "best_sellers": {
-          "type": "promo",
-          "settings": {
-            "heading": "Best sellers",
-            "text": "<p>Guide customers toward popular products.</p>",
-            "button_label": "Explore",
-            "link": ""
-          }
-        },
-        "sale": {
-          "type": "promo",
-          "settings": {
-            "heading": "Limited offers",
-            "text": "<p>Use this card for seasonal promotions.</p>",
-            "button_label": "View deals",
-            "link": ""
+            "eyebrow": "",
+            "heading": "Shop by category",
+            "description": "",
+            "alignment": "left"
           }
         }
       },
       "block_order": [
-        "new_arrivals",
-        "best_sellers",
-        "sale"
+        "content"
       ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "Shop by category",
-        "description": "",
-        "alignment": "left"
-      }
+      "settings": {}
     },
     "faq": {
-      "type": "faq",
+      "type": "base-section-container",
       "blocks": {
-        "shipping": {
-          "type": "question",
+        "content": {
+          "type": "faq",
+          "blocks": {
+            "shipping": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "How long does shipping take?",
+                "answer": "<p>Add your delivery timelines and regions here.</p>"
+              }
+            },
+            "returns": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "What is your return policy?",
+                "answer": "<p>Add the key points of your returns and exchanges policy.</p>"
+              }
+            },
+            "support": {
+              "type": "_faq-item",
+              "settings": {
+                "question": "How can customers contact support?",
+                "answer": "<p>Add your support email, chat, or contact page details.</p>"
+              }
+            }
+          },
+          "block_order": [
+            "shipping",
+            "returns",
+            "support"
+          ],
           "settings": {
-            "question": "How long does shipping take?",
-            "answer": "<p>Add your delivery timelines and regions here.</p>"
-          }
-        },
-        "returns": {
-          "type": "question",
-          "settings": {
-            "question": "What is your return policy?",
-            "answer": "<p>Add the key points of your returns and exchanges policy.</p>"
-          }
-        },
-        "support": {
-          "type": "question",
-          "settings": {
-            "question": "How can customers contact support?",
-            "answer": "<p>Add your support email, chat, or contact page details.</p>"
+            "eyebrow": "",
+            "heading": "Questions and answers",
+            "description": "",
+            "alignment": "left",
+            "animation_duration": 450
           }
         }
       },
       "block_order": [
-        "shipping",
-        "returns",
-        "support"
+        "content"
       ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "Questions and answers",
-        "description": "",
-        "alignment": "left",
-        "animation_duration": 450
-      }
+      "settings": {}
     },
     "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "heading": "",
-        "description": ""
-      }
-    },
-    "contact_form_NVYUHz": {
-      "type": "contact-form",
+      "type": "base-section-container",
       "blocks": {
-        "input_D8rFCT": {
-          "type": "input",
+        "content": {
+          "type": "newsletter",
           "settings": {
-            "label": "Your answer",
-            "input_type": "email",
-            "placeholder": "",
-            "width": "full",
-            "required": true
-          }
-        },
-        "radio_xkQ76T": {
-          "type": "radio",
-          "settings": {
-            "label": "Choose an option",
-            "options": "Option one\nOption two",
-            "width": "full",
-            "required": true
-          }
-        },
-        "required_checkbox_nVbUHB": {
-          "type": "required_checkbox",
-          "settings": {
-            "field_name": "Consent",
-            "text": "<p>I agree to the terms and conditions.</p>",
-            "width": "full"
+            "heading": "",
+            "description": ""
           }
         }
       },
       "block_order": [
-        "input_D8rFCT",
-        "radio_xkQ76T",
-        "required_checkbox_nVbUHB"
+        "content"
       ],
-      "name": "t:general.contact_form",
-      "settings": {
-        "heading": "",
-        "description": ""
-      }
+      "settings": {}
+    },
+    "contact_form_NVYUHz": {
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "contact-form",
+          "blocks": {
+            "input_D8rFCT": {
+              "type": "_contact-input",
+              "settings": {
+                "label": "Your answer",
+                "input_type": "email",
+                "placeholder": "",
+                "width": "full",
+                "required": true
+              }
+            },
+            "radio_xkQ76T": {
+              "type": "_contact-radio",
+              "settings": {
+                "label": "Choose an option",
+                "options": "Option one\nOption two",
+                "width": "full",
+                "required": true
+              }
+            },
+            "required_checkbox_nVbUHB": {
+              "type": "_contact-consent",
+              "settings": {
+                "field_name": "Consent",
+                "text": "<p>I agree to the terms and conditions.</p>",
+                "width": "full"
+              }
+            }
+          },
+          "block_order": [
+            "input_D8rFCT",
+            "radio_xkQ76T",
+            "required_checkbox_nVbUHB"
+          ],
+          "settings": {
+            "heading": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     }
   },
   "order": [

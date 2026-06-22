@@ -14,11 +14,20 @@
       "settings": {}
     },
     "contact_form": {
-      "type": "contact-form",
-      "settings": {
-        "heading": "",
-        "description": ""
-      }
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "contact-form",
+          "settings": {
+            "heading": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
     }
   },
   "order": [

@@ -1,0 +1,129 @@
+<div class="promo-grid" {{ block.shopify_attributes }}>
+  {% render 'section-header',
+    eyebrow: block.settings.eyebrow,
+    heading: block.settings.heading,
+    text: block.settings.description,
+    alignment: block.settings.alignment
+  %}
+
+  <div class="promo-grid__items">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .promo-grid { width: 100%; }
+
+  .promo-grid__items {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .promo-card {
+    position: relative;
+    grid-column: span 2;
+    overflow: hidden;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    background-color: var(--promo-card-background);
+    color: var(--promo-card-foreground);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .promo-card--span-half { grid-column: span 3; }
+  .promo-card--span-full { grid-column: 1 / -1; }
+
+  .promo-card__image img {
+    aspect-ratio: 16 / 11;
+    object-fit: cover;
+    transition: transform 300ms ease;
+  }
+
+  .promo-card--ratio-square .promo-card__image img { aspect-ratio: 1; }
+  .promo-card--ratio-portrait .promo-card__image img { aspect-ratio: 4 / 5; }
+
+  .promo-card__content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .promo-card h3 {
+    margin: 0;
+  }
+
+  .promo-card__text {
+    color: inherit;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  .promo-card a {
+    font-weight: 700;
+    color: inherit;
+  }
+
+  .promo-card__stretched-link { position: absolute; z-index: 3; inset: 0; }
+  .promo-card__button-label { font-weight: 700; text-decoration: underline; }
+  .promo-card--overlay .promo-card__content { position: absolute; right: 0; bottom: 0; left: 0; background: linear-gradient(transparent, rgba(0, 0, 0, 0.78)); color: white; }
+  .promo-card--overlay .promo-card__image, .promo-card--overlay .promo-card__image img { height: 100%; }
+  .promo-card--hover-lift:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14); }
+  .promo-card--hover-zoom:hover .promo-card__image img { transform: scale(1.04); }
+
+  @media screen and (max-width: 749px) {
+    .promo-card, .promo-card--span-half, .promo-card--span-full { grid-column: 1 / -1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promo-card, .promo-card__image img { transition: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.promo_grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Shop by category"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [{ "type": "_promo-card" }],
+  "presets": [
+    {
+      "name": "t:general.promo_grid",
+      "blocks": [
+        { "type": "_promo-card" },
+        { "type": "_promo-card" },
+        { "type": "_promo-card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,134 @@
+<script src="{{ 'tabs.js' | asset_url }}" defer></script>
+
+<div class="tabs-section" {{ block.shopify_attributes }}>
+  {% render 'section-header',
+    eyebrow: block.settings.eyebrow,
+    heading: block.settings.heading,
+    text: block.settings.description,
+    alignment: block.settings.alignment
+  %}
+
+  <div class="tabs" data-tabs>
+    <div
+      class="tabs__buttons"
+      role="tablist"
+      aria-label="{{ block.settings.heading | default: 'Tabs' | escape }}"
+      aria-orientation="horizontal"
+      data-tab-list
+    ></div>
+
+    <div class="tabs__panels" data-tab-panels>
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .tabs-section {
+    width: 100%;
+  }
+
+  .tabs {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .tabs__buttons {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-block: 0.25rem;
+    scrollbar-width: thin;
+  }
+
+  .tabs:not([data-tabs-initialized='true']) .tabs__buttons {
+    display: none;
+  }
+
+  .tabs__panels { min-width: 0; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "More information"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [{ "type": "_tab" }],
+  "presets": [
+    {
+      "name": "t:general.tabs",
+      "blocks": [
+        {
+          "type": "_tab",
+          "settings": { "title": "Details" },
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "Add product or page details here.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_tab",
+          "settings": { "title": "Shipping" },
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "Add shipping and delivery information here.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_tab",
+          "settings": { "title": "Returns" },
+          "blocks": [
+            {
+              "type": "text",
+              "settings": {
+                "text": "Add return policy information here.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

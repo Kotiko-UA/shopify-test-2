@@ -1,4 +1,7 @@
 (() => {
+	if (window.themeTabsInitialized) return
+	window.themeTabsInitialized = true
+
 	const getTabButtons = (tabs) => Array.from(tabs.querySelectorAll('[data-tab-button]'))
 
 	const activateTab = (tabs, activeButton, focusButton = false) => {

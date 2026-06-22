@@ -1,0 +1,38 @@
+<figure class="testimonial" {{ block.shopify_attributes }}>
+  {% if block.settings.rating > 0 %}
+    <div class="testimonial__rating" aria-label="{{ block.settings.rating }} out of 5">
+      {% for index in (1..block.settings.rating) %}<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.3l6.5-.9L12 2.5Z"/></svg>{% endfor %}
+    </div>
+  {% endif %}
+  {% if block.settings.quote != blank %}<blockquote>{{ block.settings.quote }}</blockquote>{% endif %}
+  <figcaption>
+    {% if block.settings.image != blank %}
+      {% render 'image', class: 'testimonial__image', image: block.settings.image, alt: block.settings.author, width: 96, height: 96, crop: 'center', widths: '48, 72, 96', sizes: '48px' %}
+    {% endif %}
+    <span>
+      {% if block.settings.author != blank %}<strong>{{ block.settings.author | escape }}</strong>{% endif %}
+      {% if block.settings.detail != blank %}<small>{{ block.settings.detail | escape }}</small>{% endif %}
+      {% if block.settings.verified %}<small class="testimonial__verified">{{ 'testimonials.verified' | t }}</small>{% endif %}
+      {% if block.settings.source != blank %}<small>{% if block.settings.source_url != blank %}<a href="{{ block.settings.source_url }}">{{ block.settings.source | escape }}</a>{% else %}{{ block.settings.source | escape }}{% endif %}</small>{% endif %}
+      {% if block.settings.product != blank %}<small><a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a></small>{% endif %}
+    </span>
+  </figcaption>
+</figure>
+
+{% schema %}
+{
+  "name": "t:general.testimonial",
+  "settings": [
+    { "type": "range", "id": "rating", "label": "t:labels.rating", "min": 0, "max": 5, "step": 1, "default": 5 },
+    { "type": "richtext", "id": "quote", "label": "t:labels.quote", "default": "<p>Add a short customer quote that explains why people trust this store.</p>" },
+    { "type": "text", "id": "author", "label": "t:labels.author", "default": "Customer name" },
+    { "type": "text", "id": "detail", "label": "t:labels.detail", "default": "Verified buyer" },
+    { "type": "image_picker", "id": "image", "label": "t:labels.image" },
+    { "type": "checkbox", "id": "verified", "label": "t:labels.verified_review", "default": false },
+    { "type": "text", "id": "source", "label": "t:labels.review_source" },
+    { "type": "url", "id": "source_url", "label": "t:labels.review_source_link" },
+    { "type": "product", "id": "product", "label": "t:labels.product" }
+  ],
+  "presets": [{ "name": "t:general.testimonial" }]
+}
+{% endschema %}

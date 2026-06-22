@@ -67,7 +67,13 @@
           {% for result in search.results %}
             {% case result.object_type %}
               {% when 'product' %}
-                {% render 'product-card', product: result, show_vendor: section.settings.show_vendor %}
+                {% render 'product-card',
+                  product: result,
+                  show_vendor: section.settings.show_vendor,
+                  show_badges: section.settings.show_badges,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  enable_quick_add: section.settings.enable_quick_add
+                %}
 
               {% when 'article' %}
                 {% render 'article-card',
@@ -228,6 +234,24 @@
       "id": "show_vendor",
       "label": "t:labels.show_vendor",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "t:labels.show_badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "t:labels.show_secondary_image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:labels.enable_quick_add",
+      "default": true
     }
   ]
 }

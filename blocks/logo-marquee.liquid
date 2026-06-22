@@ -1,0 +1,119 @@
+<script src="{{ 'logo-marquee.js' | asset_url }}" defer></script>
+
+<div
+  class="logo-marquee logo-marquee--{{ block.settings.direction }}"
+  style="--logo-marquee-speed: {{ block.settings.speed }}s;"
+  data-logo-marquee
+  {{ block.shopify_attributes }}
+>
+  {% render 'section-header',
+    heading: block.settings.heading,
+    text: block.settings.description,
+    alignment: block.settings.alignment
+  %}
+
+  <div class="logo-marquee__viewport">
+    <div class="logo-marquee__track" data-logo-marquee-track>
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .logo-marquee { width: 100%; }
+
+  .logo-marquee__viewport {
+    overflow: hidden;
+    border-block: 1px solid rgb(220, 220, 220);
+  }
+
+  .logo-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: logo-marquee-scroll var(--logo-marquee-speed) linear infinite;
+  }
+
+  .logo-marquee--right .logo-marquee__track {
+    animation-direction: reverse;
+  }
+
+  .logo-marquee__viewport:hover .logo-marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes logo-marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-marquee__track {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.logo_marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "t:labels.animation_speed",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:labels.direction",
+      "options": [
+        { "value": "left", "label": "t:options.direction.left" },
+        { "value": "right", "label": "t:options.direction.right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [{ "type": "_logo-item" }],
+  "presets": [
+    {
+      "name": "t:general.logo_marquee",
+      "blocks": [
+        { "type": "_logo-item" },
+        { "type": "_logo-item" },
+        { "type": "_logo-item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

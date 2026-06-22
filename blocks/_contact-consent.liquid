@@ -1,0 +1,18 @@
+{% assign field_id = 'ContactField-' | append: section.id | append: '-' | append: block.id %}
+{% assign field_name = block.settings.field_name | default: 'Consent' %}
+<div class="contact-form__consent contact-form__field--{{ block.settings.width }}" {{ block.shopify_attributes }}>
+  <input id="{{ field_id }}" type="checkbox" name="contact[{{ field_name | escape }}]" value="Accepted" required>
+  <label class="contact-form__consent-label" for="{{ field_id }}">{{ block.settings.text }}</label>
+</div>
+{% stylesheet %}.contact-form__consent { display: flex; align-items: flex-start; gap: 0.55rem; }.contact-form__consent-label { cursor: pointer; }.contact-form__consent-label p { margin: 0; }{% endstylesheet %}
+{% schema %}
+{
+  "name": "t:general.consent_checkbox",
+  "settings": [
+    { "type": "text", "id": "field_name", "label": "t:labels.submission_field_name", "default": "Consent" },
+    { "type": "richtext", "id": "text", "label": "t:labels.checkbox_text", "default": "<p>I agree to the terms and conditions.</p>" },
+    { "type": "select", "id": "width", "label": "t:labels.field_width", "options": [{ "value": "full", "label": "t:options.field_width.full" }, { "value": "half", "label": "t:options.field_width.half" }, { "value": "third", "label": "t:options.field_width.third" }, { "value": "two-thirds", "label": "t:options.field_width.two_thirds" }], "default": "full" }
+  ],
+  "presets": [{ "name": "t:general.consent_checkbox" }]
+}
+{% endschema %}

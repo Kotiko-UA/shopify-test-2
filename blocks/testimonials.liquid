@@ -1,0 +1,146 @@
+<script src="{{ 'testimonials.js' | asset_url }}" defer></script>
+
+<div class="testimonials testimonials--{{ block.settings.layout }}" data-testimonials {{ block.shopify_attributes }}>
+  {% render 'section-header',
+    eyebrow: block.settings.eyebrow,
+    heading: block.settings.heading,
+    text: block.settings.description,
+    alignment: block.settings.alignment
+  %}
+
+  <div class="testimonials__grid" data-testimonials-track>
+    {% content_for 'blocks' %}
+  </div>
+
+  {% if block.settings.layout == 'carousel' and block.settings.show_navigation %}
+    <div class="testimonials__controls">
+      <button type="button" data-testimonials-previous aria-label="{{ 'testimonials.previous' | t }}">&larr;</button>
+      <button type="button" data-testimonials-next aria-label="{{ 'testimonials.next' | t }}">&rarr;</button>
+    </div>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .testimonials { width: 100%; }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .testimonial {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 1.25rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    background-color: white;
+  }
+
+  .testimonial__rating {
+    display: flex;
+    gap: 0.15rem;
+    font-weight: 700;
+  }
+
+  .testimonials--carousel .testimonials__grid { grid-auto-columns: minmax(280px, calc((100% - 2rem) / 3)); grid-auto-flow: column; grid-template-columns: none; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .testimonials--carousel .testimonial { scroll-snap-align: start; }
+  .testimonials__controls { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
+  .testimonials__controls button { width: 44px; height: 44px; border: 1px solid currentcolor; border-radius: 50%; background: transparent; cursor: pointer; }
+  .testimonial__verified { color: rgb(0, 100, 70) !important; font-weight: 700; }
+
+  .testimonial blockquote {
+    margin: 0;
+    color: rgb(60, 60, 60);
+    line-height: 1.6;
+  }
+
+  .testimonial figcaption {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .testimonial__image {
+    width: 48px;
+  }
+
+  .testimonial__image img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .testimonial small {
+    display: block;
+    color: rgb(92, 95, 98);
+  }
+
+  @media screen and (max-width: 749px) { .testimonials--carousel .testimonials__grid { grid-auto-columns: 86%; } }
+  @media (prefers-reduced-motion: reduce) { .testimonials--carousel .testimonials__grid { scroll-behavior: auto; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Customer stories"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:labels.description"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:labels.layout",
+      "options": [
+        { "value": "grid", "label": "t:options.layout.grid" },
+        { "value": "carousel", "label": "t:options.layout.carousel" }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "t:labels.show_navigation",
+      "default": true
+    }
+  ],
+  "blocks": [{ "type": "_testimonial" }],
+  "presets": [
+    {
+      "name": "t:general.testimonials",
+      "blocks": [
+        { "type": "_testimonial" },
+        { "type": "_testimonial" },
+        { "type": "_testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

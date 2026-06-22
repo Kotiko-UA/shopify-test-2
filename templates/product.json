@@ -18,7 +18,16 @@
       "settings": {}
     },
     "recently_viewed": {
-      "type": "recently-viewed-products",
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "recently-viewed-products",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "content"
+      ],
       "settings": {}
     },
     "sticky_add_to_cart": {

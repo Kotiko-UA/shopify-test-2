@@ -1,4 +1,7 @@
 (() => {
+	if (window.themeFaqInitialized) return
+	window.themeFaqInitialized = true
+
 	class FaqItem {
 		constructor(element) {
 			this.element = element
@@ -39,6 +42,13 @@
 		}
 
 		open() {
+			const section = this.element.closest('[data-faq-section]')
+			if (section?.dataset.singleOpen === 'true') {
+				section.querySelectorAll('[data-faq-item][open]').forEach((item) => {
+					if (item !== this.element) item.removeAttribute('open')
+				})
+			}
+
 			this.element.style.height = `${this.element.offsetHeight}px`
 			this.element.open = true
 			delete this.element.dataset.faqClosing
@@ -126,11 +136,55 @@
 		})
 	}
 
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', () => initFaqs(), { once: true })
-	} else {
-		initFaqs()
+	const initFaqControls = (container = document) => {
+		container.querySelectorAll('[data-faq-section]').forEach((section) => {
+			if (section.dataset.faqControlsInitialized === 'true') return
+			section.dataset.faqControlsInitialized = 'true'
+
+			const search = section.querySelector('[data-faq-search]')
+			const category = section.querySelector('[data-faq-category]')
+			if (category) {
+				const categories = new Map()
+				section.querySelectorAll('[data-faq-item]').forEach((item) => {
+					if (item.dataset.category && item.dataset.categoryLabel) {
+						categories.set(item.dataset.category, item.dataset.categoryLabel)
+					}
+				})
+				categories.forEach((label, value) => category.add(new Option(label, value)))
+			}
+			const filter = () => {
+				const term = search?.value.trim().toLowerCase() || ''
+				const selectedCategory = category?.value || ''
+				section.querySelectorAll('[data-faq-item]').forEach((item) => {
+					const matchesTerm = !term || item.dataset.searchText.includes(term)
+					const matchesCategory = !selectedCategory || item.dataset.category === selectedCategory
+					item.hidden = !(matchesTerm && matchesCategory)
+				})
+			}
+
+			search?.addEventListener('input', filter)
+			category?.addEventListener('change', filter)
+		})
+
+		const target = window.location.hash ? document.querySelector(window.location.hash) : null
+		if (target?.matches('[data-faq-item]')) {
+			target.open = true
+			target.scrollIntoView({ block: 'center' })
+		}
 	}
 
-	document.addEventListener('shopify:section:load', (event) => initFaqs(event.target))
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', () => {
+			initFaqs()
+			initFaqControls()
+		}, { once: true })
+	} else {
+		initFaqs()
+		initFaqControls()
+	}
+
+	document.addEventListener('shopify:section:load', (event) => {
+		initFaqs(event.target)
+		initFaqControls(event.target)
+	})
 })()

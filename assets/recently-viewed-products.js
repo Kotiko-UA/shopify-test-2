@@ -1,4 +1,7 @@
 (() => {
+	if (window.themeRecentlyViewedInitialized) return;
+	window.themeRecentlyViewedInitialized = true;
+
 	const STORAGE_KEY = 'theme:recently-viewed-products';
 
 	const escapeHtml = (value = '') => {
