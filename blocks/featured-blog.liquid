@@ -1,14 +1,38 @@
-{% assign featured_blog = block.settings.blog %}
+{% liquid
+  assign featured_blog = block.settings.blog
+  assign has_featured_blog_articles = false
+  if featured_blog != blank and featured_blog.articles_count > 0
+    assign has_featured_blog_articles = true
+  endif
 
-<div class="featured-blog" {{ block.shopify_attributes }}>
-  {% render 'section-header',
-    eyebrow: block.settings.eyebrow,
-    heading: block.settings.heading,
-    text: block.settings.description,
-    alignment: block.settings.alignment
-  %}
+  assign should_render_featured_blog_header = has_featured_blog_articles
+  if request.design_mode
+    assign should_render_featured_blog_header = true
+  endif
 
-  {% if featured_blog != blank and featured_blog.articles_count > 0 %}
+  assign featured_blog_columns_desktop = block.settings.columns_desktop | default: 3
+  assign featured_blog_grid_gap = block.settings.grid_gap | default: 16
+  assign article_excerpt_length = block.settings.excerpt_length | default: 160
+%}
+
+<div
+  class="featured-blog"
+  style="
+    --featured-blog-columns-desktop: {{ featured_blog_columns_desktop }};
+    --featured-blog-grid-gap: {{ featured_blog_grid_gap }}px;
+  "
+  {{ block.shopify_attributes }}
+>
+  {% if should_render_featured_blog_header %}
+    {% render 'section-header',
+      eyebrow: block.settings.eyebrow,
+      heading: block.settings.heading,
+      text: block.settings.description,
+      alignment: block.settings.alignment
+    %}
+  {% endif %}
+
+  {% if has_featured_blog_articles %}
     <div class="featured-blog__grid">
       {% for article in featured_blog.articles limit: block.settings.article_limit %}
         {% render 'article-card',
@@ -17,7 +41,8 @@
           show_excerpt: block.settings.show_excerpt,
           show_author: block.settings.show_author,
           show_date: block.settings.show_date,
-          show_tags: block.settings.show_tags
+          show_tags: block.settings.show_tags,
+          excerpt_length: article_excerpt_length
         %}
       {% endfor %}
     </div>
@@ -43,8 +68,8 @@
 
   .featured-blog__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    gap: var(--featured-blog-grid-gap);
   }
 
   .featured-blog__footer {
@@ -62,6 +87,12 @@
     border: 1px dashed rgb(180, 180, 180);
     border-radius: 6px;
     color: rgb(92, 95, 98);
+  }
+
+  @media screen and (min-width: 750px) {
+    .featured-blog__grid {
+      grid-template-columns: repeat(var(--featured-blog-columns-desktop), minmax(0, 1fr));
+    }
   }
 {% endstylesheet %}
 
@@ -98,6 +129,34 @@
       "max": 6,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:labels.columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "t:labels.grid_gap",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "excerpt_length",
+      "label": "t:labels.excerpt_length",
+      "min": 80,
+      "max": 260,
+      "step": 20,
+      "default": 160
     },
     {
       "type": "checkbox",

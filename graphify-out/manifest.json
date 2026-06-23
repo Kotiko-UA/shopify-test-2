@@ -35,13 +35,13 @@
     "semantic_hash": ""
   },
   "locales/en.default.json": {
-    "mtime": 1782116657.4562905,
-    "ast_hash": "c7ade0aef3a212d7180494b1897a0111",
+    "mtime": 1782225166.8111274,
+    "ast_hash": "36540b6e01fd55921b4e5e60712c5fb9",
     "semantic_hash": ""
   },
   "locales/en.default.schema.json": {
-    "mtime": 1782121565.0415308,
-    "ast_hash": "db4e71b6b0d2f056a909462d06aeb344",
+    "mtime": 1782225158.6591418,
+    "ast_hash": "9db48d3d3ae4ad57c5d1635ca1c0f58e",
     "semantic_hash": ""
   },
   "sections/footer-group.json": {

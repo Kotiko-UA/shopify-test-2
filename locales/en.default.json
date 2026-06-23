@@ -34,7 +34,12 @@
 		"read_article": "Read article",
 		"search_articles": "Search articles",
 		"search_placeholder": "Search by article title",
-		"tags": "Tags"
+		"share_article": "Share article",
+		"share_by_email": "Email",
+		"share_on_facebook": "Facebook",
+		"share_on_x": "X",
+		"tags": "Tags",
+		"more_articles": "More articles"
 	},
 	"cart": {
 		"checkout": "Checkout",

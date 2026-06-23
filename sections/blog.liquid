@@ -5,15 +5,44 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
 {% endcomment %}
 
-{% if section.settings.show_search != false %}
+{% liquid
+  assign show_blog_search = section.settings.show_search
+  if section.settings.show_search == nil
+    assign show_blog_search = true
+  endif
+
+  assign show_blog_tag_filter = false
+  if section.settings.show_tag_filter and blog.all_tags.size > 0
+    assign show_blog_tag_filter = true
+  endif
+
+  assign has_blog_toolbar = false
+  if show_blog_search or show_blog_tag_filter
+    assign has_blog_toolbar = true
+  endif
+
+  assign blog_columns_desktop = section.settings.columns_desktop | default: 3
+  assign blog_columns_mobile = section.settings.columns_mobile | default: 1
+  assign blog_grid_gap = section.settings.grid_gap | default: 16
+  assign article_excerpt_length = section.settings.excerpt_length | default: 160
+%}
+
+{% if show_blog_search %}
   {{ 'predictive-search.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
 {% endif %}
-{% if section.settings.show_tag_filter and blog.all_tags.size > 0 %}
+{% if show_blog_tag_filter %}
   <script src="{{ 'blog.js' | asset_url }}" defer></script>
 {% endif %}
 
-<div class="blog-page">
+<div
+  class="blog-page"
+  style="
+    --blog-columns-desktop: {{ blog_columns_desktop }};
+    --blog-columns-mobile: {{ blog_columns_mobile }};
+    --blog-grid-gap: {{ blog_grid_gap }}px;
+  "
+>
   <header class="blog-page__header">
     <h1>{{ blog.title | escape }}</h1>
 
@@ -23,70 +52,71 @@
     {% endif %}
   </header>
 
-  <div class="blog-toolbar">
-    {% if section.settings.show_search != false %}
-      <predictive-search
-        class="blog-search"
-        data-predictive-search-url="{{ routes.predictive_search_url }}"
-        data-predictive-search-types="article"
-      >
-        <form class="blog-search-form" action="{{ routes.search_url }}" method="get" role="search">
-          <label for="BlogArticleSearch">{{ 'blog.search_articles' | t }}</label>
-          <div class="blog-search-form__row">
-            <input
-              id="BlogArticleSearch"
-              type="search"
-              name="q"
-              placeholder="{{ 'blog.search_placeholder' | t }}"
-              autocomplete="off"
-              role="combobox"
-              aria-expanded="false"
-              aria-controls="blog-predictive-search"
-              aria-haspopup="listbox"
-              aria-autocomplete="list"
-              data-predictive-search-input
-            >
-            <input type="hidden" name="type" value="article">
-            <input type="hidden" name="options[prefix]" value="last">
-            <button type="submit">{{ 'search.submit' | t }}</button>
-          </div>
+  {% if has_blog_toolbar %}
+    <div class="blog-toolbar{% if show_blog_search and show_blog_tag_filter %} blog-toolbar--split{% endif %}">
+      {% if show_blog_search %}
+        <predictive-search
+          class="blog-search"
+          data-predictive-search-url="{{ routes.predictive_search_url }}"
+          data-predictive-search-types="article"
+        >
+          <form class="blog-search-form" action="{{ routes.search_url }}" method="get" role="search">
+            <label for="BlogArticleSearch">{{ 'blog.search_articles' | t }}</label>
+            <div class="blog-search-form__row">
+              <input
+                id="BlogArticleSearch"
+                type="search"
+                name="q"
+                placeholder="{{ 'blog.search_placeholder' | t }}"
+                autocomplete="off"
+                role="combobox"
+                aria-expanded="false"
+                aria-controls="blog-predictive-search"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+                data-predictive-search-input
+              >
+              <input type="hidden" name="type" value="article">
+              <input type="hidden" name="options[prefix]" value="last">
+              <button type="submit">{{ 'search.submit' | t }}</button>
+            </div>
 
-          <div
-            id="blog-predictive-search"
-            class="predictive-search__panel"
-            role="listbox"
-            aria-label="{{ 'search.predictive.suggestions' | t }}"
-            tabindex="-1"
-            data-predictive-search-results
-            hidden
-          ></div>
-        </form>
-      </predictive-search>
-    {% endif %}
+            <div
+              id="blog-predictive-search"
+              class="predictive-search__panel"
+              role="listbox"
+              aria-label="{{ 'search.predictive.suggestions' | t }}"
+              tabindex="-1"
+              data-predictive-search-results
+              hidden
+            ></div>
+          </form>
+        </predictive-search>
+      {% endif %}
 
-    {% if section.settings.show_tag_filter and blog.all_tags.size > 0 %}
-      <div class="blog-toolbar__field">
-        <label for="BlogTagFilter">{{ 'blog.filter_by_tag' | t }}</label>
-        <select id="BlogTagFilter" data-blog-tag-select>
-          <option value="{{ blog.url }}">{{ 'blog.all_articles' | t }}</option>
-          {% for tag in blog.all_tags %}
-            {% assign tag_handle = tag | handleize %}
-            <option
-              value="{{ blog.url }}/tagged/{{ tag_handle }}"
-              {% if current_tags contains tag %}
-                selected
-              {% endif %}
-            >
-              {{ tag }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-    {% endif %}
+      {% if show_blog_tag_filter %}
+        <div class="blog-toolbar__field">
+          <label for="BlogTagFilter">{{ 'blog.filter_by_tag' | t }}</label>
+          <select id="BlogTagFilter" data-blog-tag-select>
+            <option value="{{ blog.url }}">{{ 'blog.all_articles' | t }}</option>
+            {% for tag in blog.all_tags %}
+              {% assign tag_handle = tag | handleize %}
+              <option
+                value="{{ blog.url }}/tagged/{{ tag_handle }}"
+                {% if current_tags contains tag %}
+                  selected
+                {% endif %}
+              >
+                {{ tag }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
 
-  </div>
-
-  {% if section.settings.show_tag_filter and blog.all_tags.size > 0 %}
+  {% if show_blog_tag_filter %}
     <nav class="blog-tags" aria-label="{{ 'blog.tags' | t }}">
       <a
         class="blog-tags__link{% if current_tags.size == 0 %} blog-tags__link--active{% endif %}"
@@ -109,18 +139,54 @@
 
   {% paginate blog.articles by section.settings.articles_per_page %}
     {% if paginate.items > 0 %}
-      <div class="blog-grid">
-        {% for article in blog.articles %}
-          {% render 'article-card',
-            article: article,
-            show_image: section.settings.show_image,
-            show_excerpt: section.settings.show_excerpt,
-            show_author: section.settings.show_author,
-            show_date: section.settings.show_date,
-            show_tags: section.settings.show_article_tags
-          %}
-        {% endfor %}
-      </div>
+      {% assign has_featured_article = false %}
+      {% if section.settings.feature_first_article and paginate.current_page == 1 %}
+        {% assign has_featured_article = true %}
+        <div class="blog-featured-article">
+          {% for article in blog.articles limit: 1 %}
+            {% render 'article-card',
+              article: article,
+              show_image: section.settings.show_image,
+              show_excerpt: section.settings.show_excerpt,
+              show_author: section.settings.show_author,
+              show_date: section.settings.show_date,
+              show_tags: section.settings.show_article_tags,
+              excerpt_length: article_excerpt_length,
+              class: 'article-card--featured'
+            %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if has_featured_article == false or paginate.items > 1 %}
+        <div class="blog-grid">
+          {% if has_featured_article %}
+            {% for article in blog.articles offset: 1 %}
+              {% render 'article-card',
+                article: article,
+                show_image: section.settings.show_image,
+                show_excerpt: section.settings.show_excerpt,
+                show_author: section.settings.show_author,
+                show_date: section.settings.show_date,
+                show_tags: section.settings.show_article_tags,
+                excerpt_length: article_excerpt_length
+              %}
+            {% endfor %}
+          {% else %}
+            {% for article in blog.articles %}
+              {% render 'article-card',
+                article: article,
+                show_image: section.settings.show_image,
+                show_excerpt: section.settings.show_excerpt,
+                show_author: section.settings.show_author,
+                show_date: section.settings.show_date,
+                show_tags: section.settings.show_article_tags,
+                excerpt_length: article_excerpt_length
+              %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% endif %}
 
       {% if paginate.pages > 1 %}
         <div class="blog-pagination">
@@ -152,10 +218,14 @@
 
   .blog-toolbar {
     display: grid;
-    grid-template-columns: minmax(260px, 1fr) minmax(180px, auto);
+    grid-template-columns: 1fr;
     gap: 1rem;
     align-items: end;
     margin-bottom: 1.5rem;
+  }
+
+  .blog-toolbar--split {
+    grid-template-columns: minmax(260px, 1fr) minmax(180px, auto);
   }
 
   .blog-search-form,
@@ -224,8 +294,12 @@
 
   .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(var(--blog-columns-mobile), minmax(0, 1fr));
+    gap: var(--blog-grid-gap);
+  }
+
+  .blog-featured-article {
+    margin-bottom: var(--blog-grid-gap);
   }
 
   .blog-pagination {
@@ -244,7 +318,7 @@
   }
 
   @media screen and (max-width: 900px) {
-    .blog-toolbar {
+    .blog-toolbar--split {
       grid-template-columns: 1fr;
     }
 
@@ -254,6 +328,12 @@
 
     .blog-search-form button {
       width: 100%;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .blog-grid {
+      grid-template-columns: repeat(var(--blog-columns-desktop), minmax(0, 1fr));
     }
   }
 {% endstylesheet %}
@@ -306,6 +386,49 @@
       "id": "show_article_tags",
       "label": "t:labels.show_article_tags",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_first_article",
+      "label": "t:labels.feature_first_article",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:labels.columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "t:labels.columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "t:labels.grid_gap",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "excerpt_length",
+      "label": "t:labels.excerpt_length",
+      "min": 80,
+      "max": 260,
+      "step": 20,
+      "default": 160
     },
     {
       "type": "checkbox",

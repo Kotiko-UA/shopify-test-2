@@ -4,6 +4,8 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/article
 {% endcomment %}
 
+{% assign related_article_limit = section.settings.related_article_limit | default: 3 %}
+
 <article class="article-page">
   <header class="article-page__header">
     <a class="article-page__back" href="{{ blog.url }}">{{ 'blog.back_to_blog' | t: blog: blog.title }}</a>
@@ -33,6 +35,7 @@
   </header>
 
   {% if section.settings.show_image and article.image %}
+    {% assign article_image_alt = article.image.alt | default: article.title %}
     <div class="article-page__media">
       {{
         article.image
@@ -40,7 +43,7 @@
         | image_tag:
           loading: 'eager',
           fetchpriority: 'high',
-          alt: article.title,
+          alt: article_image_alt,
           widths: '600, 900, 1200, 1600',
           sizes: '(min-width: 900px) 860px, calc(100vw - 2rem)'
       }}
@@ -50,7 +53,54 @@
   <div class="article-page__content">
     {{ article.content }}
   </div>
+
+  {% if section.settings.show_share_links %}
+    <div class="article-page__share" aria-label="{{ 'blog.share_article' | t }}">
+      <span>{{ 'blog.share_article' | t }}</span>
+      <a
+        href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url | url_encode }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ 'blog.share_on_facebook' | t }}
+      </a>
+      <a
+        href="https://twitter.com/intent/tweet?url={{ canonical_url | url_encode }}&amp;text={{ article.title | url_encode }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ 'blog.share_on_x' | t }}
+      </a>
+      <a href="mailto:?subject={{ article.title | url_encode }}&amp;body={{ canonical_url | url_encode }}">
+        {{ 'blog.share_by_email' | t }}
+      </a>
+    </div>
+  {% endif %}
 </article>
+
+{% if section.settings.show_related_articles and blog.articles_count > 1 %}
+  <aside class="article-related" aria-labelledby="ArticleRelatedHeading-{{ section.id }}">
+    <h2 id="ArticleRelatedHeading-{{ section.id }}">{{ 'blog.more_articles' | t }}</h2>
+
+    <div class="article-related__grid">
+      {% assign related_articles_shown = 0 %}
+      {% for related_article in blog.articles %}
+        {% if related_article.id != article.id and related_articles_shown < related_article_limit %}
+          {% render 'article-card',
+            article: related_article,
+            show_image: section.settings.show_image,
+            show_excerpt: true,
+            show_author: section.settings.show_author,
+            show_date: section.settings.show_date,
+            show_tags: section.settings.show_tags,
+            excerpt_length: 120
+          %}
+          {% assign related_articles_shown = related_articles_shown | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </aside>
+{% endif %}
 
 {% if blog.comments_enabled? and section.settings.show_comments %}
   <section class="article-comments" id="comments">
@@ -136,6 +186,12 @@
     margin-inline: auto;
   }
 
+  .article-related {
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
+    padding-bottom: 2rem;
+  }
+
   .article-page {
     padding-block: 2rem;
   }
@@ -187,6 +243,96 @@
     display: grid;
     gap: 1rem;
     line-height: 1.7;
+  }
+
+  .article-page__content > * {
+    margin-block: 0;
+  }
+
+  .article-page__content h2,
+  .article-page__content h3,
+  .article-page__content h4 {
+    margin-top: 1rem;
+    line-height: 1.25;
+  }
+
+  .article-page__content a {
+    color: inherit;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+  }
+
+  .article-page__content ul,
+  .article-page__content ol {
+    padding-left: 1.4rem;
+  }
+
+  .article-page__content blockquote {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid rgb(32, 34, 35);
+    border-radius: 0 8px 8px 0;
+    background: rgb(246, 246, 247);
+  }
+
+  .article-page__content img,
+  .article-page__content video,
+  .article-page__content iframe {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .article-page__content img,
+  .article-page__content video {
+    height: auto;
+  }
+
+  .article-page__content iframe {
+    width: 100%;
+    border: 0;
+  }
+
+  .article-page__content table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+  }
+
+  .article-page__content th,
+  .article-page__content td {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgb(220, 220, 220);
+    text-align: left;
+  }
+
+  .article-page__share {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(220, 220, 220);
+  }
+
+  .article-page__share span {
+    font-weight: 700;
+  }
+
+  .article-page__share a {
+    color: inherit;
+  }
+
+  .article-related {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .article-related__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .article-comments {
@@ -260,6 +406,12 @@
   .article-comment-form__success {
     color: rgb(0, 128, 96);
   }
+
+  @media screen and (min-width: 750px) {
+    .article-related__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -289,6 +441,27 @@
       "id": "show_tags",
       "label": "t:labels.show_tags",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_links",
+      "label": "t:labels.show_share_links",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_articles",
+      "label": "t:labels.show_related_articles",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "related_article_limit",
+      "label": "t:labels.related_article_limit",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 3
     },
     {
       "type": "checkbox",
