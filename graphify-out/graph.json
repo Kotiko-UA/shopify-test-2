@@ -544,6 +544,56 @@
       "norm_label": "logo-marquee.js"
     },
     {
+      "label": "modal.js",
+      "file_type": "code",
+      "source_file": "assets/modal.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "assets_modal",
+      "community": 78,
+      "norm_label": "modal.js"
+    },
+    {
+      "label": "getDialog()",
+      "file_type": "code",
+      "source_file": "assets/modal.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "assets_modal_getdialog",
+      "community": 78,
+      "norm_label": "getdialog()"
+    },
+    {
+      "label": "openDialog()",
+      "file_type": "code",
+      "source_file": "assets/modal.js",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "assets_modal_opendialog",
+      "community": 78,
+      "norm_label": "opendialog()"
+    },
+    {
+      "label": "closeDialog()",
+      "file_type": "code",
+      "source_file": "assets/modal.js",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "assets_modal_closedialog",
+      "community": 78,
+      "norm_label": "closedialog()"
+    },
+    {
+      "label": "isBackdropClick()",
+      "file_type": "code",
+      "source_file": "assets/modal.js",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "assets_modal_isbackdropclick",
+      "community": 78,
+      "norm_label": "isbackdropclick()"
+    },
+    {
       "label": "predictive-search.js",
       "file_type": "code",
       "source_file": "assets/predictive-search.js",
@@ -822,6 +872,16 @@
       "id": "assets_product_gallery_openzoom",
       "community": 14,
       "norm_label": "openzoom()"
+    },
+    {
+      "label": "isBackdropClick()",
+      "file_type": "code",
+      "source_file": "assets/product-gallery.js",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "assets_product_gallery_isbackdropclick",
+      "community": 14,
+      "norm_label": "isbackdropclick()"
     },
     {
       "label": "product-recommendations.js",
@@ -6390,7 +6450,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "locales_en_default_schema_options_background_image_fit",
-      "community": 73,
+      "community": 52,
       "norm_label": "background_image_fit"
     },
     {
@@ -6400,7 +6460,7 @@
       "source_location": "L278",
       "_origin": "ast",
       "id": "locales_en_default_schema_background_image_fit_cover",
-      "community": 73,
+      "community": 52,
       "norm_label": "cover"
     },
     {
@@ -6410,7 +6470,7 @@
       "source_location": "L279",
       "_origin": "ast",
       "id": "locales_en_default_schema_background_image_fit_contain",
-      "community": 73,
+      "community": 52,
       "norm_label": "contain"
     },
     {
@@ -6420,7 +6480,7 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "locales_en_default_schema_background_image_fit_fill",
-      "community": 73,
+      "community": 52,
       "norm_label": "fill"
     },
     {
@@ -6980,7 +7040,7 @@
       "source_location": "L348",
       "_origin": "ast",
       "id": "locales_en_default_schema_options_page_width",
-      "community": 52,
+      "community": 73,
       "norm_label": "page_width"
     },
     {
@@ -6990,7 +7050,7 @@
       "source_location": "L349",
       "_origin": "ast",
       "id": "locales_en_default_schema_page_width_narrow",
-      "community": 52,
+      "community": 73,
       "norm_label": "narrow"
     },
     {
@@ -7000,7 +7060,7 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "locales_en_default_schema_page_width_wide",
-      "community": 52,
+      "community": 73,
       "norm_label": "wide"
     },
     {
@@ -7040,7 +7100,7 @@
       "source_location": "L356",
       "_origin": "ast",
       "id": "locales_en_default_schema_options_size",
-      "community": 52,
+      "community": 77,
       "norm_label": "size"
     },
     {
@@ -7050,7 +7110,7 @@
       "source_location": "L357",
       "_origin": "ast",
       "id": "locales_en_default_schema_size_large",
-      "community": 52,
+      "community": 77,
       "norm_label": "large"
     },
     {
@@ -7060,7 +7120,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "locales_en_default_schema_size_small",
-      "community": 52,
+      "community": 77,
       "norm_label": "small"
     },
     {
@@ -8477,6 +8537,46 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "assets/modal.js",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "assets_modal",
+      "target": "assets_modal_closedialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/modal.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "assets_modal",
+      "target": "assets_modal_getdialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/modal.js",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "assets_modal",
+      "target": "assets_modal_isbackdropclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/modal.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "assets_modal",
+      "target": "assets_modal_opendialog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "assets/predictive-search.js",
       "source_location": "L8",
       "weight": 1.0,
@@ -8869,6 +8969,16 @@
       "confidence_score": 1.0,
       "source": "assets_product_form",
       "target": "assets_product_form_setsubmitbuttonstate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/product-gallery.js",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "assets_product_gallery",
+      "target": "assets_product_gallery_isbackdropclick"
     },
     {
       "relation": "contains",
@@ -13774,9 +13884,9 @@
       "source_file": "locales/en.default.schema.json",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_default_schema_general",
-      "target": "locales_en_default_schema_general_base_section_container",
-      "confidence_score": 1.0
+      "target": "locales_en_default_schema_general_base_section_container"
     },
     {
       "relation": "contains",
@@ -14204,9 +14314,9 @@
       "source_file": "locales/en.default.schema.json",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_default_schema_general",
-      "target": "locales_en_default_schema_general_products",
-      "confidence_score": 1.0
+      "target": "locales_en_default_schema_general_products"
     },
     {
       "relation": "contains",
@@ -17454,9 +17564,9 @@
       "source_file": "SECTION_BLOCK_AUDIT.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "section_block_audit",
-      "target": "section_block_audit_section_to_theme_block_audit",
-      "confidence_score": 1.0
+      "target": "section_block_audit_section_to_theme_block_audit"
     },
     {
       "relation": "contains",
@@ -17464,9 +17574,9 @@
       "source_file": "SECTION_BLOCK_AUDIT.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "section_block_audit_section_to_theme_block_audit",
-      "target": "section_block_audit_convert_to_theme_blocks",
-      "confidence_score": 1.0
+      "target": "section_block_audit_convert_to_theme_blocks"
     },
     {
       "relation": "contains",
@@ -17474,9 +17584,9 @@
       "source_file": "SECTION_BLOCK_AUDIT.md",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "section_block_audit_section_to_theme_block_audit",
-      "target": "section_block_audit_goal",
-      "confidence_score": 1.0
+      "target": "section_block_audit_goal"
     },
     {
       "relation": "contains",
@@ -17484,9 +17594,9 @@
       "source_file": "SECTION_BLOCK_AUDIT.md",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "section_block_audit_section_to_theme_block_audit",
-      "target": "section_block_audit_guardrails",
-      "confidence_score": 1.0
+      "target": "section_block_audit_guardrails"
     },
     {
       "relation": "contains",
@@ -17494,9 +17604,9 @@
       "source_file": "SECTION_BLOCK_AUDIT.md",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "section_block_audit_section_to_theme_block_audit",
-      "target": "section_block_audit_keep_as_sections",
-      "confidence_score": 1.0
+      "target": "section_block_audit_keep_as_sections"
     },
     {
       "relation": "contains",
@@ -17504,11 +17614,11 @@
       "source_file": "SECTION_BLOCK_AUDIT.md",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "section_block_audit_section_to_theme_block_audit",
-      "target": "section_block_audit_migration_order",
-      "confidence_score": 1.0
+      "target": "section_block_audit_migration_order"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d69e9601482d1069bb5d895be396e21658483145"
+  "built_at_commit": "cdf0a9489038c4e08ca66173ad6a2beccaef1f53"
 }

@@ -39,6 +39,17 @@
 		dialog.showModal()
 	}
 
+	function isBackdropClick(dialog, event) {
+		const rect = dialog.getBoundingClientRect()
+
+		return (
+			event.clientX < rect.left ||
+			event.clientX > rect.right ||
+			event.clientY < rect.top ||
+			event.clientY > rect.bottom
+		)
+	}
+
 	document.addEventListener('click', event => {
 		if (!(event.target instanceof Element)) return
 
@@ -57,6 +68,12 @@
 		const closeButton = event.target.closest('[data-product-gallery-dialog-close]')
 		if (closeButton) {
 			closeButton.closest('dialog')?.close()
+			return
+		}
+
+		const dialog = event.target.closest('[data-product-gallery-dialog]')
+		if (dialog && event.target === dialog && isBackdropClick(dialog, event)) {
+			dialog.close()
 		}
 	})
 

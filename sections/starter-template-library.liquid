@@ -20,7 +20,9 @@
   </div>
 
   <nav class="starter-library__nav" aria-label="Library navigation">
+    <a href="#library-guide">How to use</a>
     <a href="#library-sections">Sections</a>
+    <a href="#library-infrastructure">Infrastructure</a>
     <a href="#library-templates">Templates</a>
     <a href="#library-snippets">Snippets</a>
     <a href="#library-assets">Assets</a>
@@ -30,33 +32,104 @@
   <div class="starter-library__summary">
     <div>
       <strong>19</strong>
-      <span>Reusable ecommerce sections</span>
+      <span>Standalone sections</span>
+    </div>
+    <div>
+      <strong>20</strong>
+      <span>Portable public blocks</span>
+    </div>
+    <div>
+      <strong>14</strong>
+      <span>Theme templates</span>
     </div>
     <div>
       <strong>10</strong>
-      <span>Core page templates</span>
-    </div>
-    <div>
-      <strong>8</strong>
       <span>Reusable snippets</span>
     </div>
     <div>
-      <strong>11</strong>
-      <span>Theme JavaScript/CSS assets</span>
+      <strong>24</strong>
+      <span>JS/CSS assets</span>
     </div>
   </div>
 
-  <section class="starter-library__group" id="library-sections">
+  <section class="starter-library__group" id="library-guide">
     <header class="starter-library__heading">
-      <p>Reusable sections</p>
-      <h2>Store-building blocks</h2>
+      <p>How to use this library</p>
+      <h2>Composition map</h2>
     </header>
 
+    <div class="starter-library__guide-grid">
+      <article class="starter-library-guide-card">
+        <span>1</span>
+        <h3>Start with the wrapper</h3>
+        <p>
+          Use <code>sections/base-section-container.liquid</code> when a page area needs editable spacing,
+          max-width, side padding, background color, gradient, or background image.
+        </p>
+      </article>
+
+      <article class="starter-library-guide-card">
+        <span>2</span>
+        <h3>Add portable blocks inside</h3>
+        <p>
+          Content components in <code>blocks/*.liquid</code> are block-only by design. They should not
+          include their own <code>&lt;section&gt;</code> tag or container wrapper.
+        </p>
+      </article>
+
+      <article class="starter-library-guide-card">
+        <span>3</span>
+        <h3>Keep route sections standalone</h3>
+        <p>
+          Product, collection, cart, header, footer, search, and account-like infrastructure sections stay
+          as sections because they own page-level behavior or Shopify route data.
+        </p>
+      </article>
+
+      <article class="starter-library-guide-card">
+        <span>4</span>
+        <h3>Check dependencies</h3>
+        <p>
+          Cards list related snippets and assets so you can trace behavior quickly before editing markup,
+          schema settings, or JavaScript.
+        </p>
+      </article>
+    </div>
+
+    <div class="starter-library__note">
+      <strong>Rule of thumb:</strong>
+      if a component is portable page content, build it as a block and place it inside
+      <code>Base section + container</code>. If it controls a route, global area, drawer, or product-specific
+      behavior, keep it as a section.
+    </div>
+  </section>
+
+  <section class="starter-library__group" id="library-sections">
+    <header class="starter-library__heading">
+      <p>Sections and portable blocks</p>
+      <h2>Store-building components</h2>
+    </header>
+
+    <div class="starter-library__note">
+      <strong>Reading this grid:</strong>
+      paths beginning with <code>sections/</code> are standalone section owners. Paths beginning with
+      <code>blocks/</code> are portable content blocks intended to be nested inside
+      <code>Base section + container</code>.
+    </div>
+
     <div class="starter-library__grid">
+      <article class="starter-library-card starter-library-card--featured">
+        <span>Layout wrapper</span>
+        <h3>Base section + container</h3>
+        <code>sections/base-section-container.liquid</code>
+        <p>Universal section wrapper for responsive padding, max-width, side gutters, and backgrounds.</p>
+      </article>
+
       <article class="starter-library-card">
         <span>Global promo</span>
         <h3>Announcement bar</h3>
         <code>sections/announcement-bar.liquid</code>
+        <code>assets/announcement-bar.js</code>
         <p>Header-group promotion strip for shipping messages, sale links, or store-wide notices.</p>
       </article>
 
@@ -78,6 +151,8 @@
         <span>Merchandising</span>
         <h3>Product slider</h3>
         <code>blocks/product-slider.liquid</code>
+        <code>assets/product-slider.js</code>
+        <code>assets/swiper-bundle.min.js</code>
         <p>Manual product carousel built from product blocks selected in the theme editor.</p>
       </article>
 
@@ -92,6 +167,7 @@
         <span>Social proof</span>
         <h3>Logo marquee</h3>
         <code>blocks/logo-marquee.liquid</code>
+        <code>assets/logo-marquee.js</code>
         <p>Scrolling or text-based logo row for partner brands, press mentions, or client logos.</p>
       </article>
 
@@ -129,6 +205,7 @@
         <span>Social proof</span>
         <h3>Testimonials</h3>
         <code>blocks/testimonials.liquid</code>
+        <code>assets/testimonials.js</code>
         <p>Customer quotes with rating, author details, and optional customer image.</p>
       </article>
 
@@ -148,9 +225,24 @@
 
       <article class="starter-library-card">
         <span>Email capture</span>
+        <h3>Newsletter</h3>
+        <code>blocks/newsletter.liquid</code>
+        <p>Compact email signup block for simple content areas and footer-like layouts.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Email capture</span>
         <h3>Newsletter promo</h3>
         <code>blocks/newsletter-promo.liquid</code>
         <p>Stronger visual newsletter signup section for homepage and landing pages.</p>
+      </article>
+
+      <article class="starter-library-card">
+        <span>Lead capture</span>
+        <h3>Contact form</h3>
+        <code>blocks/contact-form.liquid</code>
+        <code>assets/contact-form.js</code>
+        <p>Block-driven contact form with configurable inputs, selects, radio buttons, textareas, and required consent.</p>
       </article>
 
       <article class="starter-library-card">
@@ -195,6 +287,51 @@
     </div>
   </section>
 
+  <section class="starter-library__group" id="library-infrastructure">
+    <header class="starter-library__heading">
+      <p>Standalone sections</p>
+      <h2>Route and global owners</h2>
+    </header>
+
+    <div class="starter-library__table" role="table">
+      <div class="starter-library__row starter-library__row--head" role="row">
+        <span role="columnheader">Area</span>
+        <span role="columnheader">Primary files</span>
+        <span role="columnheader">Why it stays a section</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Header and footer</span>
+        <span role="cell"><code>sections/header.liquid</code><code>sections/footer.liquid</code></span>
+        <span role="cell">Global theme-group owners for navigation, search entry points, menus, and footer content.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Product route</span>
+        <span role="cell"><code>sections/product.liquid</code><code>sections/product-recommendations.liquid</code><code>sections/sticky-add-to-cart.liquid</code></span>
+        <span role="cell">Owns product object data, media gallery, variant state, recommendations, and add-to-cart behavior.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Collection and search routes</span>
+        <span role="cell"><code>sections/collection.liquid</code><code>sections/collections.liquid</code><code>sections/search.liquid</code><code>sections/predictive-search.liquid</code></span>
+        <span role="cell">Owns Shopify route data, filters, sorting, search results, predictive search, and pagination.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Cart surfaces</span>
+        <span role="cell"><code>sections/cart.liquid</code><code>sections/cart-drawer.liquid</code></span>
+        <span role="cell">Owns cart lines, drawer state, Ajax rendering, notes, attributes, discounts, and checkout entry.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Content routes</span>
+        <span role="cell"><code>sections/page.liquid</code><code>sections/blog.liquid</code><code>sections/article.liquid</code></span>
+        <span role="cell">Owns page, blog, and article route data plus SEO-oriented article/card rendering.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Utility routes</span>
+        <span role="cell"><code>sections/404.liquid</code><code>sections/password.liquid</code><code>sections/starter-template-library.liquid</code></span>
+        <span role="cell">Owns special storefront states and this internal documentation page.</span>
+      </div>
+    </div>
+  </section>
+
   <section class="starter-library__group" id="library-templates">
     <header class="starter-library__heading">
       <p>Templates</p>
@@ -211,6 +348,11 @@
         <span role="cell">Homepage</span>
         <code role="cell">templates/index.json</code>
         <span role="cell">Default landing page skeleton.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Standard page</span>
+        <code role="cell">templates/page.json</code>
+        <span role="cell">Flexible page layout powered by Base section + container blocks.</span>
       </div>
       <div class="starter-library__row" role="row">
         <span role="cell">Product</span>
@@ -257,6 +399,21 @@
         <code role="cell">templates/page.starter-library.json</code>
         <span role="cell">This documentation and demo page.</span>
       </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">404</span>
+        <code role="cell">templates/404.json</code>
+        <span role="cell">Not-found page content and recovery links.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Password</span>
+        <code role="cell">templates/password.json</code>
+        <span role="cell">Storefront password page for pre-launch or maintenance states.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <span role="cell">Gift card</span>
+        <code role="cell">templates/gift_card.liquid</code>
+        <span role="cell">Shopify gift card presentation layout.</span>
+      </div>
     </div>
   </section>
 
@@ -276,6 +433,36 @@
         <h3>Main button</h3>
         <code>snippets/main-button.liquid</code>
         <p>Reusable button link with primary, secondary, and accent variants.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Cart shipping progress</h3>
+        <code>snippets/cart-shipping-progress.liquid</code>
+        <p>Reusable free-shipping progress message used by cart and cart drawer surfaces.</p>
+      </article>
+      {% capture starter_modal_content %}
+        <p>This modal content is passed through a Liquid capture, so it can contain arbitrary HTML or rendered snippets.</p>
+        <ul>
+          <li>Text, images, forms, and product content can live here.</li>
+          <li>The modal closes with the button, backdrop click, or Escape.</li>
+        </ul>
+      {% endcapture %}
+      {% capture starter_modal_trigger %}
+        <button class="starter-library-modal-trigger" type="button">
+          <span>Open demo modal</span>
+          <small>Custom trigger markup</small>
+        </button>
+      {% endcapture %}
+      <article class="starter-library-card">
+        <h3>Modal</h3>
+        <code>snippets/modal.liquid</code>
+        <code>assets/modal.js</code>
+        <p>Reusable dialog with a captured custom trigger and captured content slot.</p>
+        {% render 'modal',
+          id: 'starter-library-modal-demo',
+          trigger: starter_modal_trigger,
+          title: 'Reusable modal',
+          content: starter_modal_content
+        %}
       </article>
       <article class="starter-library-card">
         <h3>Product card</h3>
@@ -317,25 +504,42 @@
     </header>
 
     <div class="starter-library__grid starter-library__grid--small">
+      <article class="starter-library-card"><h3>Critical CSS</h3><code>assets/critical.css</code><p>Global reset, base styles, layout utilities, cart drawer, and shared theme primitives.</p></article>
+      <article class="starter-library-card"><h3>Header</h3><code>assets/header.js</code><p>Header drawer, search panel, and navigation interaction behavior.</p></article>
+      <article class="starter-library-card"><h3>Announcement bar</h3><code>assets/announcement-bar.js</code><p>Announcement marquee and promo-strip interaction behavior.</p></article>
       <article class="starter-library-card"><h3>Cart</h3><code>assets/cart.js</code><p>Ajax cart, drawer, section rendering, cart count, notes, attributes, and discounts.</p></article>
+      <article class="starter-library-card"><h3>Collection</h3><code>assets/collection.js</code><p>Collection filtering, sorting, and product grid interaction helpers.</p></article>
+      <article class="starter-library-card"><h3>Contact form</h3><code>assets/contact-form.js</code><p>Client-side enhancements for the block-driven contact form.</p></article>
+      <article class="starter-library-card"><h3>Modal</h3><code>assets/modal.js</code><p>Reusable native dialog open, close, backdrop, and Escape behavior.</p></article>
       <article class="starter-library-card"><h3>Product form</h3><code>assets/product-form.js</code><p>Ajax add-to-cart for product forms.</p></article>
       <article class="starter-library-card"><h3>Product gallery</h3><code>assets/product-gallery.js</code><p>Product media thumbnail switching.</p></article>
+      <article class="starter-library-card"><h3>Product slider</h3><code>assets/product-slider.js</code><p>Swiper-backed product carousel initialization for product slider blocks.</p></article>
+      <article class="starter-library-card"><h3>Product variants</h3><code>assets/product-variant-selector.js</code><p>Variant option synchronization, media switching, and product form state updates.</p></article>
       <article class="starter-library-card"><h3>Predictive search</h3><code>assets/predictive-search.js</code><code>assets/predictive-search.css</code><p>Keyboard-friendly predictive search dropdown.</p></article>
       <article class="starter-library-card"><h3>Blog filters</h3><code>assets/blog.js</code><p>Blog tag select behavior.</p></article>
       <article class="starter-library-card"><h3>Countdown promo</h3><code>assets/countdown-promo.js</code><p>Live countdown timer values.</p></article>
       <article class="starter-library-card"><h3>FAQ</h3><code>assets/faq.js</code><p>Animated details opening, closing, and chevron state.</p></article>
+      <article class="starter-library-card"><h3>Logo marquee</h3><code>assets/logo-marquee.js</code><p>Safe client-side marquee duplication for continuous logo rails.</p></article>
       <article class="starter-library-card"><h3>Tabs</h3><code>assets/tabs.js</code><p>Accessible tab switching.</p></article>
+      <article class="starter-library-card"><h3>Testimonials</h3><code>assets/testimonials.js</code><p>Slider and interaction behavior for testimonial blocks.</p></article>
       <article class="starter-library-card"><h3>Recommendations</h3><code>assets/product-recommendations.js</code><p>Fetches Shopify product recommendations section HTML.</p></article>
       <article class="starter-library-card"><h3>Recently viewed</h3><code>assets/recently-viewed-products.js</code><p>Tracks product handles and renders recently viewed cards.</p></article>
       <article class="starter-library-card"><h3>Sticky add to cart</h3><code>assets/sticky-add-to-cart.js</code><p>Shows a sticky product form after the main form scrolls away.</p></article>
+      <article class="starter-library-card"><h3>Swiper bundle</h3><code>assets/swiper-bundle.min.js</code><code>assets/swiper-bundle.min.css</code><p>Vendor carousel library used by slider-like components.</p></article>
     </div>
   </section>
 
   <section class="starter-library__group" id="library-blocks">
     <header class="starter-library__heading">
       <p>Theme blocks</p>
-      <h2>Reusable editor blocks</h2>
+      <h2>Editor primitives and private child blocks</h2>
     </header>
+
+    <div class="starter-library__note">
+      <strong>Private child blocks:</strong>
+      filenames that start with <code>_</code> are nested implementation blocks. Merchants add them through
+      their parent component, not as standalone page content.
+    </div>
 
     <div class="starter-library__grid starter-library__grid--small">
       <article class="starter-library-card">
@@ -352,6 +556,30 @@
         <h3>Tab container</h3>
         <code>blocks/_tab.liquid</code>
         <p>Private nested container used by the Tabs section for flexible panel content.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Contact form fields</h3>
+        <code>blocks/_contact-input.liquid</code>
+        <code>blocks/_contact-select.liquid</code>
+        <code>blocks/_contact-radio.liquid</code>
+        <code>blocks/_contact-textarea.liquid</code>
+        <code>blocks/_contact-consent.liquid</code>
+        <p>Private nested field blocks used by the configurable Contact form block.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Content item blocks</h3>
+        <code>blocks/_faq-item.liquid</code>
+        <code>blocks/_comparison-row.liquid</code>
+        <code>blocks/_testimonial.liquid</code>
+        <p>Private rows/items that give parent components repeatable content.</p>
+      </article>
+      <article class="starter-library-card">
+        <h3>Visual card blocks</h3>
+        <code>blocks/_collection-card.liquid</code>
+        <code>blocks/_promo-card.liquid</code>
+        <code>blocks/_logo-item.liquid</code>
+        <code>blocks/_trust-badge.liquid</code>
+        <p>Private visual cards used by collection list, promo grid, logo marquee, and trust badge blocks.</p>
       </article>
     </div>
   </section>
@@ -395,12 +623,19 @@
 
   .starter-library__route,
   .starter-library__note {
-    display: grid;
-    gap: 0.4rem;
     padding: 1rem;
     border: 1px solid rgb(220, 220, 220);
     border-radius: 8px;
     background: rgb(250, 251, 251);
+  }
+
+  .starter-library__route {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .starter-library__note {
+    line-height: 1.55;
   }
 
   .starter-library__route span {
@@ -409,15 +644,20 @@
   }
 
   .starter-library code {
-    display: inline-flex;
-    width: max-content;
+    display: inline-block;
+    min-width: 0;
+    width: auto;
     max-width: 100%;
     overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     background: rgb(244, 244, 245);
     color: rgb(32, 34, 35);
     font-size: 0.85rem;
+    line-height: 1.35;
+    vertical-align: baseline;
   }
 
   .starter-library__nav {
@@ -457,6 +697,44 @@
     color: rgb(92, 95, 98);
   }
 
+  .starter-library__guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+  }
+
+  .starter-library-guide-card {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgb(250, 251, 251), white);
+  }
+
+  .starter-library-guide-card > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: rgb(32, 34, 35);
+    color: white;
+    font-weight: 700;
+  }
+
+  .starter-library-guide-card h3,
+  .starter-library-guide-card p {
+    margin: 0;
+  }
+
+  .starter-library-guide-card p {
+    color: rgb(92, 95, 98);
+    line-height: 1.5;
+  }
+
   .starter-library__group {
     display: grid;
     gap: 1.25rem;
@@ -477,6 +755,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1rem;
+    min-width: 0;
   }
 
   .starter-library__grid--small {
@@ -487,10 +766,17 @@
     display: grid;
     align-content: start;
     gap: 0.75rem;
+    min-width: 0;
     padding: 1rem;
     border: 1px solid rgb(220, 220, 220);
     border-radius: 8px;
     background: white;
+  }
+
+  .starter-library-card--featured {
+    border-color: rgb(32, 34, 35);
+    background: rgb(250, 251, 251);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
   }
 
   .starter-library-card h3,
@@ -507,6 +793,25 @@
     line-height: 1.5;
   }
 
+  .starter-library-modal-trigger {
+    display: grid;
+    gap: 0.15rem;
+    width: fit-content;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgb(32, 34, 35);
+    border-radius: 999px;
+    background: rgb(32, 34, 35);
+    color: white;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .starter-library-modal-trigger small {
+    opacity: 0.72;
+    font-size: 0.75rem;
+  }
+
   .starter-library__table {
     overflow: hidden;
     border: 1px solid rgb(220, 220, 220);
@@ -519,6 +824,7 @@
   }
 
   .starter-library__row > * {
+    min-width: 0;
     padding: 0.85rem;
     border-top: 1px solid rgb(220, 220, 220);
   }

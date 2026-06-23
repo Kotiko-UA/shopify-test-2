@@ -543,9 +543,15 @@
         "background_image_position": "center center",
         "prioritize_background_image": false
       }
+    },
+    "starter_template_library_NtcPc7": {
+      "type": "starter-template-library",
+      "name": "Starter template library",
+      "settings": {}
     }
   },
   "order": [
+    "starter_template_library_NtcPc7",
     "main",
     "product_slider_fntxax",
     "tabs_ieFpTc",

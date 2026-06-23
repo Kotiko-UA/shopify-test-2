@@ -1,0 +1,201 @@
+{% comment %}
+  Reusable modal snippet.
+
+  Usage:
+  {% capture modal_content %}
+    <p>Any HTML or Liquid content can go here.</p>
+  {% endcapture %}
+
+  {% render 'modal',
+    id: 'size-guide-modal',
+    trigger_text: 'Open size guide',
+    title: 'Size guide',
+    content: modal_content
+  %}
+
+  Custom trigger:
+  {% capture modal_trigger %}
+    <button class="my-modal-trigger" type="button">Open custom modal</button>
+  {% endcapture %}
+
+  {% render 'modal',
+    id: 'custom-trigger-modal',
+    trigger: modal_trigger,
+    title: 'Custom trigger modal',
+    content: modal_content
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign modal_id = id | default: 'theme-modal'
+  assign modal_trigger_text = trigger_text | default: 'Open modal'
+  assign modal_title = title
+  assign modal_aria_label = aria_label | default: modal_title | default: modal_trigger_text
+  assign default_close_label = 'accessibility.close' | t
+  assign modal_close_label = close_label | default: default_close_label
+-%}
+
+<div class="custom-modal">
+  {% if trigger != blank %}
+    <div
+      class="custom-modal__trigger-slot{% if trigger_class != blank %} {{ trigger_class }}{% endif %}"
+      aria-haspopup="dialog"
+      aria-controls="{{ modal_id | escape }}"
+      data-modal-open="{{ modal_id | escape }}"
+    >
+      {{ trigger }}
+    </div>
+  {% else %}
+    <button
+      class="custom-modal__trigger{% if trigger_class != blank %} {{ trigger_class }}{% endif %}"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="{{ modal_id | escape }}"
+      data-modal-open="{{ modal_id | escape }}"
+    >
+      {{ modal_trigger_text }}
+    </button>
+  {% endif %}
+
+  <dialog
+    id="{{ modal_id | escape }}"
+    class="custom-modal__dialog{% if dialog_class != blank %} {{ dialog_class }}{% endif %}"
+    data-modal
+    scroll-lock
+    {% if modal_title != blank %}
+      aria-labelledby="{{ modal_id | escape }}-title"
+    {% else %}
+      aria-label="{{ modal_aria_label | escape }}"
+    {% endif %}
+  >
+    <div class="custom-modal__panel" data-modal-panel>
+      <div class="custom-modal__header{% if modal_title == blank %} custom-modal__header--icon-only{% endif %}">
+        {% if modal_title != blank %}
+          <h2 id="{{ modal_id | escape }}-title" class="custom-modal__title">{{ modal_title }}</h2>
+        {% endif %}
+
+        <button
+          class="custom-modal__close"
+          type="button"
+          data-modal-close
+          aria-label="{{ modal_close_label | escape }}"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="custom-modal__content{% if content_class != blank %} {{ content_class }}{% endif %}">
+        {{ content }}
+      </div>
+    </div>
+  </dialog>
+</div>
+
+{% stylesheet %}
+  .custom-modal__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 4px;
+    background-color: rgb(32, 34, 35);
+    color: rgb(255, 255, 255);
+    font: inherit;
+    line-height: 1.2;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .custom-modal__trigger-slot {
+    display: contents;
+  }
+
+  .custom-modal__dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: min(92vw, var(--custom-modal-max-width, 640px));
+    max-width: none;
+    max-height: calc(100vh - 2rem);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-foreground);
+    overflow: visible;
+    transform: translate(-50%, -50%);
+  }
+
+  .custom-modal__dialog[open] {
+    display: block;
+  }
+
+  .custom-modal__dialog::backdrop {
+    background: rgba(0, 0, 0, 0.56);
+  }
+
+  .custom-modal__panel {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    max-height: calc(100vh - 2rem);
+    border-radius: 12px;
+    background-color: var(--color-background);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+    overflow: hidden;
+  }
+
+  .custom-modal__header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.25rem 0;
+  }
+
+  .custom-modal__header--icon-only {
+    justify-content: flex-end;
+  }
+
+  .custom-modal__title {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .custom-modal__close {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: -0.5rem -0.5rem 0 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: currentcolor;
+    font: inherit;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .custom-modal__close:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .custom-modal__content {
+    padding: 1.25rem;
+    overflow: auto;
+  }
+
+  @supports (height: 100dvh) {
+    .custom-modal__dialog,
+    .custom-modal__panel {
+      max-height: calc(100dvh - 2rem);
+    }
+  }
+{% endstylesheet %}

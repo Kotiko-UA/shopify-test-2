@@ -1,16 +1,16 @@
-# Graph Report - shopify-test-2  (2026-06-22)
+# Graph Report - shopify-test-2  (2026-06-23)
 
 ## Corpus Check
-- 46 files · ~14,981 words
+- 47 files · ~15,690 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 771 nodes · 956 edges · 77 communities (72 shown, 5 thin omitted)
+- 777 nodes · 961 edges · 79 communities (74 shown, 5 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 28 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d69e9601`
+- Built from commit: `cdf0a948`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,6 +61,7 @@
 - [[_COMMUNITY_Community 73|Community 73]]
 - [[_COMMUNITY_Community 74|Community 74]]
 - [[_COMMUNITY_Community 75|Community 75]]
+- [[_COMMUNITY_Community 77|Community 77]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `labels` - 186 edges
@@ -81,7 +82,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (77 total, 5 thin omitted)
+## Communities (79 total, 5 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.01
@@ -172,8 +173,8 @@ Cohesion: 0.50
 Nodes (4): password, enter, password, title
 
 ### Community 52 - "Community 52"
-Cohesion: 0.18
-Nodes (10): background, split, options, hero_layout, page_width, size, narrow, wide (+2 more)
+Cohesion: 0.22
+Nodes (8): contain, cover, fill, background, split, options, background_image_fit, hero_layout
 
 ### Community 54 - "Community 54"
 Cohesion: 0.40
@@ -236,8 +237,8 @@ Cohesion: 0.50
 Nodes (4): 404, back_to_shopping, not_found, title
 
 ### Community 73 - "Community 73"
-Cohesion: 0.50
-Nodes (4): contain, cover, fill, background_image_fit
+Cohesion: 0.67
+Nodes (3): page_width, narrow, wide
 
 ### Community 74 - "Community 74"
 Cohesion: 0.67
@@ -246,6 +247,10 @@ Nodes (3): position, left, right
 ### Community 75 - "Community 75"
 Cohesion: 0.29
 Nodes (6): Convert To Theme Blocks, Goal, Guardrails, Keep As Sections, Migration Order, Section to Theme Block Audit
+
+### Community 77 - "Community 77"
+Cohesion: 0.67
+Nodes (3): size, large, small
 
 ## Knowledge Gaps
 - **507 isolated node(s):** `PreToolUse`, `title`, `not_found`, `back_to_shopping`, `yes` (+502 more)
@@ -256,11 +261,11 @@ Nodes (6): Convert To Theme Blocks, Goal, Guardrails, Keep As Sections, Migratio
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `labels` connect `Community 0` to `Community 52`?**
-  _High betweenness centrality (0.156) - this node is a cross-community bridge._
-- **Why does `options` connect `Community 52` to `Community 64`, `Community 65`, `Community 2`, `Community 66`, `Community 69`, `Community 7`, `Community 73`, `Community 74`, `Community 55`, `Community 56`, `Community 57`, `Community 60`, `Community 61`, `Community 62`, `Community 63`?**
-  _High betweenness centrality (0.081) - this node is a cross-community bridge._
+  _High betweenness centrality (0.154) - this node is a cross-community bridge._
+- **Why does `options` connect `Community 52` to `Community 64`, `Community 65`, `Community 2`, `Community 66`, `Community 69`, `Community 7`, `Community 73`, `Community 74`, `Community 77`, `Community 55`, `Community 56`, `Community 57`, `Community 60`, `Community 61`, `Community 62`, `Community 63`?**
+  _High betweenness centrality (0.080) - this node is a cross-community bridge._
 - **Why does `general` connect `Community 1` to `Community 52`?**
-  _High betweenness centrality (0.077) - this node is a cross-community bridge._
+  _High betweenness centrality (0.076) - this node is a cross-community bridge._
 - **What connects `PreToolUse`, `title`, `not_found` to the rest of the system?**
   _507 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**

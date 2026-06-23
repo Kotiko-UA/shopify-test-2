@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "templates/page.json": {
-    "mtime": 1782121940.9572878,
-    "ast_hash": "de132a830dafc500f71c2a1066135ffb",
+    "mtime": 1782223033.600376,
+    "ast_hash": "d66b2d6b78cf8253e76305aadd08ff66",
     "semantic_hash": ""
   },
   "templates/product.json": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "assets/product-gallery.js": {
-    "mtime": 1782113458.8988397,
-    "ast_hash": "dabe56b9521de9e3f3f0426ebf02951e",
+    "mtime": 1782214855.483721,
+    "ast_hash": "8eb188d62d7f0da72128048eb49bb6f3",
     "semantic_hash": ""
   },
   "assets/product-recommendations.js": {
@@ -242,6 +242,11 @@
   "SECTION_BLOCK_AUDIT.md": {
     "mtime": 1782122025.170964,
     "ast_hash": "ebdef9e685f47e3029c5174071f60ec0",
+    "semantic_hash": ""
+  },
+  "assets/modal.js": {
+    "mtime": 1782222266.432878,
+    "ast_hash": "0b7e008ffae52fe7f8fedf0e20d390b7",
     "semantic_hash": ""
   }
 }
