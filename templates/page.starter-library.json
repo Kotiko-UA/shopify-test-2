@@ -13,6 +13,54 @@
       "type": "starter-template-library",
       "settings": {}
     },
+    "group_text_demo": {
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "group",
+          "blocks": {
+            "eyebrow": {
+              "type": "text",
+              "settings": {
+                "text": "Demo theme blocks",
+                "text_style": "text--subtitle",
+                "alignment": "left"
+              }
+            },
+            "title": {
+              "type": "text",
+              "settings": {
+                "text": "Group + text blocks",
+                "text_style": "text--title",
+                "alignment": "left"
+              }
+            },
+            "body": {
+              "type": "text",
+              "settings": {
+                "text": "This area is rendered by the real group block with real nested text blocks.",
+                "text_style": "text--normal",
+                "alignment": "left"
+              }
+            }
+          },
+          "block_order": [
+            "eyebrow",
+            "title",
+            "body"
+          ],
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "flex-start",
+            "padding": 0
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
+    },
     "hero_demo": {
       "type": "base-section-container",
       "blocks": {
@@ -586,6 +634,95 @@
       ],
       "settings": {}
     },
+    "contact_form_demo": {
+      "type": "base-section-container",
+      "blocks": {
+        "content": {
+          "type": "contact-form",
+          "blocks": {
+            "name": {
+              "type": "_contact-input",
+              "settings": {
+                "label": "Name",
+                "field_name": "Name",
+                "input_type": "text",
+                "placeholder": "Alex Morgan",
+                "help_text": "",
+                "pattern": "",
+                "min": "",
+                "max": "",
+                "width": "half",
+                "required": false
+              }
+            },
+            "email": {
+              "type": "_contact-input",
+              "settings": {
+                "label": "Email",
+                "field_name": "",
+                "input_type": "email",
+                "placeholder": "alex@example.com",
+                "help_text": "",
+                "pattern": "",
+                "min": "",
+                "max": "",
+                "width": "half",
+                "required": true
+              }
+            },
+            "topic": {
+              "type": "_contact-select",
+              "settings": {
+                "label": "Topic",
+                "field_name": "Topic",
+                "placeholder": "Choose a topic",
+                "options": "Sizing\nShipping\nReturns",
+                "help_text": "",
+                "width": "full",
+                "required": false
+              }
+            },
+            "message": {
+              "type": "_contact-textarea",
+              "settings": {
+                "label": "Message",
+                "field_name": "Message",
+                "placeholder": "How can we help?",
+                "help_text": "",
+                "rows": 4,
+                "width": "full",
+                "required": true
+              }
+            },
+            "consent": {
+              "type": "_contact-consent",
+              "settings": {
+                "field_name": "Consent",
+                "text": "<p>I agree to be contacted about my request.</p>",
+                "width": "full"
+              }
+            }
+          },
+          "block_order": [
+            "name",
+            "email",
+            "topic",
+            "message",
+            "consent"
+          ],
+          "settings": {
+            "heading": "Contact form",
+            "description": "<p>This demo is rendered by the real contact-form block and real contact field blocks.</p>",
+            "success_redirect": "",
+            "redirect_delay": 2
+          }
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "settings": {}
+    },
     "newsletter_demo": {
       "type": "base-section-container",
       "blocks": {
@@ -605,6 +742,7 @@
   },
   "order": [
     "library",
+    "group_text_demo",
     "hero_demo",
     "media_text_demo",
     "featured_collection_demo",
@@ -620,6 +758,7 @@
     "comparison_demo",
     "tabs_demo",
     "newsletter_promo_demo",
+    "contact_form_demo",
     "newsletter_demo"
   ]
 }

@@ -65,6 +65,23 @@
       <small>Custom modal trigger</small>
     </button>
   {% endcapture %}
+  {% capture starter_showcase_consent_label %}
+    <p>I agree to be contacted about my request.</p>
+  {% endcapture %}
+  {% capture starter_showcase_topic_options %}Sizing
+Shipping
+Returns{% endcapture %}
+  {% capture starter_showcase_priority_options %}Low
+Medium
+High{% endcapture %}
+  {% assign starter_demo_product = all_products['gift-card'] %}
+  {% assign starter_demo_blog = blogs['news'] %}
+  {% assign starter_demo_article = starter_demo_blog.articles.first %}
+  {% assign starter_search_label = 'search.title' | t %}
+  {% assign starter_search_placeholder = 'search.placeholder' | t %}
+  {% assign starter_search_submit = 'search.submit' | t %}
+  {{ 'predictive-search.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
 
   <section class="starter-library__group" id="library-guide">
     <header class="starter-library__heading">
@@ -126,537 +143,40 @@
 
     <div class="starter-library__note">
       <strong>Reading this list:</strong>
-      each component is shown as one full-width example block. The live example comes first; files and usage notes
-      sit underneath it. Paths beginning with <code>sections/</code> are standalone route or wrapper owners. Paths
-      beginning with <code>blocks/</code> are portable content blocks for <code>Base section + container</code>.
+      this section is now a map, not a fake preview gallery. Real portable block examples are rendered below
+      by <code>templates/page.starter-library.json</code> as actual <code>base-section-container</code> sections
+      with real <code>blocks/*.liquid</code> children. Paths beginning with <code>sections/</code> are standalone
+      route or wrapper owners.
     </div>
 
-    <div class="starter-library-live-list">
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-section">
-            <div class="starter-library-demo-section__container">
-              <p>Base section + container</p>
-              <h3>One wrapper for padding, width, gutters, and backgrounds.</h3>
-              <div>
-                <span>Desktop padding</span>
-                <span>Container max width</span>
-                <span>Background image/color</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Layout wrapper</span>
-          <h3>Base section + container</h3>
-          <p>Universal section wrapper for responsive padding, max-width, side gutters, and backgrounds.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>sections/base-section-container.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add this section first, then place portable blocks inside it.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-group">
-            <div>
-              <span>Image block</span>
-              <span>Text block</span>
-              <span>Button block</span>
-            </div>
-            <p>Group can stack or align nested blocks without adding a new section wrapper.</p>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Layout primitive</span>
-          <h3>Group</h3>
-          <p>Nestable layout wrapper for horizontal or vertical groups of theme blocks.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/group.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add it inside Base section + container when several blocks need shared direction, spacing, or alignment.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-text">
-            <p>Small heading</p>
-            <h3>Reusable title, subtitle, and body copy.</h3>
-            <p>Use this block when a section needs editable text without creating a one-off component.</p>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Content primitive</span>
-          <h3>Text</h3>
-          <p>Reusable text block with title, subtitle, and normal text styles.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/text.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add it anywhere nested theme blocks are allowed and configure title, subtitle, and body text.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-announcement">
-            <span>Free shipping over $100</span>
-            <a href="#">Shop sale</a>
-            <button type="button" aria-label="Close announcement">x</button>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Global promo</span>
-          <h3>Announcement bar</h3>
-          <p>Header-group promotion strip for shipping messages, sale links, or store-wide notices.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>sections/announcement-bar.liquid</code><code>assets/announcement-bar.js</code></div>
-            <div><strong>How to apply</strong><p>Add it to the Header group and configure text, link, marquee, or dismissal.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-hero">
-            <p>New collection</p>
-            <h3>Build a faster storefront from reusable blocks.</h3>
-            <div>
-              <a href="#">Shop now</a>
-              <a href="#">Learn more</a>
-            </div>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Homepage</span>
-          <h3>Hero</h3>
-          <p>First-screen campaign block with heading, rich text, image, and primary/secondary buttons.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/hero.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add it inside Base section + container on homepages or landing pages.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-products">
-            <article><span></span><strong>Canvas tote</strong><small>$48</small></article>
-            <article><span></span><strong>Travel mug</strong><small>$24</small></article>
-            <article><span></span><strong>Hoodie</strong><small>$86</small></article>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Merchandising</span>
-          <h3>Featured collection</h3>
-          <p>Shows products from a selected collection as a grid or horizontal slider.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/featured-collection.liquid</code></div>
-            <div><strong>How to apply</strong><p>Choose a collection and set product count, layout, badges, and quick add options.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-slider">
-            <button type="button" aria-label="Previous product">&lt;</button>
-            <div>
-              <article><span></span><strong>Board</strong></article>
-              <article><span></span><strong>Bindings</strong></article>
-              <article><span></span><strong>Boots</strong></article>
-            </div>
-            <button type="button" aria-label="Next product">&gt;</button>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Merchandising</span>
-          <h3>Product slider</h3>
-          <p>Manual product carousel built from product blocks selected in the theme editor.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/product-slider.liquid</code><code>assets/product-slider.js</code><code>assets/swiper-bundle.min.js</code></div>
-            <div><strong>How to apply</strong><p>Add product child blocks, then choose slides per view and navigation settings.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-media">
-            <span></span>
-            <div>
-              <p>Brand story</p>
-              <h3>Pair a strong image with clear supporting copy.</h3>
-              <a href="#">Read more</a>
-            </div>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Content</span>
-          <h3>Media with text</h3>
-          <p>Image plus text layout for brand stories, product benefits, or collection introductions.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/media-with-text.liquid</code></div>
-            <div><strong>How to apply</strong><p>Use it for editorial blocks, product explainers, and collection intros.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-logos">
-            <span>North</span><span>Studio</span><span>Peak</span><span>Alpine</span><span>River</span>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Social proof</span>
-          <h3>Logo marquee</h3>
-          <p>Scrolling or text-based logo row for partner brands, press mentions, or client logos.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/logo-marquee.liquid</code><code>assets/logo-marquee.js</code></div>
-            <div><strong>How to apply</strong><p>Add logo item blocks and enable marquee for continuous movement.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-countdown">
-            <strong>Flash sale ends soon</strong>
-            <div><span>02<small>Days</small></span><span>14<small>Hours</small></span><span>36<small>Min</small></span><span>09<small>Sec</small></span></div>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Promotion</span>
-          <h3>Countdown promo</h3>
-          <p>Deadline-driven promotion with days, hours, minutes, and seconds.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/countdown-promo.liquid</code><code>assets/countdown-promo.js</code></div>
-            <div><strong>How to apply</strong><p>Set an end date or evergreen duration and add campaign copy/buttons.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-blog">
-            <article><span></span><strong>How to choose your setup</strong><p>Tips for first-time buyers.</p></article>
-            <article><span></span><strong>Behind the collection</strong><p>Material and design notes.</p></article>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Content marketing</span>
-          <h3>Featured blog</h3>
-          <p>Displays latest articles from a selected blog using the shared article card snippet.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/featured-blog.liquid</code><code>snippets/article-card.liquid</code></div>
-            <div><strong>How to apply</strong><p>Choose a blog, article count, column count, and which metadata to show.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-faq faq-section" data-faq-section data-animation-duration="450" data-single-open="false">
-            <div class="faq-section__controls">
-              <label>
-                <span>Search</span>
-                <input type="search" placeholder="Search questions">
-              </label>
-              <label>
-                <span>Category</span>
-                <select>
-                  <option>All categories</option>
-                </select>
-              </label>
-            </div>
-            <div class="faq-section__items">
-              <details class="faq-section__item" data-faq-item open>
-                <summary data-faq-summary>
-                  <span>What is your return policy?</span>
-                  <span class="faq-section__chevron" aria-hidden="true"></span>
-                </summary>
-                <div class="faq-section__content" data-faq-content>
-                  <div class="faq-section__answer">
-                    <p>Use FAQ items for shipping, returns, sizing, and care answers.</p>
-                  </div>
-                </div>
-              </details>
-              <details class="faq-section__item" data-faq-item>
-                <summary data-faq-summary>
-                  <span>How long does shipping take?</span>
-                  <span class="faq-section__chevron" aria-hidden="true"></span>
-                </summary>
-                <div class="faq-section__content" data-faq-content>
-                  <div class="faq-section__answer">
-                    <p>Each question is a nested FAQ item block.</p>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Support</span>
-          <h3>FAQ</h3>
-          <p>Animated accordion blocks for shipping, returns, sizing, or product details.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/faq.liquid</code><code>blocks/_faq-item.liquid</code><code>assets/faq.js</code></div>
-            <div><strong>How to apply</strong><p>Add FAQ, then add question child blocks with answers and optional categories.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-badges">
-            <article><strong>Free shipping</strong><small>Over $100</small></article>
-            <article><strong>Secure checkout</strong><small>Encrypted payments</small></article>
-            <article><strong>Easy returns</strong><small>30-day window</small></article>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Trust</span>
-          <h3>Trust badges</h3>
-          <p>Benefit cards for free shipping, returns, secure checkout, warranties, and guarantees.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/trust-badges.liquid</code><code>blocks/_trust-badge.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add badge child blocks and write short confidence-building benefits.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-reviews">
-            <figure><div>&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"Exactly what I needed."</blockquote><figcaption>Alex, verified buyer</figcaption></figure>
-            <figure><div>&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>"Easy setup and great quality."</blockquote><figcaption>Jordan, store owner</figcaption></figure>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Social proof</span>
-          <h3>Testimonials</h3>
-          <p>Customer quotes with rating, author details, and optional customer image.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/testimonials.liquid</code><code>blocks/_testimonial.liquid</code><code>assets/testimonials.js</code></div>
-            <div><strong>How to apply</strong><p>Add testimonial child blocks and choose grid or carousel layout.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-promo-grid">
-            <article><p>Winter drop</p><strong>Boards</strong></article>
-            <article><p>Bundle deal</p><strong>Gear kits</strong></article>
-            <article><p>Limited</p><strong>Accessories</strong></article>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Campaigns</span>
-          <h3>Promo grid</h3>
-          <p>Card grid for categories, seasonal offers, collection links, and landing page promos.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/promo-grid.liquid</code><code>blocks/_promo-card.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add promo card child blocks and link each card to collections or pages.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-collections">
-            <article><span></span><strong>Snowboards</strong><small>12 products</small></article>
-            <article><span></span><strong>Outerwear</strong><small>18 products</small></article>
-            <article><span></span><strong>Accessories</strong><small>24 products</small></article>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Navigation</span>
-          <h3>Collection list</h3>
-          <p>Selectable collection cards with collection images and product counts.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/collection-list.liquid</code><code>blocks/_collection-card.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add collection card child blocks and select collections in the editor.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <form class="starter-library-demo-newsletter">
-            <label for="StarterNewsletter">Get product updates</label>
-            <div><input id="StarterNewsletter" type="email" value="you@example.com"><button type="button">Sign up</button></div>
-          </form>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Email capture</span>
-          <h3>Newsletter</h3>
-          <p>Compact email signup block for simple content areas and footer-like layouts.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/newsletter.liquid</code><code>snippets/newsletter-form.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add it where a compact email capture form is enough.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <form class="starter-library-demo-newsletter starter-library-demo-newsletter--promo">
-            <p>Join the list</p>
-            <h3>10% off your first order</h3>
-            <div><input type="email" value="you@example.com"><button type="button">Get code</button></div>
-          </form>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Email capture</span>
-          <h3>Newsletter promo</h3>
-          <p>Stronger visual newsletter signup section for homepage and landing pages.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/newsletter-promo.liquid</code><code>snippets/newsletter-form.liquid</code></div>
-            <div><strong>How to apply</strong><p>Use it for campaign signup areas with stronger heading and description copy.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <form class="starter-library-demo-contact">
-            <label>Name<input type="text" value="Alex Morgan"></label>
-            <label>Email<input type="email" value="alex@example.com"></label>
-            <label class="starter-library-demo-contact__full">Message<textarea rows="3">I need help choosing a size.</textarea></label>
-            <label class="starter-library-demo-contact__consent"><input type="checkbox" checked required> I agree to be contacted.</label>
-            <button type="button">Send message</button>
-          </form>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Lead capture</span>
-          <h3>Contact form</h3>
-          <p>Block-driven contact form with configurable inputs, selects, radio buttons, textareas, and required consent.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/contact-form.liquid</code><code>blocks/_contact-input.liquid</code><code>blocks/_contact-select.liquid</code><code>blocks/_contact-radio.liquid</code><code>blocks/_contact-textarea.liquid</code><code>blocks/_contact-consent.liquid</code><code>snippets/form-field.liquid</code><code>snippets/form-message.liquid</code><code>assets/contact-form.js</code></div>
-            <div><strong>How to apply</strong><p>Add Contact form, then compose the fields as nested blocks.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <table class="starter-library-demo-table">
-            <thead><tr><th>Feature</th><th>Basic</th><th>Pro</th></tr></thead>
-            <tbody><tr><td>Support</td><td>Email</td><td>Priority</td></tr><tr><td>Warranty</td><td>1 year</td><td>3 years</td></tr></tbody>
-          </table>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Decision support</span>
-          <h3>Comparison table</h3>
-          <p>Responsive comparison table for plans, variants, bundles, or product lines.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/comparison-table.liquid</code><code>blocks/_comparison-row.liquid</code></div>
-            <div><strong>How to apply</strong><p>Add comparison rows and configure column labels, values, and highlighted status.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-tabs">
-            <div role="tablist"><button type="button">Details</button><button type="button">Shipping</button><button type="button">Care</button></div>
-            <div role="tabpanel"><h3>Panel content</h3><p>Each tab can hold nested theme blocks.</p></div>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Content</span>
-          <h3>Tabs</h3>
-          <p>Accessible tabs whose panels accept nested theme and app blocks.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/tabs.liquid</code><code>blocks/_tab.liquid</code><code>assets/tabs.js</code></div>
-            <div><strong>How to apply</strong><p>Add tab child blocks and place content blocks inside each panel.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-products">
-            <article><span></span><strong>Related board</strong><small>$420</small></article>
-            <article><span></span><strong>Wax kit</strong><small>$18</small></article>
-            <article><span></span><strong>Travel bag</strong><small>$74</small></article>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Product page</span>
-          <h3>Product recommendations</h3>
-          <p>Shopify recommendations endpoint integration for related products.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>sections/product-recommendations.liquid</code><code>assets/product-recommendations.js</code></div>
-            <div><strong>How to apply</strong><p>Add the section to product templates so Shopify can fetch recommended products.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-products starter-library-demo-products--recent">
-            <article><span></span><strong>Viewed boot</strong><small>Earlier today</small></article>
-            <article><span></span><strong>Viewed jacket</strong><small>Yesterday</small></article>
-            <article><span></span><strong>Viewed gloves</strong><small>This week</small></article>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Product discovery</span>
-          <h3>Recently viewed products</h3>
-          <p>LocalStorage-powered product history shown as a reusable product grid.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>blocks/recently-viewed-products.liquid</code><code>assets/recently-viewed-products.js</code></div>
-            <div><strong>How to apply</strong><p>Add it to product or collection pages to show products the customer already opened.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-sticky-cart">
-            <span></span>
-            <strong>Demo snowboard</strong>
-            <small>$420</small>
-            <button type="button">Add to cart</button>
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Conversion</span>
-          <h3>Sticky add to cart</h3>
-          <p>Product-page sticky bar that follows the selected variant and uses Ajax add-to-cart.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>sections/sticky-add-to-cart.liquid</code><code>assets/sticky-add-to-cart.js</code></div>
-            <div><strong>How to apply</strong><p>Add it to product templates after the main product section.</p></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="starter-library-live-card">
-        <div class="starter-library-live-card__preview">
-          <div class="starter-library-demo-modal">
-            {% render 'modal',
-              id: 'starter-library-modal-showcase',
-              trigger: starter_showcase_modal_trigger,
-              title: 'Reusable modal',
-              content: starter_showcase_modal_content
-            %}
-          </div>
-        </div>
-        <div class="starter-library-live-card__reference">
-          <span>Snippet</span>
-          <h3>Modal</h3>
-          <p>Reusable dialog snippet that accepts a captured custom trigger and captured content slot.</p>
-          <div class="starter-library-live-card__meta">
-            <div><strong>Files</strong><code>snippets/modal.liquid</code><code>assets/modal.js</code></div>
-            <div><strong>How to apply</strong><p>Capture your trigger and content, then render the snippet with <code>id</code>, <code>trigger</code>, and <code>content</code>.</p></div>
-          </div>
-        </div>
-      </article>
+    <div class="starter-library__table" role="table">
+      <div class="starter-library__row starter-library__row--head" role="row">
+        <span role="columnheader">Live demo source</span>
+        <span role="columnheader">Real blocks rendered below</span>
+        <span role="columnheader">Notes</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <code role="cell">templates/page.starter-library.json</code>
+        <span role="cell"><code>hero</code><code>media-with-text</code><code>featured-collection</code><code>product-slider</code></span>
+        <span role="cell">Merchandising and campaign blocks render as actual theme blocks inside Base section + container.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <code role="cell">templates/page.starter-library.json</code>
+        <span role="cell"><code>trust-badges</code><code>collection-list</code><code>logo-marquee</code><code>promo-grid</code></span>
+        <span role="cell">Composite blocks render with their real private child blocks.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <code role="cell">templates/page.starter-library.json</code>
+        <span role="cell"><code>faq</code><code>featured-blog</code><code>testimonials</code><code>comparison-table</code><code>tabs</code></span>
+        <span role="cell">Support, content, social proof, comparison, and tab examples are live block instances.</span>
+      </div>
+      <div class="starter-library__row" role="row">
+        <code role="cell">templates/page.starter-library.json</code>
+        <span role="cell"><code>group</code><code>text</code><code>newsletter</code><code>newsletter-promo</code><code>contact-form</code></span>
+        <span role="cell">Primitive layout, text, and form examples are real editable blocks.</span>
+      </div>
     </div>
+
   </section>
 
   <section class="starter-library__group" id="library-infrastructure">
@@ -794,6 +314,197 @@
       <p>Snippets</p>
       <h2>Reusable Liquid building blocks</h2>
     </header>
+
+    <div class="starter-library__note">
+      <strong>Live snippet examples:</strong>
+      the cards below call the actual files in <code>snippets/</code>. Non-visual snippets such as
+      <code>meta-tags</code>, <code>css-variables</code>, and structured data helpers stay listed in the reference
+      because rendering extra copies here would change page metadata instead of creating a useful visual preview.
+    </div>
+
+    <div class="starter-library-snippet-showcase">
+      <article class="starter-library-snippet-card">
+        <span>snippets/section-header.liquid</span>
+        {% render 'section-header',
+          eyebrow: 'Live snippet',
+          heading: 'Section header',
+          text: '<p>This heading is rendered through the shared section-header snippet.</p>',
+          alignment: 'left'
+        %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/main-button.liquid</span>
+        {% render 'main-button', label: 'Primary action', url: routes.root_url, variant: 'primary' %}
+        {% render 'main-button', label: 'Secondary action', url: routes.root_url, variant: 'secondary' %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/button-group.liquid</span>
+        {% render 'button-group',
+          primary_label: 'Shop now',
+          primary_url: routes.root_url,
+          primary_variant: 'primary',
+          secondary_label: 'Learn more',
+          secondary_url: routes.root_url,
+          secondary_variant: 'secondary'
+        %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/empty-state.liquid</span>
+        {% render 'empty-state', text: 'This is the reusable editor empty-state snippet.' %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/cart-shipping-progress.liquid</span>
+        {% render 'cart-shipping-progress',
+          threshold: 100,
+          class: 'starter-library-snippet-shipping-progress'
+        %}
+      </article>
+
+      <article class="starter-library-snippet-card starter-library-snippet-card--wide">
+        <span>snippets/form-field.liquid</span>
+        <div class="starter-library-snippet-form-grid">
+          {% render 'form-field',
+            type: 'input',
+            id: 'StarterSnippetName',
+            name: 'contact[Name]',
+            label: 'Name',
+            placeholder: 'Alex Morgan',
+            class: 'starter-library-snippet-field'
+          %}
+          {% render 'form-field',
+            type: 'select',
+            id: 'StarterSnippetTopic',
+            name: 'contact[Topic]',
+            label: 'Topic',
+            placeholder: 'Choose a topic',
+            options_text: starter_showcase_topic_options,
+            class: 'starter-library-snippet-field'
+          %}
+          {% render 'form-field',
+            type: 'radio',
+            id: 'StarterSnippetPriority',
+            name: 'contact[Priority]',
+            label: 'Priority',
+            options_text: starter_showcase_priority_options,
+            class: 'starter-library-snippet-field',
+            choices_class: 'starter-library-snippet-choices',
+            choice_class: 'starter-library-snippet-choice'
+          %}
+          {% render 'form-field',
+            type: 'checkbox',
+            id: 'StarterSnippetConsent',
+            name: 'contact[Consent]',
+            label_html: starter_showcase_consent_label,
+            checkbox_class: 'starter-library-snippet-consent',
+            checkbox_label_class: 'starter-library-snippet-consent-label'
+          %}
+        </div>
+      </article>
+
+      <article class="starter-library-snippet-card starter-library-snippet-card--wide">
+        <span>snippets/newsletter-form.liquid + snippets/form-message.liquid</span>
+        {% render 'newsletter-form',
+          id: 'StarterSnippetNewsletter',
+          class: 'starter-library-snippet-newsletter',
+          row_class: 'starter-library-snippet-newsletter__row',
+          button_label: 'Subscribe'
+        %}
+      </article>
+
+      <article class="starter-library-snippet-card starter-library-snippet-card--wide">
+        <span>snippets/predictive-search-form.liquid</span>
+        {% render 'predictive-search-form',
+          input_id: 'StarterSnippetSearch',
+          panel_id: 'starter-snippet-predictive-search',
+          types: 'product,page,article',
+          class: 'starter-library-snippet-search',
+          form_class: 'starter-library-snippet-search__form',
+          row_class: 'starter-library-snippet-search__row',
+          label: starter_search_label,
+          input_value: '',
+          placeholder: starter_search_placeholder,
+          button_label: starter_search_submit,
+          unavailable_products: 'last'
+        %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/rating-stars.liquid</span>
+        {% render 'rating-stars', rating: 5 %}
+      </article>
+
+      <article class="starter-library-snippet-card starter-library-snippet-card--wide">
+        <span>snippets/product-price.liquid + product-badges + quick-add-form</span>
+        {% if starter_demo_product != blank %}
+          <div class="starter-library-snippet-commerce">
+            <h3>{{ starter_demo_product.title | escape }}</h3>
+            {% render 'product-price',
+              price: starter_demo_product.price,
+              compare_at_price: starter_demo_product.compare_at_price,
+              class: 'starter-library-snippet-price'
+            %}
+            {% render 'product-badges', product: starter_demo_product %}
+            {% render 'quick-add-form', product: starter_demo_product %}
+          </div>
+        {% else %}
+          {% render 'empty-state', text: 'Add a product with handle gift-card to preview commerce snippets here.' %}
+        {% endif %}
+      </article>
+
+      <article class="starter-library-snippet-card starter-library-snippet-card--wide">
+        <span>snippets/product-card.liquid</span>
+        {% if starter_demo_product != blank %}
+          {% render 'product-card', product: starter_demo_product, show_badges: true, show_secondary_image: true, enable_quick_add: true %}
+        {% else %}
+          {% render 'empty-state', text: 'Product card needs a real product object.' %}
+        {% endif %}
+      </article>
+
+      <article class="starter-library-snippet-card starter-library-snippet-card--wide">
+        <span>snippets/article-card.liquid</span>
+        {% if starter_demo_article != blank %}
+          {% render 'article-card', article: starter_demo_article, show_image: true, show_excerpt: true, show_author: true, show_date: true, show_tags: true %}
+        {% else %}
+          {% render 'empty-state', text: 'Article card needs a real blog article.' %}
+        {% endif %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/image.liquid</span>
+        {% if starter_demo_product.featured_image != blank %}
+          {% render 'image',
+            image: starter_demo_product.featured_image,
+            alt: starter_demo_product.title,
+            width: 600,
+            height: 600,
+            crop: 'center'
+          %}
+        {% else %}
+          {% render 'empty-state', text: 'Image snippet needs a real Shopify image object.' %}
+        {% endif %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/pagination.liquid</span>
+        {% paginate collections by 1 %}
+          {% render 'pagination', paginate: paginate, class: 'starter-library-snippet-pagination' %}
+        {% endpaginate %}
+      </article>
+
+      <article class="starter-library-snippet-card">
+        <span>snippets/modal.liquid</span>
+        {% render 'modal',
+          id: 'starter-library-modal-showcase',
+          trigger: starter_showcase_modal_trigger,
+          title: 'Reusable modal',
+          content: starter_showcase_modal_content
+        %}
+      </article>
+    </div>
 
     <div class="starter-library__grid starter-library__grid--small">
       <article class="starter-library-card">
@@ -1097,570 +808,114 @@
     color: rgb(92, 95, 98);
   }
 
-  .starter-library-live-list {
+  .starter-library-snippet-showcase {
     display: grid;
-    gap: 1.5rem;
-  }
-
-  .starter-library-live-card {
-    overflow: hidden;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 18px;
-    background: white;
-    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.06);
-  }
-
-  .starter-library-live-card__preview {
-    padding: clamp(1rem, 3vw, 2rem);
-    border-bottom: 1px solid rgb(220, 220, 220);
-    background: linear-gradient(135deg, rgb(250, 251, 251), rgb(246, 246, 247));
-  }
-
-  .starter-library-live-card__reference {
-    display: grid;
-    gap: 0.75rem;
-    padding: clamp(1rem, 3vw, 1.5rem);
-  }
-
-  .starter-library-live-card__reference > span {
-    color: rgb(92, 95, 98);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .starter-library-live-card__reference h3,
-  .starter-library-live-card__reference p,
-  .starter-library-live-card__meta p {
-    margin: 0;
-  }
-
-  .starter-library-live-card__reference > p,
-  .starter-library-live-card__meta p {
-    color: rgb(92, 95, 98);
-    line-height: 1.55;
-  }
-
-  .starter-library-live-card__meta {
-    display: grid;
-    grid-template-columns: minmax(220px, 0.9fr) minmax(260px, 1.1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid rgb(220, 220, 220);
+    margin-bottom: 1.5rem;
   }
 
-  .starter-library-live-card__meta > div {
+  .starter-library-snippet-card {
     display: grid;
     align-content: start;
-    gap: 0.45rem;
+    gap: 1rem;
     min-width: 0;
-  }
-
-  .starter-library-live-card__meta code {
-    justify-self: start;
-  }
-
-  .starter-library-demo-section {
-    padding: clamp(1.25rem, 5vw, 3rem);
-    border-radius: 18px;
-    background:
-      radial-gradient(circle at 10% 20%, rgba(88, 166, 255, 0.24), transparent 28%),
-      linear-gradient(135deg, rgb(230, 246, 255), rgb(255, 255, 255));
-  }
-
-  .starter-library-demo-section__container {
-    display: grid;
-    gap: 0.75rem;
-    width: min(100%, 980px);
-    margin-inline: auto;
-    padding: clamp(1rem, 3vw, 2rem);
-    border: 1px solid rgba(32, 34, 35, 0.14);
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.84);
-  }
-
-  .starter-library-demo-section__container p,
-  .starter-library-demo-section__container h3 {
-    margin: 0;
-  }
-
-  .starter-library-demo-section__container > div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .starter-library-demo-section__container span,
-  .starter-library-demo-logos span,
-  .starter-library-demo-badges article,
-  .starter-library-demo-countdown span,
-  .starter-library-demo-tabs button {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 999px;
-    background: white;
-  }
-
-  .starter-library-demo-group,
-  .starter-library-demo-text,
-  .starter-library-demo-modal {
-    display: grid;
-    gap: 1rem;
-    padding: clamp(1rem, 3vw, 2rem);
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 16px;
-    background: white;
-  }
-
-  .starter-library-demo-group > div {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.75rem;
-  }
-
-  .starter-library-demo-group span {
-    display: grid;
-    min-height: 120px;
-    align-content: center;
-    justify-items: center;
-    padding: 1rem;
-    border: 1px dashed rgb(180, 180, 180);
-    border-radius: 12px;
-    background: rgb(250, 251, 251);
-    color: rgb(92, 95, 98);
-    text-align: center;
-  }
-
-  .starter-library-demo-group p,
-  .starter-library-demo-text p,
-  .starter-library-demo-text h3 {
-    margin: 0;
-  }
-
-  .starter-library-demo-text {
-    max-width: 760px;
-    margin-inline: auto;
-  }
-
-  .starter-library-demo-text h3 {
-    max-width: 18ch;
-    font-size: clamp(2rem, 5vw, 4rem);
-    line-height: 1;
-  }
-
-  .starter-library-demo-text p {
-    color: rgb(92, 95, 98);
-    line-height: 1.55;
-  }
-
-  .starter-library-demo-modal {
-    min-height: 180px;
-    align-content: center;
-    justify-items: start;
-  }
-
-  .starter-library-demo-announcement {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 1rem;
-    align-items: center;
-    padding: 0.85rem 1rem;
-    border-radius: 999px;
-    background: rgb(32, 34, 35);
-    color: white;
-  }
-
-  .starter-library-demo-announcement a,
-  .starter-library-demo-hero a,
-  .starter-library-demo-media a {
-    color: inherit;
-  }
-
-  .starter-library-demo-announcement button {
-    border: 0;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  .starter-library-demo-hero {
-    display: grid;
-    gap: 1rem;
-    min-height: 360px;
-    align-content: end;
-    padding: clamp(1.25rem, 5vw, 3rem);
-    border-radius: 18px;
-    color: white;
-    background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.62)),
-      linear-gradient(135deg, rgb(247, 186, 89), rgb(239, 92, 128));
-  }
-
-  .starter-library-demo-hero p,
-  .starter-library-demo-hero h3,
-  .starter-library-demo-media p,
-  .starter-library-demo-media h3,
-  .starter-library-demo-countdown strong,
-  .starter-library-demo-newsletter p,
-  .starter-library-demo-newsletter h3 {
-    margin: 0;
-  }
-
-  .starter-library-demo-hero h3 {
-    max-width: 12ch;
-    font-size: clamp(2rem, 5vw, 4rem);
-    line-height: 1;
-  }
-
-  .starter-library-demo-hero > div,
-  .starter-library-demo-slider,
-  .starter-library-demo-logos,
-  .starter-library-demo-countdown > div,
-  .starter-library-demo-tabs [role='tablist'] {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
-  }
-
-  .starter-library-demo-hero a,
-  .starter-library-demo-media a,
-  .starter-library-demo-newsletter button,
-  .starter-library-demo-contact button,
-  .starter-library-demo-sticky-cart button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 42px;
-    padding: 0.65rem 1rem;
-    border: 1px solid currentcolor;
-    border-radius: 999px;
-    background: rgb(32, 34, 35);
-    color: white;
-    text-decoration: none;
-  }
-
-  .starter-library-demo-products,
-  .starter-library-demo-blog,
-  .starter-library-demo-badges,
-  .starter-library-demo-promo-grid,
-  .starter-library-demo-collections,
-  .starter-library-demo-reviews {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-  }
-
-  .starter-library-demo-products article,
-  .starter-library-demo-blog article,
-  .starter-library-demo-badges article,
-  .starter-library-demo-promo-grid article,
-  .starter-library-demo-collections article,
-  .starter-library-demo-reviews figure {
-    display: grid;
-    gap: 0.55rem;
-    margin: 0;
     padding: 1rem;
     border: 1px solid rgb(220, 220, 220);
-    border-radius: 12px;
+    border-radius: 8px;
     background: white;
   }
 
-  .starter-library-demo-products article > span,
-  .starter-library-demo-blog article > span,
-  .starter-library-demo-collections article > span {
-    min-height: 150px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, rgb(238, 238, 238), rgb(248, 248, 248));
+  .starter-library-snippet-card--wide {
+    grid-column: span 2;
   }
 
-  .starter-library-demo-products strong,
-  .starter-library-demo-products small,
-  .starter-library-demo-blog strong,
-  .starter-library-demo-blog p,
-  .starter-library-demo-collections strong,
-  .starter-library-demo-collections small,
-  .starter-library-demo-reviews blockquote,
-  .starter-library-demo-reviews figcaption {
-    margin: 0;
-  }
-
-  .starter-library-demo-products small,
-  .starter-library-demo-blog p,
-  .starter-library-demo-collections small,
-  .starter-library-demo-reviews figcaption {
+  .starter-library-snippet-card > span {
     color: rgb(92, 95, 98);
-  }
-
-  .starter-library-demo-slider > div {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    flex: 1;
-  }
-
-  .starter-library-demo-slider button,
-  .starter-library-demo-tabs button {
-    cursor: pointer;
-  }
-
-  .starter-library-demo-slider button {
-    width: 44px;
-    height: 44px;
-    border: 1px solid rgb(32, 34, 35);
-    border-radius: 999px;
-    background: white;
-  }
-
-  .starter-library-demo-media {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(1rem, 4vw, 2rem);
-    align-items: center;
-  }
-
-  .starter-library-demo-media > span {
-    min-height: 320px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, rgb(210, 210, 210), rgb(248, 248, 248));
-  }
-
-  .starter-library-demo-media > div,
-  .starter-library-demo-countdown,
-  .starter-library-demo-newsletter,
-  .starter-library-demo-tabs [role='tabpanel'] {
-    display: grid;
-    gap: 0.85rem;
-  }
-
-  .starter-library-demo-logos {
-    justify-content: center;
-    min-height: 120px;
-  }
-
-  .starter-library-demo-countdown {
-    justify-items: center;
-    padding: 2rem;
-    border-radius: 18px;
-    background: rgb(32, 34, 35);
-    color: white;
-  }
-
-  .starter-library-demo-countdown span {
-    display: grid;
-    min-width: 90px;
-    justify-items: center;
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-size: 1.6rem;
+    font-size: 0.8rem;
     font-weight: 700;
   }
 
-  .starter-library-demo-countdown small {
-    font-size: 0.75rem;
-    font-weight: 400;
-    opacity: 0.72;
+  .starter-library-snippet-card .section-header {
+    margin-bottom: 0;
   }
 
-  .starter-library-demo-faq.faq-section {
+  .starter-library-snippet-form-grid {
     display: grid;
-    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .starter-library-demo-faq .faq-section__controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .starter-library-demo-faq .faq-section__controls label {
+  .starter-library-snippet-field {
     display: grid;
-    flex: 1 1 240px;
     gap: 0.35rem;
-    font-weight: 700;
   }
 
-  .starter-library-demo-faq .faq-section__controls input,
-  .starter-library-demo-faq .faq-section__controls select {
+  .starter-library-snippet-field input,
+  .starter-library-snippet-field select,
+  .starter-library-snippet-newsletter input,
+  .starter-library-snippet-search input {
+    width: 100%;
     min-height: 42px;
     padding: 0.55rem 0.7rem;
     border: 1px solid rgb(180, 180, 180);
     border-radius: 4px;
-    background: white;
     font: inherit;
   }
 
-  .starter-library-demo-faq .faq-section__items {
+  .starter-library-snippet-choices {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
-  .starter-library-demo-faq .faq-section__item {
-    border: 1px solid color-mix(in srgb, var(--color-foreground), transparent 78%);
-    border-radius: 6px;
-    background-color: var(--color-background);
-  }
-
-  .starter-library-demo-faq .faq-section__item summary {
+  .starter-library-snippet-choice,
+  .starter-library-snippet-consent {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem;
-    font-weight: 700;
-    list-style: none;
-    cursor: pointer;
+    align-items: flex-start;
+    gap: 0.55rem;
   }
 
-  .starter-library-demo-faq .faq-section__item summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .starter-library-demo-faq .faq-section__item summary::marker {
-    content: '';
-  }
-
-  .starter-library-demo-faq .faq-section__chevron {
-    flex: 0 0 auto;
-    width: 0.65rem;
-    height: 0.65rem;
-    margin-right: 0.2rem;
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-    transform: rotate(45deg);
-  }
-
-  .starter-library-demo-faq .faq-section__item[open] .faq-section__chevron {
-    transform: rotate(225deg);
-  }
-
-  .starter-library-demo-faq .faq-section__content {
-    overflow: hidden;
-  }
-
-  .starter-library-demo-faq .faq-section__answer {
-    padding: 0 1rem 1rem;
-    color: color-mix(in srgb, var(--color-foreground), transparent 25%);
-    line-height: 1.6;
-  }
-
-  .starter-library-demo-faq .faq-section__answer p {
+  .starter-library-snippet-consent-label p {
     margin: 0;
   }
 
-  .starter-library-demo-promo-grid article {
-    min-height: 180px;
-    align-content: end;
-    color: white;
-    background: linear-gradient(135deg, rgb(247, 186, 89), rgb(239, 92, 128));
-  }
-
-  .starter-library-demo-newsletter {
-    max-width: 760px;
-    margin-inline: auto;
-    padding: 2rem;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 16px;
-    background: white;
-  }
-
-  .starter-library-demo-newsletter--promo {
-    max-width: none;
-    color: white;
-    background: linear-gradient(135deg, rgb(32, 34, 35), rgb(85, 87, 90));
-  }
-
-  .starter-library-demo-newsletter > div {
+  .starter-library-snippet-newsletter,
+  .starter-library-snippet-search__form,
+  .starter-library-snippet-commerce {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.75rem;
   }
 
-  .starter-library-demo-newsletter input,
-  .starter-library-demo-contact input:not([type='checkbox']),
-  .starter-library-demo-contact textarea {
-    width: 100%;
-    padding: 0.65rem 0.75rem;
-    border: 1px solid rgb(180, 180, 180);
-    border-radius: 8px;
-    font: inherit;
-  }
-
-  .starter-library-demo-contact {
+  .starter-library-snippet-newsletter__row,
+  .starter-library-snippet-search__row {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    max-width: 840px;
-    margin-inline: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
   }
 
-  .starter-library-demo-contact label {
-    display: grid;
-    gap: 0.35rem;
-    font-weight: 700;
+  .starter-library-snippet-newsletter button,
+  .starter-library-snippet-search button,
+  .starter-library-snippet-commerce .quick-add__choose-options,
+  .starter-library-snippet-commerce .quick-add input[type='submit'] {
+    min-height: 42px;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgb(20, 20, 20);
+    border-radius: 4px;
+    background: rgb(20, 20, 20);
+    color: white;
+    cursor: pointer;
   }
 
-  .starter-library-demo-contact__full,
-  .starter-library-demo-contact__consent,
-  .starter-library-demo-contact button {
-    grid-column: 1 / -1;
-  }
-
-  .starter-library-demo-contact__consent {
-    display: flex !important;
-    align-items: flex-start;
-    font-weight: 400 !important;
-  }
-
-  .starter-library-demo-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-  }
-
-  .starter-library-demo-table th,
-  .starter-library-demo-table td {
-    padding: 0.85rem;
-    border: 1px solid rgb(220, 220, 220);
-    text-align: left;
-  }
-
-  .starter-library-demo-table th {
-    background: rgb(246, 246, 247);
-  }
-
-  .starter-library-demo-tabs {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .starter-library-demo-tabs [role='tabpanel'] {
-    padding: 1.25rem;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 12px;
-    background: white;
-  }
-
-  .starter-library-demo-sticky-cart {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
-    gap: 1rem;
+  .starter-library-snippet-price {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     align-items: center;
-    padding: 1rem;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 999px;
-    background: white;
-    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
   }
 
-  .starter-library-demo-sticky-cart > span {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgb(230, 230, 230), rgb(250, 250, 250));
+  .starter-library-snippet-card .product-card,
+  .starter-library-snippet-card .article-card {
+    height: 100%;
   }
 
   .starter-library__guide-grid {
@@ -1830,24 +1085,14 @@
   }
 
   @media screen and (max-width: 749px) {
-    .starter-library-live-card__meta,
-    .starter-library-demo-group > div,
-    .starter-library-demo-products,
-    .starter-library-demo-blog,
-    .starter-library-demo-badges,
-    .starter-library-demo-promo-grid,
-    .starter-library-demo-collections,
-    .starter-library-demo-reviews,
-    .starter-library-demo-slider > div,
-    .starter-library-demo-media,
-    .starter-library-demo-contact,
-    .starter-library-demo-newsletter > div,
-    .starter-library-demo-sticky-cart {
-      grid-template-columns: 1fr;
+    .starter-library-snippet-card--wide {
+      grid-column: auto;
     }
 
-    .starter-library-demo-sticky-cart {
-      border-radius: 18px;
+    .starter-library-snippet-form-grid,
+    .starter-library-snippet-newsletter__row,
+    .starter-library-snippet-search__row {
+      grid-template-columns: 1fr;
     }
 
     .starter-library__table {
