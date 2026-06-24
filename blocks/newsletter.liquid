@@ -23,46 +23,21 @@
       <h2>{{ newsletter_heading | escape }}</h2>
     {% endif %}
 
-    {% if newsletter_description != blank %}
+  {% if newsletter_description != blank %}
       <div class="newsletter-section__description">
         {{ newsletter_description }}
       </div>
     {% endif %}
   </div>
 
-  {% form 'customer', id: newsletter_form_id, class: 'newsletter-form' %}
-    <input type="hidden" name="contact[tags]" value="newsletter">
-
-    {% if form.posted_successfully? %}
-      <p class="newsletter-form__success" role="status" tabindex="-1" autofocus>
-        {{ 'newsletter.success' | t }}
-      </p>
-    {% endif %}
-
-    {% if form.errors %}
-      <div class="newsletter-form__errors" role="alert" tabindex="-1" autofocus>
-        {{ form.errors | default_errors }}
-      </div>
-    {% endif %}
-
-    <div class="newsletter-form__row">
-      <label class="newsletter-form__label" for="{{ newsletter_form_id }}-email">
-        {{ 'newsletter.email' | t }}
-      </label>
-      <input
-        id="{{ newsletter_form_id }}-email"
-        type="email"
-        name="contact[email]"
-        value="{{ form.email | escape }}"
-        placeholder="{{ 'newsletter.placeholder' | t }}"
-        autocomplete="email"
-        spellcheck="false"
-        autocapitalize="off"
-        required
-      >
-      <button type="submit">{{ 'newsletter.submit' | t }}</button>
-    </div>
-  {% endform %}
+  {% render 'newsletter-form',
+    id: newsletter_form_id,
+    class: 'newsletter-form',
+    label_class: 'newsletter-form__label',
+    row_class: 'newsletter-form__row',
+    success_class: 'newsletter-form__success',
+    errors_class: 'newsletter-form__errors'
+  %}
 </div>
 
 {% stylesheet %}

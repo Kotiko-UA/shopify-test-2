@@ -1,0 +1,41 @@
+{% doc %}
+  Renders product-card quick add or choose-options controls.
+
+  @param {product} product - Product to add
+  @param {string} [class] - Form class
+  @param {string} [actions_class] - Action wrapper class
+  @param {string} [choose_options_class] - Choose-options link class
+  @param {string} [message_class] - Status message class
+{% enddoc %}
+
+{% liquid
+  assign quick_add_variant = product.selected_or_first_available_variant
+  assign quick_add_form_class = class | default: 'js-product-form'
+  assign quick_add_actions_class = actions_class | default: 'quick-add'
+  assign quick_add_choose_options_class = choose_options_class | default: 'quick-add__choose-options'
+  assign quick_add_message_class = message_class | default: 'product-form__message'
+  assign adding_text = 'cart.adding' | t
+  assign added_text = 'cart.added' | t
+  assign error_text = 'cart.error' | t
+%}
+
+<div class="{{ quick_add_actions_class }}">
+  {% if product.available and product.has_only_default_variant %}
+    {% form 'product',
+      product,
+      class: quick_add_form_class,
+      data-adding-text: adding_text,
+      data-added-text: added_text,
+      data-error-text: error_text
+    %}
+      <input type="hidden" name="id" value="{{ quick_add_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="submit" value="{{ 'products.add_to_cart' | t }}">
+      <p class="{{ quick_add_message_class }}" role="status" aria-live="polite" hidden></p>
+    {% endform %}
+  {% elsif product.available %}
+    <a class="{{ quick_add_choose_options_class }}" href="{{ product.url }}">
+      {{ 'products.choose_options' | t }}
+    </a>
+  {% endif %}
+</div>

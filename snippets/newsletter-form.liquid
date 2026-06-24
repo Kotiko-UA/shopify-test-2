@@ -1,0 +1,56 @@
+{% doc %}
+  Renders a Shopify customer newsletter signup form.
+
+  @param {string} id - Form ID
+  @param {string} [class] - Form class
+  @param {string} [label_class] - Email label class
+  @param {string} [row_class] - Input/button row class
+  @param {string} [button_label] - Submit button label
+  @param {string} [success_text] - Success message text
+  @param {string} [success_class] - Success message class
+  @param {string} [errors_class] - Error message class
+{% enddoc %}
+
+{% liquid
+  assign newsletter_form_class = class | default: 'newsletter-form'
+  assign default_newsletter_button_label = 'newsletter.submit' | t
+  assign default_newsletter_success_text = 'newsletter.success' | t
+  assign newsletter_button_label = button_label | default: default_newsletter_button_label
+  assign newsletter_success_text = success_text | default: default_newsletter_success_text
+%}
+
+{% form 'customer', id: id, class: newsletter_form_class %}
+  <input type="hidden" name="contact[tags]" value="newsletter">
+
+  {% render 'form-message',
+    form: form,
+    success_text: newsletter_success_text,
+    success_class: success_class,
+    errors_class: errors_class
+  %}
+
+  <label
+    {% if label_class != blank %}
+      class="{{ label_class }}"
+    {% endif %}
+    for="{{ id }}-email"
+  >
+    {{ 'newsletter.email' | t }}
+  </label>
+  <div
+    {% if row_class != blank %}
+      class="{{ row_class }}"
+    {% endif %}
+  >
+    <input
+      id="{{ id }}-email"
+      type="email"
+      name="contact[email]"
+      value="{{ form.email | escape }}"
+      placeholder="{{ 'newsletter.placeholder' | t }}"
+      autocomplete="email"
+      required
+    >
+    <button type="submit">{{ newsletter_button_label | escape }}</button>
+  </div>
+{% endform %}

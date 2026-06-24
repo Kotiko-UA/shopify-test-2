@@ -25,6 +25,9 @@
   assign blog_columns_mobile = section.settings.columns_mobile | default: 1
   assign blog_grid_gap = section.settings.grid_gap | default: 16
   assign article_excerpt_length = section.settings.excerpt_length | default: 160
+  assign blog_search_label = 'blog.search_articles' | t
+  assign blog_search_placeholder = 'blog.search_placeholder' | t
+  assign search_submit_label = 'search.submit' | t
 %}
 
 {% if show_blog_search %}
@@ -55,43 +58,17 @@
   {% if has_blog_toolbar %}
     <div class="blog-toolbar{% if show_blog_search and show_blog_tag_filter %} blog-toolbar--split{% endif %}">
       {% if show_blog_search %}
-        <predictive-search
-          class="blog-search"
-          data-predictive-search-url="{{ routes.predictive_search_url }}"
-          data-predictive-search-types="article"
-        >
-          <form class="blog-search-form" action="{{ routes.search_url }}" method="get" role="search">
-            <label for="BlogArticleSearch">{{ 'blog.search_articles' | t }}</label>
-            <div class="blog-search-form__row">
-              <input
-                id="BlogArticleSearch"
-                type="search"
-                name="q"
-                placeholder="{{ 'blog.search_placeholder' | t }}"
-                autocomplete="off"
-                role="combobox"
-                aria-expanded="false"
-                aria-controls="blog-predictive-search"
-                aria-haspopup="listbox"
-                aria-autocomplete="list"
-                data-predictive-search-input
-              >
-              <input type="hidden" name="type" value="article">
-              <input type="hidden" name="options[prefix]" value="last">
-              <button type="submit">{{ 'search.submit' | t }}</button>
-            </div>
-
-            <div
-              id="blog-predictive-search"
-              class="predictive-search__panel"
-              role="listbox"
-              aria-label="{{ 'search.predictive.suggestions' | t }}"
-              tabindex="-1"
-              data-predictive-search-results
-              hidden
-            ></div>
-          </form>
-        </predictive-search>
+        {% render 'predictive-search-form',
+          input_id: 'BlogArticleSearch',
+          panel_id: 'blog-predictive-search',
+          types: 'article',
+          class: 'blog-search',
+          form_class: 'blog-search-form',
+          row_class: 'blog-search-form__row',
+          label: blog_search_label,
+          placeholder: blog_search_placeholder,
+          button_label: search_submit_label
+        %}
       {% endif %}
 
       {% if show_blog_tag_filter %}
@@ -188,11 +165,7 @@
         </div>
       {% endif %}
 
-      {% if paginate.pages > 1 %}
-        <div class="blog-pagination">
-          {{ paginate | default_pagination }}
-        </div>
-      {% endif %}
+      {% render 'pagination', paginate: paginate, class: 'blog-pagination' %}
     {% else %}
       <p class="blog-empty">{{ 'blog.empty' | t }}</p>
     {% endif %}

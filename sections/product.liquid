@@ -110,20 +110,16 @@
         <p class="product-vendor">{{ product.vendor }}</p>
       {% endif %}
       <h1>{{ product.title }}</h1>
-      <div class="product-price">
-        <span class="product-price__current" data-product-price>
-          {{ current_variant.price | money }}
-        </span>
-        <s
-          class="product-price__compare"
-          data-product-compare-price
-          {% unless current_variant.compare_at_price > current_variant.price %}
-            hidden
-          {% endunless %}
-        >
-          {{ current_variant.compare_at_price | money }}
-        </s>
-      </div>
+      {% render 'product-price',
+        price: current_variant.price,
+        compare_at_price: current_variant.compare_at_price,
+        class: 'product-price',
+        current_class: 'product-price__current',
+        compare_class: 'product-price__compare',
+        always_render_compare: true,
+        current_attributes: 'data-product-price',
+        compare_attributes: 'data-product-compare-price'
+      %}
 
       {% if section.settings.show_inventory %}
         <p

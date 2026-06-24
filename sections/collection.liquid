@@ -6,6 +6,9 @@
 {% endcomment %}
 
 <script src="{{ 'collection.js' | asset_url }}" defer></script>
+{% assign collection_search_label = 'collections.search_products' | t %}
+{% assign collection_search_placeholder = 'collections.search_placeholder' | t %}
+{% assign search_submit_label = 'search.submit' | t %}
 
 {% if section.settings.show_search != false %}
   {{ 'predictive-search.css' | asset_url | stylesheet_tag }}
@@ -46,44 +49,18 @@
     {% endif %}
 
     {% if section.settings.show_search != false %}
-      <predictive-search
-        class="collection-predictive-search"
-        data-predictive-search-url="{{ routes.predictive_search_url }}"
-        data-predictive-search-types="product"
-      >
-        <form class="collection-search-form" action="{{ routes.search_url }}" method="get" role="search">
-          <label for="CollectionProductSearch">{{ 'collections.search_products' | t }}</label>
-          <div class="collection-search-form__row">
-            <input
-              id="CollectionProductSearch"
-              type="search"
-              name="q"
-              placeholder="{{ 'collections.search_placeholder' | t }}"
-              autocomplete="off"
-              role="combobox"
-              aria-expanded="false"
-              aria-controls="collection-predictive-search"
-              aria-haspopup="listbox"
-              aria-autocomplete="list"
-              data-predictive-search-input
-            >
-            <input type="hidden" name="type" value="product">
-            <input type="hidden" name="options[prefix]" value="last">
-            <input type="hidden" name="options[unavailable_products]" value="last">
-            <button type="submit">{{ 'search.submit' | t }}</button>
-          </div>
-
-          <div
-            id="collection-predictive-search"
-            class="predictive-search__panel"
-            role="listbox"
-            aria-label="{{ 'search.predictive.suggestions' | t }}"
-            tabindex="-1"
-            data-predictive-search-results
-            hidden
-          ></div>
-        </form>
-      </predictive-search>
+      {% render 'predictive-search-form',
+        input_id: 'CollectionProductSearch',
+        panel_id: 'collection-predictive-search',
+        types: 'product',
+        class: 'collection-predictive-search',
+        form_class: 'collection-search-form',
+        row_class: 'collection-search-form__row',
+        label: collection_search_label,
+        placeholder: collection_search_placeholder,
+        button_label: search_submit_label,
+        unavailable_products: 'last'
+      %}
     {% endif %}
 
     <form class="collection-sort-form" method="get">
@@ -271,9 +248,7 @@
       {% endfor %}
     </div>
 
-    <div class="collection-pagination">
-      {{ paginate | default_pagination }}
-    </div>
+    {% render 'pagination', paginate: paginate, class: 'collection-pagination' %}
   {% else %}
     <p class="collection-empty">{{ 'collections.empty' | t }}</p>
   {% endif %}
@@ -514,6 +489,48 @@
     .collection-filters__clear {
       width: 100%;
     }
+
+    .collection-filter-toggle {
+      display: block;
+      min-height: 42px;
+    }
+
+    .collection-products {
+      grid-template-columns: repeat(var(--collection-columns-mobile), minmax(0, 1fr));
+    }
+
+    .collection-filters {
+      position: fixed;
+      z-index: 31;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      width: min(90vw, 420px);
+      overflow-y: auto;
+      margin: 0;
+      padding: 1rem;
+      background: var(--color-background);
+    }
+
+    .collection-filters.is-open,
+    .collection-filters__overlay.is-open {
+      display: grid;
+    }
+
+    .collection-filters__overlay {
+      position: fixed;
+      z-index: 30;
+      inset: 0;
+      border: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .collection-filters__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 {% endstylesheet %}
 
@@ -588,44 +605,3 @@
   ]
 }
 {% endschema %}
-    .collection-filter-toggle {
-      display: block;
-      min-height: 42px;
-    }
-
-    .collection-products {
-      grid-template-columns: repeat(var(--collection-columns-mobile), minmax(0, 1fr));
-    }
-
-    .collection-filters {
-      position: fixed;
-      z-index: 31;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      display: none;
-      width: min(90vw, 420px);
-      overflow-y: auto;
-      margin: 0;
-      padding: 1rem;
-      background: var(--color-background);
-    }
-
-    .collection-filters.is-open,
-    .collection-filters__overlay.is-open {
-      display: grid;
-    }
-
-    .collection-filters__overlay {
-      position: fixed;
-      z-index: 30;
-      inset: 0;
-      border: 0;
-      background: rgba(0, 0, 0, 0.45);
-    }
-
-    .collection-filters__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }

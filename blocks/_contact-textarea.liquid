@@ -1,13 +1,22 @@
 {% assign field_id = 'ContactField-' | append: section.id | append: '-' | append: block.id %}
 {% assign field_label = block.settings.label | default: 'Message' %}
 {% assign field_name = block.settings.field_name | default: field_label %}
-{% assign help_id = field_id | append: '-help' %}
-<div class="contact-form__field contact-form__field--{{ block.settings.width }}" {{ block.shopify_attributes }}>
-  <label for="{{ field_id }}">{{ field_label | escape }}</label>
-  <textarea id="{{ field_id }}" name="contact[{{ field_name | escape }}]" rows="{{ block.settings.rows }}" placeholder="{{ block.settings.placeholder | escape }}"{% if block.settings.help_text != blank %} aria-describedby="{{ help_id }}"{% endif %}{% if block.settings.required %} required{% endif %}></textarea>
-  {% if block.settings.help_text != blank %}<small id="{{ help_id }}">{{ block.settings.help_text | escape }}</small>{% endif %}
-</div>
-{% stylesheet %}.contact-form__field { display: grid; gap: 0.35rem; }{% endstylesheet %}
+{% assign field_contact_name = 'contact[' | append: field_name | append: ']' %}
+{% assign field_width_class = 'contact-form__field--' | append: block.settings.width %}
+
+{% render 'form-field',
+  type: 'textarea',
+  id: field_id,
+  label: field_label,
+  name: field_contact_name,
+  rows: block.settings.rows,
+  placeholder: block.settings.placeholder,
+  help_text: block.settings.help_text,
+  required: block.settings.required,
+  class: 'contact-form__field',
+  width_class: field_width_class,
+  attributes: block.shopify_attributes
+%}
 {% schema %}
 {
   "name": "t:general.textarea_field",

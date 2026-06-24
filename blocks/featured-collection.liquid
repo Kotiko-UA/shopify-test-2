@@ -1,4 +1,5 @@
 {% assign featured_collection = block.settings.collection %}
+{% assign featured_collection_empty_text = 'sections.featured_collection.empty' | t %}
 
 <div class="featured-collection featured-collection--{{ block.settings.layout }}" {{ block.shopify_attributes }}>
   {% render 'section-header',
@@ -23,15 +24,15 @@
 
     {% if block.settings.button_label != blank %}
       <div class="featured-collection__footer">
-        {% render 'main-button',
-          label: block.settings.button_label,
-          url: featured_collection.url,
-          variant: block.settings.button_variant
+        {% render 'button-group',
+          primary_label: block.settings.button_label,
+          primary_url: featured_collection.url,
+          primary_variant: block.settings.button_variant
         %}
       </div>
     {% endif %}
   {% elsif request.design_mode %}
-    <p class="featured-collection__empty">{{ 'sections.featured_collection.empty' | t }}</p>
+    {% render 'empty-state', text: featured_collection_empty_text, class: 'featured-collection__empty' %}
   {% endif %}
 </div>
 

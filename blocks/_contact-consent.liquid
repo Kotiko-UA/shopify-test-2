@@ -1,10 +1,21 @@
 {% assign field_id = 'ContactField-' | append: section.id | append: '-' | append: block.id %}
 {% assign field_name = block.settings.field_name | default: 'Consent' %}
-<div class="contact-form__consent contact-form__field--{{ block.settings.width }}" {{ block.shopify_attributes }}>
-  <input id="{{ field_id }}" type="checkbox" name="contact[{{ field_name | escape }}]" value="Accepted" required>
-  <label class="contact-form__consent-label" for="{{ field_id }}">{{ block.settings.text }}</label>
-</div>
-{% stylesheet %}.contact-form__consent { display: flex; align-items: flex-start; gap: 0.55rem; }.contact-form__consent-label { cursor: pointer; }.contact-form__consent-label p { margin: 0; }{% endstylesheet %}
+{% assign field_contact_name = 'contact[' | append: field_name | append: ']' %}
+{% assign field_width_class = 'contact-form__field--' | append: block.settings.width %}
+
+{% render 'form-field',
+  type: 'checkbox',
+  id: field_id,
+  label: field_name,
+  name: field_contact_name,
+  label_html: block.settings.text,
+  required: true,
+  value: 'Accepted',
+  width_class: field_width_class,
+  checkbox_class: 'contact-form__consent',
+  checkbox_label_class: 'contact-form__consent-label',
+  attributes: block.shopify_attributes
+%}
 {% schema %}
 {
   "name": "t:general.consent_checkbox",

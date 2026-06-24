@@ -23,13 +23,12 @@
       alignment: 'left'
     %}
 
-    {% if block.settings.button_label != blank and block.settings.button_link != blank %}
-      {% render 'main-button',
-        label: block.settings.button_label,
-        url: block.settings.button_link,
-        variant: block.settings.button_variant
-      %}
-    {% endif %}
+    {% render 'button-group',
+      class: 'media-with-text__actions',
+      primary_label: block.settings.button_label,
+      primary_url: block.settings.button_link,
+      primary_variant: block.settings.button_variant
+    %}
   </div>
 </div>
 
@@ -55,6 +54,7 @@
   .media-with-text__content {
     display: grid;
     align-content: center;
+    gap: 1rem;
   }
 
   .media-with-text .section-header {

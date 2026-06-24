@@ -1,0 +1,19 @@
+{% doc %}
+  Renders Shopify pagination in a shared wrapper.
+
+  @param {paginate} paginate - Shopify paginate object
+  @param {string} [class] - Wrapper class
+  @param {string} [anchor] - Optional pagination anchor
+{% enddoc %}
+
+{% assign pagination_class = class | default: 'pagination-wrapper' %}
+
+{% if paginate.pages > 1 %}
+  <div class="{{ pagination_class }}">
+    {% if anchor != blank %}
+      {{ paginate | default_pagination: anchor: anchor }}
+    {% else %}
+      {{ paginate | default_pagination }}
+    {% endif %}
+  </div>
+{% endif %}

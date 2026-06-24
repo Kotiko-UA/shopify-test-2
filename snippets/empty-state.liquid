@@ -1,0 +1,26 @@
+{% doc %}
+  Renders a reusable dashed empty-state note, usually in design mode.
+
+  @param {string} text - Empty-state text
+  @param {string} [class] - Optional extra class
+{% enddoc %}
+
+{% liquid
+  assign empty_state_class = 'empty-state'
+  if class != blank
+    assign empty_state_class = empty_state_class | append: ' ' | append: class
+  endif
+%}
+
+{% if text != blank %}
+  <p class="{{ empty_state_class }}">{{ text }}</p>
+{% endif %}
+
+{% stylesheet %}
+  .empty-state {
+    padding: 1rem;
+    border: 1px dashed rgb(180, 180, 180);
+    border-radius: 6px;
+    color: rgb(92, 95, 98);
+  }
+{% endstylesheet %}

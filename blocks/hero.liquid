@@ -78,23 +78,15 @@
       </div>
     {% endif %}
 
-    <div class="hero__actions">
-      {% if block.settings.primary_label != blank and block.settings.primary_link != blank %}
-        {% render 'main-button',
-          label: block.settings.primary_label,
-          url: block.settings.primary_link,
-          variant: block.settings.primary_variant
-        %}
-      {% endif %}
-
-      {% if block.settings.secondary_label != blank and block.settings.secondary_link != blank %}
-        {% render 'main-button',
-          label: block.settings.secondary_label,
-          url: block.settings.secondary_link,
-          variant: 'secondary'
-        %}
-      {% endif %}
-    </div>
+    {% render 'button-group',
+      class: 'hero__actions',
+      primary_label: block.settings.primary_label,
+      primary_url: block.settings.primary_link,
+      primary_variant: block.settings.primary_variant,
+      secondary_label: block.settings.secondary_label,
+      secondary_url: block.settings.secondary_link,
+      secondary_variant: 'secondary'
+    %}
   </div>
 
 </div>

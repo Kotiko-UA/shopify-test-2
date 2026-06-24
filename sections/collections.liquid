@@ -40,11 +40,7 @@
     {% endfor %}
   </div>
 
-  {% if paginate.pages > 1 %}
-    <div class="collections-pagination">
-      {{ paginate | default_pagination }}
-    </div>
-  {% endif %}
+  {% render 'pagination', paginate: paginate, class: 'collections-pagination' %}
 {% endpaginate %}
 
 {% stylesheet %}

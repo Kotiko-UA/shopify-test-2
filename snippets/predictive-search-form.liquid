@@ -1,0 +1,96 @@
+{% doc %}
+  Renders a predictive search form shell.
+
+  @param {string} input_id - Search input ID
+  @param {string} panel_id - Results panel ID
+  @param {string} types - Comma-separated predictive search result types
+  @param {string} [class] - predictive-search element class
+  @param {string} [form_class] - Form class
+  @param {string} [row_class] - Optional input/button row class
+  @param {string} [label] - Input label
+  @param {string} [label_class] - Label class
+  @param {string} [input_class] - Input class
+  @param {string} [input_value] - Input value
+  @param {string} [placeholder] - Placeholder text
+  @param {string} [button_class] - Button class
+  @param {string} [button_label] - Submit label
+  @param {string} [panel_class] - Results panel class
+  @param {string} [prefix] - Search prefix option
+  @param {string} [unavailable_products] - Optional unavailable_products search setting
+{% enddoc %}
+
+{% liquid
+  assign predictive_search_class = class | default: 'predictive-search'
+  assign predictive_search_form_class = form_class | default: 'search-form'
+  assign default_predictive_search_label = 'search.title' | t
+  assign default_predictive_search_placeholder = 'search.placeholder' | t
+  assign default_predictive_search_button_label = 'search.submit' | t
+  assign predictive_search_label = label | default: default_predictive_search_label
+  assign predictive_search_placeholder = placeholder | default: default_predictive_search_placeholder
+  assign predictive_search_button_label = button_label | default: default_predictive_search_button_label
+  assign predictive_search_types = types | default: 'product,page,article'
+  assign predictive_search_prefix = prefix | default: 'last'
+%}
+
+<predictive-search
+  class="{{ predictive_search_class }}"
+  data-predictive-search-url="{{ routes.predictive_search_url }}"
+  data-predictive-search-types="{{ predictive_search_types }}"
+>
+  <form class="{{ predictive_search_form_class }}" action="{{ routes.search_url }}" method="get" role="search">
+    <label
+      {% if label_class != blank %}
+        class="{{ label_class }}"
+      {% endif %}
+      for="{{ input_id }}"
+    >
+      {{ predictive_search_label }}
+    </label>
+    {% if row_class != blank %}
+      <div class="{{ row_class }}">
+    {% endif %}
+      <input
+        id="{{ input_id }}"
+        {% if input_class != blank %}
+          class="{{ input_class }}"
+        {% endif %}
+        type="search"
+        name="q"
+        value="{{ input_value | escape }}"
+        placeholder="{{ predictive_search_placeholder | escape }}"
+        autocomplete="off"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="{{ panel_id }}"
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        data-predictive-search-input
+      >
+      <input name="type" type="hidden" value="{{ predictive_search_types }}">
+      <input name="options[prefix]" type="hidden" value="{{ predictive_search_prefix }}">
+      {% if unavailable_products != blank %}
+        <input name="options[unavailable_products]" type="hidden" value="{{ unavailable_products }}">
+      {% endif %}
+      <button
+        {% if button_class != blank %}
+          class="{{ button_class }}"
+        {% endif %}
+        type="submit"
+      >
+        {{ predictive_search_button_label }}
+      </button>
+    {% if row_class != blank %}
+      </div>
+    {% endif %}
+
+    <div
+      id="{{ panel_id }}"
+      class="{{ panel_class | default: 'predictive-search__panel' }}"
+      role="listbox"
+      aria-label="{{ 'search.predictive.suggestions' | t }}"
+      tabindex="-1"
+      data-predictive-search-results
+      hidden
+    ></div>
+  </form>
+</predictive-search>

@@ -1,17 +1,22 @@
 {% assign field_id = 'ContactField-' | append: section.id | append: '-' | append: block.id %}
 {% assign field_label = block.settings.label | default: 'Field' %}
 {% assign field_name = block.settings.field_name | default: field_label %}
-{% assign help_id = field_id | append: '-help' %}
-{% assign options = block.settings.options | newline_to_br | split: '<br />' %}
-<div class="contact-form__field contact-form__field--{{ block.settings.width }}" {{ block.shopify_attributes }}>
-  <label for="{{ field_id }}">{{ field_label | escape }}</label>
-  <select id="{{ field_id }}" name="contact[{{ field_name | escape }}]"{% if block.settings.help_text != blank %} aria-describedby="{{ help_id }}"{% endif %}{% if block.settings.required %} required{% endif %}>
-    {% if block.settings.placeholder != blank %}<option value="" selected disabled>{{ block.settings.placeholder | escape }}</option>{% endif %}
-    {% for option in options %}{% assign value = option | strip %}{% if value != blank %}<option value="{{ value | escape }}">{{ value | escape }}</option>{% endif %}{% endfor %}
-  </select>
-  {% if block.settings.help_text != blank %}<small id="{{ help_id }}">{{ block.settings.help_text | escape }}</small>{% endif %}
-</div>
-{% stylesheet %}.contact-form__field { display: grid; gap: 0.35rem; }{% endstylesheet %}
+{% assign field_contact_name = 'contact[' | append: field_name | append: ']' %}
+{% assign field_width_class = 'contact-form__field--' | append: block.settings.width %}
+
+{% render 'form-field',
+  type: 'select',
+  id: field_id,
+  label: field_label,
+  name: field_contact_name,
+  placeholder: block.settings.placeholder,
+  options_text: block.settings.options,
+  help_text: block.settings.help_text,
+  required: block.settings.required,
+  class: 'contact-form__field',
+  width_class: field_width_class,
+  attributes: block.shopify_attributes
+%}
 {% schema %}
 {
   "name": "t:general.select_field",

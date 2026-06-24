@@ -1,16 +1,28 @@
 {% assign field_id = 'ContactField-' | append: section.id | append: '-' | append: block.id %}
 {% assign field_label = block.settings.label | default: 'Field' %}
 {% assign field_name = block.settings.field_name | default: field_label %}
-{% assign help_id = field_id | append: '-help' %}
 {% if block.settings.input_type == 'email' %}{% assign field_name = 'email' %}{% endif %}
+{% assign field_contact_name = 'contact[' | append: field_name | append: ']' %}
+{% assign field_required = block.settings.required %}
+{% if block.settings.input_type == 'email' %}{% assign field_required = true %}{% endif %}
+{% assign field_width_class = 'contact-form__field--' | append: block.settings.width %}
 
-<div class="contact-form__field contact-form__field--{{ block.settings.width }}" {{ block.shopify_attributes }}>
-  <label for="{{ field_id }}">{{ field_label | escape }}</label>
-  <input id="{{ field_id }}" type="{{ block.settings.input_type }}" name="contact[{{ field_name | escape }}]" placeholder="{{ block.settings.placeholder | escape }}"{% if block.settings.help_text != blank %} aria-describedby="{{ help_id }}"{% endif %}{% if block.settings.pattern != blank %} pattern="{{ block.settings.pattern | escape }}"{% endif %}{% if block.settings.min != blank %} min="{{ block.settings.min | escape }}"{% endif %}{% if block.settings.max != blank %} max="{{ block.settings.max | escape }}"{% endif %}{% if block.settings.input_type == 'email' %} autocomplete="email" spellcheck="false" autocapitalize="off"{% endif %}{% if block.settings.required or block.settings.input_type == 'email' %} required{% endif %}>
-  {% if block.settings.help_text != blank %}<small id="{{ help_id }}">{{ block.settings.help_text | escape }}</small>{% endif %}
-</div>
-
-{% stylesheet %}.contact-form__field { display: grid; gap: 0.35rem; }{% endstylesheet %}
+{% render 'form-field',
+  type: 'input',
+  id: field_id,
+  label: field_label,
+  name: field_contact_name,
+  input_type: block.settings.input_type,
+  placeholder: block.settings.placeholder,
+  help_text: block.settings.help_text,
+  pattern: block.settings.pattern,
+  min: block.settings.min,
+  max: block.settings.max,
+  required: field_required,
+  class: 'contact-form__field',
+  width_class: field_width_class,
+  attributes: block.shopify_attributes
+%}
 
 {% schema %}
 {

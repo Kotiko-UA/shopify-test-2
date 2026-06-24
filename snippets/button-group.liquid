@@ -1,0 +1,56 @@
+{% doc %}
+  Renders one or two CTA buttons as a reusable action group.
+
+  @param {string} [class] - Optional extra class for the wrapper
+  @param {string} [primary_label] - Primary button label
+  @param {string} [primary_url] - Primary button URL
+  @param {string} [primary_variant] - Primary button variant
+  @param {string} [secondary_label] - Secondary button label
+  @param {string} [secondary_url] - Secondary button URL
+  @param {string} [secondary_variant] - Secondary button variant
+{% enddoc %}
+
+{% liquid
+  assign button_group_class = 'button-group'
+  if class != blank
+    assign button_group_class = button_group_class | append: ' ' | append: class
+  endif
+
+  assign primary_button_variant = primary_variant | default: 'primary'
+  assign secondary_button_variant = secondary_variant | default: 'secondary'
+  assign has_primary_button = false
+  assign has_secondary_button = false
+
+  if primary_label != blank and primary_url != blank
+    assign has_primary_button = true
+  endif
+
+  if secondary_label != blank and secondary_url != blank
+    assign has_secondary_button = true
+  endif
+%}
+
+{% if has_primary_button or has_secondary_button %}
+  <div class="{{ button_group_class }}">
+    {% if has_primary_button %}
+      {% render 'main-button', label: primary_label, url: primary_url, variant: primary_button_variant %}
+    {% endif %}
+
+    {% if has_secondary_button %}
+      {% render 'main-button', label: secondary_label, url: secondary_url, variant: secondary_button_variant %}
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .button-group .main-button {
+    margin-top: 0;
+  }
+{% endstylesheet %}

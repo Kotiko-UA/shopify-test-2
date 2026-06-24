@@ -1,0 +1,56 @@
+{% doc %}
+  Renders success and error messages for Shopify forms.
+
+  @param {form} form - Shopify form object
+  @param {string} [success_text] - Success message
+  @param {string} [success_class] - Extra success class
+  @param {string} [errors_class] - Extra errors class
+  @param {string} [success_attributes] - Extra attributes for the success element
+{% enddoc %}
+
+{% liquid
+  assign form_message_success_class = 'form-message form-message--success'
+  if success_class != blank
+    assign form_message_success_class = form_message_success_class | append: ' ' | append: success_class
+  endif
+
+  assign form_message_errors_class = 'form-message form-message--errors'
+  if errors_class != blank
+    assign form_message_errors_class = form_message_errors_class | append: ' ' | append: errors_class
+  endif
+%}
+
+{% if form.posted_successfully? and success_text != blank %}
+  <p
+    class="{{ form_message_success_class }}"
+    role="status"
+    tabindex="-1"
+    autofocus
+    {{ success_attributes }}
+  >
+    {{ success_text }}
+  </p>
+{% endif %}
+
+{% if form.errors %}
+  <div class="{{ form_message_errors_class }}" role="alert" tabindex="-1" autofocus>
+    {{ form.errors | default_errors }}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .form-message {
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+  }
+
+  .form-message--success {
+    border: 1px solid rgb(0, 128, 96);
+    color: rgb(0, 128, 96);
+  }
+
+  .form-message--errors {
+    border: 1px solid rgb(180, 38, 38);
+    color: rgb(180, 38, 38);
+  }
+{% endstylesheet %}

@@ -12,35 +12,14 @@
       alignment: 'left'
     %}
 
-    {% form 'customer', id: newsletter_promo_form_id, class: 'newsletter-promo__form' %}
-      <input type="hidden" name="contact[tags]" value="newsletter">
-
-      {% if form.posted_successfully? %}
-        <p class="newsletter-promo__success" role="status" tabindex="-1" autofocus>
-          {{ 'newsletter.success' | t }}
-        </p>
-      {% endif %}
-
-      {% if form.errors %}
-        <div class="newsletter-promo__errors" role="alert" tabindex="-1" autofocus>
-          {{ form.errors | default_errors }}
-        </div>
-      {% endif %}
-
-      <label for="{{ newsletter_promo_form_id }}-email">{{ 'newsletter.email' | t }}</label>
-      <div class="newsletter-promo__row">
-        <input
-          id="{{ newsletter_promo_form_id }}-email"
-          type="email"
-          name="contact[email]"
-          value="{{ form.email | escape }}"
-          placeholder="{{ 'newsletter.placeholder' | t }}"
-          autocomplete="email"
-          required
-        >
-        <button type="submit">{{ block.settings.button_label | escape }}</button>
-      </div>
-    {% endform %}
+    {% render 'newsletter-form',
+      id: newsletter_promo_form_id,
+      class: 'newsletter-promo__form',
+      row_class: 'newsletter-promo__row',
+      button_label: block.settings.button_label,
+      success_class: 'newsletter-promo__success',
+      errors_class: 'newsletter-promo__errors'
+    %}
   </div>
 
   {% if block.settings.image != blank %}

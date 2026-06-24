@@ -22,16 +22,12 @@
             {% assign footer_form_id = 'FooterNewsletter-' | append: section.id | append: '-' | append: block.id %}
             {% if block.settings.heading != blank %}<h2>{{ block.settings.heading | escape }}</h2>{% endif %}
             <div class="site-footer__text">{{ block.settings.text }}</div>
-            {% form 'customer', id: footer_form_id, class: 'site-footer__newsletter' %}
-              <input type="hidden" name="contact[tags]" value="newsletter">
-              {% if form.posted_successfully? %}<p role="status">{{ 'newsletter.success' | t }}</p>{% endif %}
-              {% if form.errors %}<div role="alert">{{ form.errors | default_errors }}</div>{% endif %}
-              <label for="{{ footer_form_id }}-email">{{ 'newsletter.email' | t }}</label>
-              <div>
-                <input id="{{ footer_form_id }}-email" type="email" name="contact[email]" autocomplete="email" required>
-                <button type="submit">{{ block.settings.button_label | escape }}</button>
-              </div>
-            {% endform %}
+            {% render 'newsletter-form',
+              id: footer_form_id,
+              class: 'site-footer__newsletter',
+              row_class: 'site-footer__newsletter-row',
+              button_label: block.settings.button_label
+            %}
 
           {% when 'social_link' %}
             <a class="site-footer__social-link" href="{{ block.settings.link }}">
@@ -98,7 +94,7 @@
   .site-footer__block li a { text-decoration: none; }
   .site-footer__text { line-height: 1.6; }
   .site-footer__newsletter { display: grid; gap: 0.5rem; margin-top: 0.75rem; }
-  .site-footer__newsletter > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .site-footer__newsletter-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
   .site-footer__newsletter input, .site-footer__newsletter button, .site-footer__localization select { min-height: 42px; padding: 0.55rem 0.7rem; border: 1px solid currentcolor; border-radius: 4px; }
   .site-footer__social-link { display: inline-flex; font-weight: 700; }
   .site-footer__localization, .site-footer__policies, .site-footer__bottom, .site-footer__payment { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
@@ -108,7 +104,7 @@
   .site-footer__payment svg { width: 38px; }
   @media screen and (max-width: 749px) {
     .site-footer__grid { grid-template-columns: 1fr; }
-    .site-footer__newsletter > div { grid-template-columns: 1fr; gap: 0.4rem; }
+    .site-footer__newsletter-row { grid-template-columns: 1fr; gap: 0.4rem; }
     .site-footer__bottom { align-items: flex-start; flex-direction: column; }
   }
 {% endstylesheet %}

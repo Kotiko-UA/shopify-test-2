@@ -24,7 +24,6 @@
     assign enable_quick_add = true
   endif
 
-  assign card_variant = product.selected_or_first_available_variant
   assign secondary_image = product.images[1]
 %}
 
@@ -60,15 +59,12 @@
       {% endif %}
 
       {% if show_badges %}
-        <div class="product-card__badges">
-          {% unless product.available %}
-            <span class="product-card__badge">{{ 'products.sold_out' | t }}</span>
-          {% else %}
-            {% if product.compare_at_price_max > product.price %}
-              <span class="product-card__badge product-card__badge--sale">{{ 'products.sale' | t }}</span>
-            {% endif %}
-          {% endunless %}
-        </div>
+        {% render 'product-badges',
+          product: product,
+          class: 'product-card__badges',
+          badge_class: 'product-card__badge',
+          sale_badge_class: 'product-card__badge--sale'
+        %}
       {% endif %}
     </div>
   {% endif %}
@@ -77,38 +73,20 @@
       <p class="product-card__vendor">{{ product.vendor }}</p>
     {% endif %}
     <p class="product-card__title">{{ product.title | escape | link_to: product.url }}</p>
-    <div class="product-card__price">
-      <span>{{ product.price | money }}</span>
-
-      {% if product.compare_at_price > product.price %}
-        <s>{{ product.compare_at_price | money }}</s>
-      {% endif %}
-    </div>
+    {% render 'product-price',
+      price: product.price,
+      compare_at_price: product.compare_at_price,
+      class: 'product-card__price'
+    %}
 
     {% if enable_quick_add %}
-      <div class="product-card__actions">
-        {% if product.available and product.has_only_default_variant %}
-          {% assign adding_text = 'cart.adding' | t %}
-          {% assign added_text = 'cart.added' | t %}
-          {% assign error_text = 'cart.error' | t %}
-          {% form 'product',
-            product,
-            class: 'js-product-form product-card__quick-add',
-            data-adding-text: adding_text,
-            data-added-text: added_text,
-            data-error-text: error_text
-          %}
-            <input type="hidden" name="id" value="{{ card_variant.id }}">
-            <input type="hidden" name="quantity" value="1">
-            <input type="submit" value="{{ 'products.add_to_cart' | t }}">
-            <p class="product-card__message product-form__message" role="status" aria-live="polite" hidden></p>
-          {% endform %}
-        {% elsif product.available %}
-          <a class="product-card__choose-options" href="{{ product.url }}">
-            {{ 'products.choose_options' | t }}
-          </a>
-        {% endif %}
-      </div>
+      {% render 'quick-add-form',
+        product: product,
+        actions_class: 'product-card__actions',
+        class: 'js-product-form product-card__quick-add',
+        choose_options_class: 'product-card__choose-options',
+        message_class: 'product-card__message product-form__message'
+      %}
     {% endif %}
   </div>
 </article>

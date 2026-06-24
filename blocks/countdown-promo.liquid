@@ -42,15 +42,12 @@
   <p class="countdown-promo__invalid" data-countdown-invalid hidden>{{ 'sections.countdown.invalid_date' | t }}</p>
   <div class="countdown-promo__completion" data-countdown-completion hidden>{{ block.settings.completion_message }}</div>
 
-  {% if block.settings.button_label != blank and block.settings.button_link != blank %}
-    <div class="countdown-promo__action">
-      {% render 'main-button',
-        label: block.settings.button_label,
-        url: block.settings.button_link,
-        variant: block.settings.button_variant
-      %}
-    </div>
-  {% endif %}
+  {% render 'button-group',
+    class: 'countdown-promo__action',
+    primary_label: block.settings.button_label,
+    primary_url: block.settings.button_link,
+    primary_variant: block.settings.button_variant
+  %}
 </div>
 
 {% stylesheet %}

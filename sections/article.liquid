@@ -5,6 +5,7 @@
 {% endcomment %}
 
 {% assign related_article_limit = section.settings.related_article_limit | default: 3 %}
+{% assign comment_success_text = 'blog.comment_form_success' | t %}
 
 <article class="article-page">
   <header class="article-page__header">
@@ -122,11 +123,7 @@
           {% endfor %}
         </div>
 
-        {% if paginate.pages > 1 %}
-          <div class="article-comments__pagination">
-            {{ paginate | default_pagination: anchor: 'comments' }}
-          </div>
-        {% endif %}
+        {% render 'pagination', paginate: paginate, class: 'article-comments__pagination', anchor: 'comments' %}
       {% else %}
         <p class="article-comments__empty">{{ 'blog.comments_empty' | t }}</p>
       {% endif %}
@@ -135,15 +132,12 @@
     {% form 'new_comment', article, class: 'article-comment-form' %}
       <h2>{{ 'blog.comment_form_title' | t }}</h2>
 
-      {% if form.posted_successfully? %}
-        <p class="article-comment-form__success" role="status">{{ 'blog.comment_form_success' | t }}</p>
-      {% endif %}
-
-      {% if form.errors %}
-        <div class="article-comment-form__errors" role="alert">
-          {{ form.errors | default_errors }}
-        </div>
-      {% endif %}
+      {% render 'form-message',
+        form: form,
+        success_text: comment_success_text,
+        success_class: 'article-comment-form__success',
+        errors_class: 'article-comment-form__errors'
+      %}
 
       <div class="article-comment-form__field">
         <label for="CommentAuthor-{{ section.id }}">{{ 'blog.comment_form_name' | t }}</label>

@@ -1,0 +1,35 @@
+{% doc %}
+  Renders a product or variant price with an optional compare-at price.
+
+  @param {number} price - Current price
+  @param {number} [compare_at_price] - Compare-at price
+  @param {string} [class] - Wrapper class
+  @param {string} [current_class] - Current price class
+  @param {string} [compare_class] - Compare-at price class
+  @param {boolean} [always_render_compare] - Keep the compare element in the DOM when hidden
+  @param {string} [current_attributes] - Extra current price attributes
+  @param {string} [compare_attributes] - Extra compare price attributes
+{% enddoc %}
+
+{% liquid
+  assign product_price_class = class | default: 'price'
+  assign product_price_current_class = current_class | default: 'price__current'
+  assign product_price_compare_class = compare_class | default: 'price__compare'
+%}
+
+<div class="{{ product_price_class }}">
+  <span class="{{ product_price_current_class }}" {{ current_attributes }}>
+    {{ price | money }}
+  </span>
+  {% if compare_at_price > price or always_render_compare %}
+    <s
+      class="{{ product_price_compare_class }}"
+      {{ compare_attributes }}
+      {% unless compare_at_price > price %}
+        hidden
+      {% endunless %}
+    >
+      {{ compare_at_price | money }}
+    </s>
+  {% endif %}
+</div>

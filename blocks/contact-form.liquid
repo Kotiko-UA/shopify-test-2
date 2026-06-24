@@ -20,6 +20,12 @@
 {% if contact_description == blank %}
   {% assign contact_description = 'contact.description_html' | t %}
 {% endif %}
+{% assign contact_success_text = 'contact.success' | t %}
+{% capture contact_success_attributes %}
+  data-contact-success
+  data-redirect-url="{{ block.settings.success_redirect }}"
+  data-redirect-delay="{{ block.settings.redirect_delay | times: 1000 }}"
+{% endcapture %}
 
 <div class="contact-form-section" {{ block.shopify_attributes }}>
   <div class="contact-form-section__header">
@@ -35,25 +41,13 @@
   </div>
 
   {% form 'contact', id: contact_form_id, class: 'contact-form' %}
-    {% if form.posted_successfully? %}
-      <p
-        class="contact-form__success"
-        role="status"
-        tabindex="-1"
-        autofocus
-        data-contact-success
-        data-redirect-url="{{ block.settings.success_redirect }}"
-        data-redirect-delay="{{ block.settings.redirect_delay | times: 1000 }}"
-      >
-        {{ 'contact.success' | t }}
-      </p>
-    {% endif %}
-
-    {% if form.errors %}
-      <div class="contact-form__errors" role="alert" tabindex="-1" autofocus>
-        {{ form.errors | default_errors }}
-      </div>
-    {% endif %}
+    {% render 'form-message',
+      form: form,
+      success_text: contact_success_text,
+      success_class: 'contact-form__success',
+      errors_class: 'contact-form__errors',
+      success_attributes: contact_success_attributes
+    %}
 
     <div class="contact-form__fields">
       {% content_for 'blocks' %}

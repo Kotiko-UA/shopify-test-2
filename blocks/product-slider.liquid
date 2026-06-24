@@ -2,6 +2,7 @@
 {% if slider_label == blank %}
   {% assign slider_label = 'sections.product_slider.label' | t %}
 {% endif %}
+{% assign product_slider_empty_text = 'sections.product_slider.empty' | t %}
 
 <div
   id="ProductSlider-{{ block.id }}"
@@ -71,7 +72,7 @@
       <div class="product-slider__pagination swiper-pagination"></div>
     {% endif %}
   {% elsif request.design_mode %}
-    <p class="product-slider__empty">{{ 'sections.product_slider.empty' | t }}</p>
+    {% render 'empty-state', text: product_slider_empty_text, class: 'product-slider__empty' %}
   {% endif %}
 </div>
 

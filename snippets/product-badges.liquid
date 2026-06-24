@@ -1,0 +1,26 @@
+{% doc %}
+  Renders product sale and sold-out badges.
+
+  @param {product} product - Product to inspect
+  @param {string} [class] - Badge wrapper class
+  @param {string} [badge_class] - Badge class
+  @param {string} [sale_badge_class] - Extra sale badge class
+{% enddoc %}
+
+{% liquid
+  assign product_badges_class = class | default: 'product-badges'
+  assign product_badge_class = badge_class | default: 'product-badge'
+  assign product_sale_badge_class = sale_badge_class | default: ''
+%}
+
+{% unless product.available %}
+  <div class="{{ product_badges_class }}">
+    <span class="{{ product_badge_class }}">{{ 'products.sold_out' | t }}</span>
+  </div>
+{% else %}
+  {% if product.compare_at_price_max > product.price %}
+    <div class="{{ product_badges_class }}">
+      <span class="{{ product_badge_class }} {{ product_sale_badge_class }}">{{ 'products.sale' | t }}</span>
+    </div>
+  {% endif %}
+{% endunless %}

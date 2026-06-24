@@ -1,0 +1,178 @@
+{% doc %}
+  Renders common form field markup for inputs, textareas, selects, radios, and required checkboxes.
+
+  @param {string} id - Field ID
+  @param {string} name - Field name
+  @param {string} label - Field label
+  @param {string} [type] - input, textarea, select, radio, checkbox
+  @param {string} [input_type] - HTML input type for input fields
+  @param {string} [placeholder] - Placeholder text
+  @param {string} [help_text] - Optional help text
+  @param {string} [options_text] - Newline-separated option values
+  @param {string} [label_html] - Rich label content for checkbox fields
+  @param {number} [rows] - Textarea row count
+  @param {string} [pattern] - Optional input validation pattern
+  @param {string} [min] - Optional input minimum value
+  @param {string} [max] - Optional input maximum value
+  @param {string} [value] - Checkbox value
+  @param {boolean} [required] - Whether the field is required
+  @param {string} [class] - Base wrapper class
+  @param {string} [width_class] - Optional width class
+  @param {string} [fieldset_class] - Optional fieldset class
+  @param {string} [choices_class] - Optional radio choices class
+  @param {string} [choice_class] - Optional radio choice class
+  @param {string} [checkbox_class] - Optional checkbox wrapper class
+  @param {string} [checkbox_label_class] - Optional checkbox label class
+  @param {string} [attributes] - Extra wrapper attributes
+{% enddoc %}
+
+{% liquid
+  assign field_type = type | default: 'input'
+  assign field_input_type = input_type | default: 'text'
+  assign field_label = label | default: 'Field'
+  assign field_help_id = id | append: '-help'
+  assign field_class = class | default: 'form-field'
+  if width_class != blank
+    assign field_class = field_class | append: ' ' | append: width_class
+  endif
+%}
+
+{% case field_type %}
+  {% when 'textarea' %}
+    <div class="{{ field_class }}" {{ attributes }}>
+      <label for="{{ id }}">{{ field_label | escape }}</label>
+      <textarea
+        id="{{ id }}"
+        name="{{ name }}"
+        rows="{{ rows | default: 6 }}"
+        placeholder="{{ placeholder | escape }}"
+        {% if help_text != blank %}
+          aria-describedby="{{ field_help_id }}"
+        {% endif %}
+        {% if required %}
+          required
+        {% endif %}
+      ></textarea>
+      {% if help_text != blank %}
+        <small id="{{ field_help_id }}">{{ help_text | escape }}</small>
+      {% endif %}
+    </div>
+
+  {% when 'select' %}
+    {% assign field_options = options_text | newline_to_br | split: '<br />' %}
+    <div class="{{ field_class }}" {{ attributes }}>
+      <label for="{{ id }}">{{ field_label | escape }}</label>
+      <select
+        id="{{ id }}"
+        name="{{ name }}"
+        {% if help_text != blank %}
+          aria-describedby="{{ field_help_id }}"
+        {% endif %}
+        {% if required %}
+          required
+        {% endif %}
+      >
+        {% if placeholder != blank %}
+          <option value="" selected disabled>{{ placeholder | escape }}</option>
+        {% endif %}
+        {% for option in field_options %}
+          {% assign option_value = option | strip %}
+          {% if option_value != blank %}
+            <option value="{{ option_value | escape }}">{{ option_value | escape }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      {% if help_text != blank %}
+        <small id="{{ field_help_id }}">{{ help_text | escape }}</small>
+      {% endif %}
+    </div>
+
+  {% when 'radio' %}
+    {% assign field_options = options_text | newline_to_br | split: '<br />' %}
+    <fieldset
+      class="{{ field_class }} {{ fieldset_class }}"
+      {% if help_text != blank %}
+        aria-describedby="{{ field_help_id }}"
+      {% endif %}
+      {{ attributes }}
+    >
+      <legend>{{ field_label | escape }}</legend>
+      <div class="{{ choices_class | default: 'form-field__choices' }}">
+        {% for option in field_options %}
+          {% assign option_value = option | strip %}
+          {% if option_value != blank %}
+            {% assign option_id = id | append: '-' | append: forloop.index %}
+            <label class="{{ choice_class | default: 'form-field__choice' }}" for="{{ option_id }}">
+              <input
+                id="{{ option_id }}"
+                type="radio"
+                name="{{ name }}"
+                value="{{ option_value | escape }}"
+                {% if required %}
+                  required
+                {% endif %}
+              >
+              <span>{{ option_value | escape }}</span>
+            </label>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if help_text != blank %}
+        <small id="{{ field_help_id }}">{{ help_text | escape }}</small>
+      {% endif %}
+    </fieldset>
+
+  {% when 'checkbox' %}
+    <div class="{{ checkbox_class | default: field_class }}{% if width_class != blank %} {{ width_class }}{% endif %}" {{ attributes }}>
+      <input
+        id="{{ id }}"
+        type="checkbox"
+        name="{{ name }}"
+        value="{{ value | default: 'Accepted' }}"
+        {% if required != false %}
+          required
+        {% endif %}
+      >
+      <label class="{{ checkbox_label_class }}" for="{{ id }}">
+        {% if label_html != blank %}
+          {{ label_html }}
+        {% else %}
+          {{ field_label | escape }}
+        {% endif %}
+      </label>
+    </div>
+
+  {% else %}
+    <div class="{{ field_class }}" {{ attributes }}>
+      <label for="{{ id }}">{{ field_label | escape }}</label>
+      <input
+        id="{{ id }}"
+        type="{{ field_input_type }}"
+        name="{{ name }}"
+        placeholder="{{ placeholder | escape }}"
+        {% if help_text != blank %}
+          aria-describedby="{{ field_help_id }}"
+        {% endif %}
+        {% if pattern != blank %}
+          pattern="{{ pattern | escape }}"
+        {% endif %}
+        {% if min != blank %}
+          min="{{ min | escape }}"
+        {% endif %}
+        {% if max != blank %}
+          max="{{ max | escape }}"
+        {% endif %}
+        {% if field_input_type == 'email' %}
+          autocomplete="email"
+          spellcheck="false"
+          autocapitalize="off"
+        {% endif %}
+        {% if required %}
+          required
+        {% endif %}
+      >
+      {% if help_text != blank %}
+        <small id="{{ field_help_id }}">{{ help_text | escape }}</small>
+      {% endif %}
+    </div>
+{% endcase %}
